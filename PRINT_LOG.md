@@ -41,7 +41,7 @@ Design: flat cam plate with integral shaft and toothed pocket, separate gear wit
 
 Stack: washer 2 + plate 6.6 + shaft 14 + gear 4.6 = 27.2 mm wall to gear top.
 
-Material, layer height, infill and printer: not recorded. Add here if known.
+Slicer settings (PrusaSlicer): PETG, 0.2 mm layers, 2 perimeters, 15 percent grid infill.
 
 Observed:
 
