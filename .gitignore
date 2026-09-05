@@ -1,0 +1,13 @@
+# Reference material downloaded from the internet is not ours to redistribute.
+# Only the owner's own photographs (own_*.jpg) are tracked.
+reference/*
+!reference/own_*.jpg
+
+# Measurement sheets derived from internet product photos.
+measure/2_cam_side_view.png
+measure/3_follower_gear.png
+measure/4_cam_underside.png
+
+# Scratch
+*.bak
+*.tmp
