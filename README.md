@@ -21,6 +21,7 @@ The steel pin runs through the bore of all of them.
 | `scad/follower_gear.scad` | Optional: the compound gear from the cam gear kit (36 T ring + 12 T pinion). |
 | `scad/lib/involute_gear.scad` | Self contained involute spur gear library, no external dependencies. |
 | `render.ps1` | Exports every part to `stl/` using the OpenSCAD command line. |
+| `PRINT_LOG.md` | One entry per physical print: config used, what was observed, what changed. |
 | `renders/` | PNG previews of the current model. |
 | `measure/` | Annotated photos with lettered callouts plus a fill-in table of what to measure. |
 | `stl/` | Exported STLs with the current config values. |
