@@ -5,25 +5,25 @@
 function _pol(a, r) = [ r * cos(a), r * sin(a) ];
 function _ang(p) = atan2(p[1], p[0]);
 
-// Protrusion of bump i, using the optional per-bump override.
-function cam_bump_out(i) = len(cam_bumps[i]) > 2 ? cam_bumps[i][2] : cam_ear_out;
+// Protrusion of lobe i, using the optional per-lobe override.
+function lobe_height_of(i) = len(lobes[i]) > 2 ? lobes[i][2] : lobe_height;
 
-// One bump as a 2D polygon: root arc (inside the base circle for overlap),
+// One lobe as a 2D polygon: root arc (inside the trough circle for overlap),
 // two straight leaning edge faces, tip arc at R + out. Each face passes
-// through its mid-height point at the cam_bumps angle and is rotated from
-// radial by the lean, toward the middle of the bump.
-module cam_bump_2d(i) {
-    R = cam_od / 2;
-    o = cam_bump_out(i);
+// through its mid-height point at the lobes angle and is rotated from
+// radial by the lean, toward the middle of the lobe.
+module lobe_2d(i) {
+    R = trough_d / 2;
+    o = lobe_height_of(i);
     ov = 1;
-    s = cam_bumps[i][0] + cam_bump_rot;
-    e = cam_bumps[i][1] + cam_bump_rot;
-    us = [ cos(s + cam_lean_start), sin(s + cam_lean_start) ];
-    ue = [ cos(e - cam_lean_end),   sin(e - cam_lean_end) ];
+    s = lobes[i][0] + lobe_rot;
+    e = lobes[i][1] + lobe_rot;
+    us = [ cos(s + ramp_lean), sin(s + ramp_lean) ];
+    ue = [ cos(e - drop_lean),   sin(e - drop_lean) ];
     ms = _pol(s, R + o / 2);
     me = _pol(e, R + o / 2);
-    dts = (o / 2) / cos(cam_lean_start);   drs = (o / 2 + ov) / cos(cam_lean_start);
-    dte = (o / 2) / cos(cam_lean_end);     dre = (o / 2 + ov) / cos(cam_lean_end);
+    dts = (o / 2) / cos(ramp_lean);   drs = (o / 2 + ov) / cos(ramp_lean);
+    dte = (o / 2) / cos(drop_lean);     dre = (o / 2 + ov) / cos(drop_lean);
     tip_s = ms + dts * us;  root_s = ms - drs * us;
     tip_e = me + dte * ue;  root_e = me - dre * ue;
     at_s = _ang(tip_s); at_e = _ang(tip_e);
@@ -39,13 +39,13 @@ module cam_bump_2d(i) {
     ));
 }
 
-// 2D outline of the plate: base circle plus the bumps.
-module cam_outline_2d() {
+// 2D outline of the plate: trough circle plus the lobes.
+module plate_outline_2d() {
     mirror([0, cam_mirror ? 1 : 0, 0])
-    offset(r = cam_outline_round) offset(delta = -cam_outline_round)
+    offset(r = plate_corner_round) offset(delta = -plate_corner_round)
     union() {
-        circle(r = cam_od / 2, $fn = 360);
-        for (i = [0 : len(cam_bumps) - 1]) cam_bump_2d(i);
+        circle(r = trough_d / 2, $fn = 360);
+        for (i = [0 : len(lobes) - 1]) lobe_2d(i);
     }
 }
 
@@ -56,9 +56,9 @@ module spline_2d(grow = 0) {
                 addendum = spline_addendum, dedendum = spline_dedendum);
 }
 
-// Toothed boss (used under the gear) with a lead-in chamfer on its free end
+// Toothed plug (used under the gear) with a lead-in chamfer on its free end
 // at z = h.
-module spline_boss(h) {
+module plug(h) {
     if (spline_lead_in > 0) {
         rt = spline_od / 2;
         intersection() {
@@ -74,23 +74,23 @@ module spline_boss(h) {
     }
 }
 
-// Toothed pocket cut into the top of the shaft, grown by the clearance.
-module spline_pocket() {
-    depth = spline_boss_h + spline_pocket_extra;
-    translate([0, 0, cam_t + hub_h - depth]) linear_extrude(depth + 1) spline_2d(spline_clearance);
+// Toothed socket cut into the top of the hub, grown by the clearance.
+module socket() {
+    depth = plug_h + socket_extra;
+    translate([0, 0, plate_t + hub_h - depth]) linear_extrude(depth + 1) spline_2d(spline_clearance);
 }
 
-// Z of the gear underside above the cam bottom (the shaft shoulder).
-function cam_gear_z() = cam_t + hub_h;
+// Z of the gear underside above the cam bottom (the hub shoulder).
+function shoulder_z() = plate_t + hub_h;
 
 module cam() {
     difference() {
         union() {
-            linear_extrude(cam_t) cam_outline_2d();
-            cylinder(h = cam_t + hub_h, d = hub_d);
+            linear_extrude(plate_t) plate_outline_2d();
+            cylinder(h = plate_t + hub_h, d = hub_d);
         }
-        spline_pocket();
-        translate([0, 0, -1]) cylinder(h = cam_t + hub_h + 2, d = bore_d, $fn = 64);
+        socket();
+        translate([0, 0, -1]) cylinder(h = plate_t + hub_h + 2, d = bore_d, $fn = 64);
     }
 }
 

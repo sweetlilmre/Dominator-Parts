@@ -6,20 +6,20 @@ Open the four annotated photos in this folder. Each lettered callout is one valu
 
 | Letter | Parameter | What to measure | Value |
 |---|---|---|---|
-| A | `cam_od` | Diameter of the base circle (orange), rim outside face to outside face where there is no bump | |
-| C | `cam_ear_out` | How far a bump sticks out past the base circle | |
-| D | `hub_d` | Diameter of the centre boss the gear sits on | |
+| A | `trough_d` | Diameter of the trough circle (orange), rim outside face to outside face where there is no lobe | |
+| C | `lobe_height` | How far a lobe sticks out past the trough circle | |
+| D | `hub_d` | Diameter of the centre plug the gear sits on | |
 | E | `shaft_d` | Bore diameter (or the steel shaft, whichever you can measure cleanly) | |
 | F | `cam_tray_inner_d` | Diameter of the raised centre plateau (the inner groove ring) | |
-| 1 to 5 | `cam_bumps` | Start and end angle of each bump (green). Traced from your straight-down photo: 15-65, 90-133, 168.5-209.5, 230-279.5, 305-354.5 degrees. Already in config. | done |
+| 1 to 5 | `lobes` | Start and end angle of each lobe (green). Traced from your straight-down photo: 15-65, 90-133, 168.5-209.5, 230-279.5, 305-354.5 degrees. Already in config. | done |
 
-The sheet is now built from your own photo (`reference/own_cam_top.jpg`), scaled by your 71 mm rim reading. The trace gives a bump height of 3.9 mm against your 4, and a bore of 6.2 mm. Items B, D and F from the earlier sheet are gone with the flat style.
+The sheet is now built from your own photo (`reference/own_cam_top.jpg`), scaled by your 71 mm rim reading. The trace gives a lobe height of 3.9 mm against your 4, and a bore of 6.2 mm. Items B, D and F from the earlier sheet are gone with the flat style.
 
 ## 5_bump_edge_lean.png
 
-Zoom on bump 2 with radial reference lines. The edge faces are straight but not radial: seen from above with 0 degrees to the right, the clockwise edge of each bump (its start angle) leans about 21 degrees toward the middle of the bump as it goes outward, and the counter-clockwise edge (end angle) leans about 9 degrees the same way. All five bumps agree within a degree. These are `cam_lean_start` and `cam_lean_end` in the config; the `cam_bumps` angles are taken at mid-height so the lean pivots about that point.
+Zoom on lobe 2 with radial reference lines. The edge faces are straight but not radial: seen from above with 0 degrees to the right, the clockwise edge of each lobe (its start angle) leans about 21 degrees toward the middle of the lobe as it goes outward, and the counter-clockwise edge (end angle) leans about 9 degrees the same way. All five lobes agree within a degree. These are `ramp_lean` and `drop_lean` in the config; the `lobes` angles are taken at mid-height so the lean pivots about that point.
 
-The photo turned out to be of the non-gear side: held gear side up, the owner sees the steep face on the counter-clockwise side. The model therefore mirrors the whole traced outline (`cam_mirror = true`), which flips both the bump sequence and the leans together. The traced angles and leans in the config are still the photo's values.
+The photo turned out to be of the non-gear side: held gear side up, the owner sees the ramp face on the counter-clockwise side. The model therefore mirrors the whole traced outline (`cam_mirror = true`), which flips both the lobe sequence and the leans together. The traced angles and leans in the config are still the photo's values.
 
 ## 2_cam_side_view.png
 
@@ -27,9 +27,9 @@ The photo turned out to be of the non-gear side: held gear side up, the owner se
 |---|---|---|---|
 | G | `gear_od` | Gear diameter tip to tip, take the biggest of a few readings | |
 | H | `gear_thickness` | Gear face width (have 4.6) | done |
-| I | `hub_h` | Shaft height, top of the OEM rim to the underside of the gear (have 10) | done |
-| J | not used | Flat plate design: the rim height is covered by `cam_t` | |
-| K | `cam_t` | Plate thickness: OEM rim bottom edge to rim top edge (have 6.6) | done |
+| I | `hub_h` | Hub height, top of the OEM rim to the underside of the gear (have 10) | done |
+| J | not used | Flat plate design: the rim height is covered by `plate_t` | |
+| K | `plate_t` | Plate thickness: OEM rim bottom edge to rim top edge (have 6.6) | done |
 | L | not used | No rim wall in the flat design | |
 | M | (check) | Total height, rim bottom to gear top. Should equal K + I + H = 21.2 | |
 | | `gear_teeth` | 36 counted | done |
@@ -51,5 +51,5 @@ Not needed any more: the flat design has a flat underside and a washer sets the 
 
 ## Not in the photos but worth checking
 
-- The direction the cam turns in the gearbox, and which face of each bump the pawl or follower rides against. That decides whether the bumps need a sharp edge on one side.
+- The direction the cam turns in the gearbox, and which face of each lobe the pawl or follower rides against. That decides whether the lobes need a sharp edge on one side.
 - Whether the gear is moulded as one piece with the cam (the model can do either).

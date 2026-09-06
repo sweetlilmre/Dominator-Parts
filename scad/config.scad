@@ -1,10 +1,10 @@
 // config.scad - every tunable dimension for the Dominator cam + gear.
 //
 // Two printed pieces plus an optional washer:
-//   cam   flat plate with the bump outline, an integral shaft (hub) rising
-//         from it, and a toothed pocket in the top of the shaft
-//   gear  the 36 tooth ring gear with a matching toothed boss underneath,
-//         plugs into the pocket and seats on the shaft shoulder
+//   cam   flat plate with the lobe outline, an integral hub rising
+//         from it, and a socket in the top of the hub
+//   gear  the 36 tooth ring gear with a matching plug underneath,
+//         plugs into the socket and seats on the hub shoulder
 // The steel pin runs through the bore of both.
 //
 // Sources: (owner) caliper readings on the worn part, (trace) measured from
@@ -22,44 +22,44 @@ bore_clearance = 0.4;
 bore_d = pin_d + bore_clearance;
 
 /* [Cam plate] */
-// Diameter of the base circle of the rim, not across the bumps. (owner)
-cam_od = 71;
-// Plate thickness. This is the height of the bump face the follower runs on. (owner)
-cam_t = 6.6;
-// How far each bump protrudes beyond the base circle. (owner 4, trace 3.9)
-cam_ear_out = 5;
-// Bumps as [start_deg, end_deg] at mid-height of the bump, counter-clockwise
+// Diameter of the trough circle of the rim, not across the lobes. (owner)
+trough_d = 71;
+// Plate thickness. This is the height of the lobe face the follower runs on. (owner)
+plate_t = 6.6;
+// How far each lobe protrudes beyond the trough circle. (owner 4, trace 3.9)
+lobe_height = 5;
+// Lobes as [start_deg, end_deg] at mid-height of the lobe, counter-clockwise
 // seen from the gear side, 0 deg = +X. (trace) An optional third value
-// overrides cam_ear_out for that bump.
-cam_bumps = [ [15, 65], [90, 133], [168.5, 209.5], [230, 279.5], [305, 354.5] ];
-// Rotate the whole bump pattern (deg). Cosmetic, the gear is round.
-cam_bump_rot = 0;
-// Mirror the whole outline (bump order and edge leans together). The photo
+// overrides lobe_height for that lobe.
+lobes = [ [15, 65], [90, 133], [168.5, 209.5], [230, 279.5], [305, 354.5] ];
+// Rotate the whole lobe pattern (deg). Cosmetic, the gear is round.
+lobe_rot = 0;
+// Mirror the whole outline (lobe order and edge leans together). The photo
 // used for the trace was taken looking at the non-gear side, and the owner
 // confirmed the lean runs the other way when the part is held gear side up.
 // Set false if a future trace is made from the gear side.
 cam_mirror = true;
-// Lean of the bump edge faces from radial, deg. Positive = the face leans
-// toward the middle of its bump going outward. (trace) In the photo's view
+// Lean of the lobe edge faces from radial, deg. Positive = the face leans
+// toward the middle of its lobe going outward. (trace) In the photo's view
 // the clockwise edge leans 21 and the counter-clockwise edge 9; with
-// cam_mirror = true the steep face ends up on the counter-clockwise side
+// cam_mirror = true the ramp face ends up on the counter-clockwise side
 // when seen from the gear side. 0 = square radial steps.
-cam_lean_start = 21;
-cam_lean_end = 9;
+ramp_lean = 21;
+drop_lean = 9;
 // Rounding of the outline corners (mm). 0 = sharp.
-cam_outline_round = 0.6;
+plate_corner_round = 0.6;
 
-/* [Shaft (hub) on the cam] */
-// Shaft outside diameter. The gear seats on the shoulder at its top. (est)
+/* [Hub on the cam] */
+// Hub outside diameter. The gear seats on the shoulder at its top. (est)
 hub_d = 22;
-// Shaft height from the plate top to the gear underside. (owner)
+// Hub height from the plate top to the gear underside. (owner)
 hub_h = 14;
 
-/* [Spline joint between shaft and gear] */
-// As in the OEM kit: the gear carries a toothed boss on its underside, the top
-// of the cam shaft has a matching toothed pocket. The boss is an involute
-// pinion profile. The gear seats on the flat shoulder of the shaft around the
-// pocket, so the teeth only carry torque and do not locate the gear.
+/* [Spline joint between hub and gear] */
+// As in the OEM kit: the gear carries a plug on its underside, the top
+// of the hub has a matching socket. The plug is an involute
+// pinion profile. The gear seats on the flat shoulder of the hub around the
+// socket, so the teeth only carry torque and do not locate the gear.
 spline_teeth = 12;
 // Tip to tip diameter of the spline. (TV pinion 14.4) Must be < hub_d, and
 // leave at least 1.3 mm of wall between the bore and the tooth roots.
@@ -68,19 +68,19 @@ spline_od = 14;
 // stays thick around the bore.
 spline_addendum = 0.9;
 spline_dedendum = 0.9;
-// Height of the toothed boss under the gear = engagement depth in the shaft.
-spline_boss_h = 5;
-// The pocket is this much deeper than the boss so the gear seats on the
-// shoulder, not on the boss end.
-spline_pocket_extra = 0.3;
-// Radial clearance added to the pocket. First print at 0.15 had play between
-// the boss teeth and the socket; 0.05 next. Go to 0 or slightly negative if
+// Height of the plug under the gear = engagement depth in the hub.
+plug_h = 5;
+// The socket is this much deeper than the plug so the gear seats on the
+// shoulder, not on the plug end.
+socket_extra = 0.3;
+// Radial clearance added to the socket. First print at 0.15 had play between
+// the plug teeth and the socket; 0.05 next. Go to 0 or slightly negative if
 // still loose, since FDM tends to shrink holes and grow posts anyway.
 spline_clearance = 0.05;
-// Chamfer on the boss end to help it start into the pocket (mm).
+// Chamfer on the plug end to help it start into the socket (mm).
 spline_lead_in = 0.6;
 
-/* [Ring gear] */
+/* [Gear] */
 // Tooth count, counted on the original by the owner. (owner)
 gear_teeth = 36;
 // Tip to tip diameter. Module is derived. (owner)

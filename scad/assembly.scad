@@ -2,8 +2,8 @@
 // (Window > Customizer) to pick the part and tune every dimension from
 // config.scad. Export STLs from here or with render.ps1.
 //
-//   part = "cam"       flat cam plate with shaft and toothed pocket (print as shown)
-//   part = "gear"      ring gear with toothed boss, shown boss up for printing
+//   part = "cam"       flat cam plate with shaft and socket (print as shown)
+//   part = "gear"      ring gear with plug, shown plug up for printing
 //   part = "washer"    spacer washer
 //   part = "follower"  optional compound gear from the cam gear kit
 //   part = "assembly"  cam with the gear seated, for checking fit and height
@@ -19,7 +19,7 @@ part = "all"; // ["all", "cam", "gear", "washer", "follower", "assembly"]
 
 module assembled() {
     cam();
-    translate([0, 0, cam_gear_z()]) cam_gear();
+    translate([0, 0, shoulder_z()]) cam_gear();
 }
 
 if (part == "cam") {
@@ -34,17 +34,17 @@ if (part == "cam") {
     assembled();
 } else {
     cam();
-    translate([cam_od + 20, 0, 0]) cam_gear_printable();
-    translate([cam_od + 20, -(gear_od / 2 + washer_od), 0]) spacer_washer();
-    translate([cam_od + 20, gear_od / 2 + fg_ring_od / 2 + 8, 0]) follower_gear();
+    translate([trough_d + 20, 0, 0]) cam_gear_printable();
+    translate([trough_d + 20, -(gear_od / 2 + washer_od), 0]) spacer_washer();
+    translate([trough_d + 20, gear_od / 2 + fg_ring_od / 2 + 8, 0]) follower_gear();
 }
 
 echo(str("gear module = ", gear_module, " mm, pitch dia = ", gear_module * gear_teeth,
          " mm, OD = ", gear_outer_diameter(gear_teeth, gear_module), " mm"));
-echo(str("stack: washer ", washer_t, " + plate ", cam_t, " + shaft ", hub_h, " + gear ", gear_thickness,
-         " = ", washer_t + cam_t + hub_h + gear_thickness, " mm wall to gear top; boss engages ",
-         spline_boss_h, " mm into the shaft, pocket floor ", hub_h - spline_boss_h - spline_pocket_extra,
+echo(str("stack: washer ", washer_t, " + plate ", plate_t, " + shaft ", hub_h, " + gear ", gear_thickness,
+         " = ", washer_t + plate_t + hub_h + gear_thickness, " mm wall to gear top; plug engages ",
+         plug_h, " mm into the hub, socket floor ", hub_h - plug_h - socket_extra,
          " mm above the plate"));
-echo(str("cam outer span = ", cam_od + 2 * cam_ear_out, " mm; spline root dia = ",
+echo(str("cam outer span = ", trough_d + 2 * lobe_height, " mm; spline root dia = ",
          2 * gear_root_radius(spline_teeth, gear_module_from_od(spline_od, spline_teeth, spline_addendum), spline_dedendum),
          " mm vs bore ", bore_d, " mm"));

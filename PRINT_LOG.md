@@ -58,6 +58,23 @@ Changes made for print 2:
 - `gear_addendum` and `gear_dedendum` added as parameters.
 - Tooth count briefly changed to 35 from a photo estimate, then reverted to 36 after counting.
 
+## Rename, 2026-09-06
+
+Parameters were renamed to match the glossary in `CONTEXT.md`. Shape verified identical before and after. Print 1 above uses the old names.
+
+| Old | New |
+|---|---|
+| `cam_od` | `trough_d` |
+| `cam_t` | `plate_t` |
+| `cam_ear_out` | `lobe_height` |
+| `cam_bumps` | `lobes` |
+| `cam_bump_rot` | `lobe_rot` |
+| `cam_lean_start` | `ramp_lean` |
+| `cam_lean_end` | `drop_lean` |
+| `cam_outline_round` | `plate_corner_round` |
+| `spline_boss_h` | `plug_h` |
+| `spline_pocket_extra` | `socket_extra` |
+
 ## Print 2
 
 Not yet printed. Config as committed after print 1 feedback.

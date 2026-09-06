@@ -82,5 +82,39 @@ _Avoid_: leading face, trailing face, shallow face, straight edge
 How far the crest stands out beyond the trough circle.
 _Avoid_: ear out, bump height, protrusion
 
+**Lean**:
+The angle between a ramp or drop face and the radial line through the face's mid-height point.
+_Avoid_: rake, slope angle, draft
+
+**Face position**:
+The angle around the cam at which a face sits, always taken at mid-height of the face. Changing a lean pivots the face about this point.
+_Avoid_: root angle, corner angle
+
 **Rotation direction**:
-Counter-clockwise when viewed from the gear side, so each lobe presents its ramp face to the follower first.
+Counter-clockwise when viewed from the gear side, observed in the gearbox, so each lobe presents its ramp face to the follower first.
+
+### Orientation
+
+**Gear side**:
+The side of the cam assembly from which the gear is visible; the plate face the hub rises from.
+_Avoid_: top, front
+
+**Cam side**:
+The opposite side, the flat face of the plate that sits against the washer and gearbox wall.
+_Avoid_: bottom, back, wall side, underside
+
+**Hub side**:
+The face of the gear that carries the plug and seats on the shoulder.
+_Avoid_: underside, back
+
+**Flat side**:
+The plain face of the gear, the one printed against the bed.
+_Avoid_: top, outer face
+
+**Shoulder**:
+The flat top of the hub around the socket on which the gear's hub side seats.
+_Avoid_: seat, land
+
+**Stack height**:
+The distance from the gearbox wall to the flat side of the gear: washer plus plate plus hub plus gear thickness.
+_Avoid_: overall height, assembly height, stack
