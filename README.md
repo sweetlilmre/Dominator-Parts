@@ -22,6 +22,7 @@ The steel pin runs through the bore of all of them.
 | `scad/lib/involute_gear.scad` | Self contained involute spur gear library, no external dependencies. |
 | `render.ps1` | Exports every part to `stl/` using the OpenSCAD command line. |
 | `PRINT_LOG.md` | One entry per physical print: config used, what was observed, what changed. |
+| `SLICING.md` | How to slice in PrusaSlicer: where perimeters and infill go, and the modifier meshes. |
 | `renders/` | PNG previews of the current model. |
 | `measure/` | Annotated photos with lettered callouts plus a fill-in table of what to measure. |
 | `stl/` | Exported STLs with the current config values. |
@@ -66,8 +67,8 @@ The steel pin runs through the bore of all of them.
 
 ## Printing
 
-- Cam: plate down, hub up, no supports. Slow the outer wall for the lobe faces. Set Perimeters = 6 on the cam object, and load `stl/dominator_cam_rim_modifier.stl` as a modifier with only Fill density = 100 percent, so the lobes and troughs are solid. See PRINT_LOG.md for why perimeters go on the object rather than the modifier.
-- Gear: flat side down, plug up, as exported. No supports. Set Perimeters = 4 on the object and load `stl/dominator_gear_tooth_modifier.stl` and `stl/dominator_gear_plug_modifier.stl` as modifiers with Fill density = 100 percent, or print at 100 percent infill throughout. 0.12 to 0.2 mm layers, 0.4 mm nozzle.
+- Cam: plate down, hub up, no supports. Set Perimeters = 3 on the object and load `stl/dominator_cam_rim_modifier.stl` as a modifier with only Fill density = 100 percent, so the lobes and troughs are solid. Full reasoning and steps in `SLICING.md`.
+- Gear: flat side down, plug up, as exported. No supports. Perimeters = 3 on the object; load `stl/dominator_gear_tooth_modifier.stl` and `stl/dominator_gear_plug_modifier.stl` as modifiers with Fill density = 100 percent. 0.12 to 0.2 mm layers, 0.4 mm nozzle. See `SLICING.md`.
 - Washer: flat.
 - Material: PETG, ASA or nylon. PLA goes soft in a hot pool box.
 

@@ -79,12 +79,6 @@ Parameters were renamed to match the glossary in `CONTEXT.md`. Shape verified id
 
 Not yet printed. Config as committed after print 1 feedback.
 
-## Slicing note: reinforcing the contact regions
+## Slicing note
 
-Perimeter count goes on the object, infill goes on modifiers. A perimeter override on a modifier makes the slicer draw perimeters around the modifier boundary as well, which is not wanted. In PrusaSlicer: right click the part, Add settings, Layers and perimeters, Perimeters = 6 (cam) or 4 (gear). Then right click the part, Add modifier, Load, pick the modifier STL below (they land on the same origin), right click the modifier, Add settings, Infill, Fill density = 100 percent, and nothing else.
-
-| Part | Modifier STL | Covers |
-|---|---|---|
-| cam | `stl/dominator_cam_rim_modifier.stl` | outer 8 mm of the plate plus all lobes |
-| gear | `stl/dominator_gear_tooth_modifier.stl` | the teeth plus 4 mm inside the root circle |
-| gear | `stl/dominator_gear_plug_modifier.stl` | the plug and the gear body beneath it |
+How to make the contact regions solid without a fully solid part is written up in `SLICING.md`: Fill density 100 percent on the modifier meshes, a modest perimeter count on the object itself.
