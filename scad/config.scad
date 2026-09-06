@@ -27,7 +27,7 @@ cam_od = 71;
 // Plate thickness. This is the height of the bump face the follower runs on. (owner)
 cam_t = 6.6;
 // How far each bump protrudes beyond the base circle. (owner 4, trace 3.9)
-cam_ear_out = 4;
+cam_ear_out = 5;
 // Bumps as [start_deg, end_deg] at mid-height of the bump, counter-clockwise
 // seen from the gear side, 0 deg = +X. (trace) An optional third value
 // overrides cam_ear_out for that bump.
