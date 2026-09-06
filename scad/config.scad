@@ -121,6 +121,13 @@ fg_pinion_h = 5;
 fg_plate_d = 24;
 fg_plate_h = 1.5;
 
+/* [Slicer modifier] */
+// Radial depth of the rim band, measured inward from the trough circle, that
+// the rim_modifier part covers. Load stl/dominator_rim_modifier.stl in
+// PrusaSlicer as a modifier and give it more perimeters / 100% infill so the
+// crests, faces and troughs are solid where the follower touches them.
+rim_band = 8;
+
 /* [Rendering] */
 $fn = 96;
 // Tiny overlap so unions/differences do not leave zero-thickness skins.

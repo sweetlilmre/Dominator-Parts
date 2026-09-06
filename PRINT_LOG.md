@@ -78,3 +78,7 @@ Parameters were renamed to match the glossary in `CONTEXT.md`. Shape verified id
 ## Print 2
 
 Not yet printed. Config as committed after print 1 feedback.
+
+## Slicing note: reinforcing the rim
+
+`stl/dominator_rim_modifier.stl` is a ring covering the outer 8 mm of the plate plus the lobes. In PrusaSlicer load the cam, right click it, Add modifier > Load, pick this file (it lands centred on the same origin), then right click the modifier and add the settings Perimeters = 6 or more and Fill density = 100 percent. The rest of the plate keeps the global settings. See README, Printing.

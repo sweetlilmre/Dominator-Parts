@@ -3,7 +3,7 @@
 #         pwsh ./render.ps1 cam gear     (selected parts)
 # Requires OpenSCAD (official download: https://openscad.org/downloads.html)
 # on PATH or in the default install folder.
-param([string[]]$Parts = @("cam", "gear", "washer", "follower"))
+param([string[]]$Parts = @("cam", "gear", "washer", "follower", "rim_modifier"))
 
 $found = Get-Command openscad -ErrorAction SilentlyContinue
 $candidates = @()
