@@ -36,7 +36,15 @@ _Avoid_: shaft, axle, spindle
 
 **Follower**:
 The part of the gearbox that rides on the cam's lobes and triggers the steering. Not part of the cam assembly.
-_Avoid_: pawl, finger
+_Avoid_: pawl, finger, follower gear
+
+**Reduction gear**:
+One of the gearbox gears between the turbine and the cam: a ring identical to the gear, with a pinion on top. Not part of the cam assembly; modelled as an optional extra.
+_Avoid_: follower gear, compound gear, cam gear kit gear
+
+**Pinion**:
+The small toothed wheel on top of a reduction gear that drives the next gear in the train.
+_Avoid_: small gear, spur
 
 ### Spline joint
 

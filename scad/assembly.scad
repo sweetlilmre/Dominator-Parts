@@ -5,7 +5,7 @@
 //   part = "cam"       flat cam plate with shaft and socket (print as shown)
 //   part = "gear"      ring gear with plug, shown plug up for printing
 //   part = "washer"    spacer washer
-//   part = "follower"  optional compound gear from the cam gear kit
+//   part = "reduction_gear"  optional gearbox reduction gear (ring as the gear, plus pinion)
 //   part = "assembly"  cam with the gear seated, for checking fit and height
 //   part = "cam_rim_modifier"    PrusaSlicer modifier: solid rim band on the cam
 //   part = "gear_tooth_modifier" PrusaSlicer modifier: solid tooth band on the gear
@@ -15,10 +15,10 @@ INVOLUTE_GEAR_NO_DEMO = true;
 include <config.scad>
 include <cam.scad>
 include <cam_gear.scad>
-include <follower_gear.scad>
+include <reduction_gear.scad>
 
 /* [Part selection] */
-part = "all"; // ["all", "cam", "gear", "washer", "follower", "assembly", "cam_rim_modifier", "gear_tooth_modifier", "gear_plug_modifier"]
+part = "all"; // ["all", "cam", "gear", "washer", "reduction_gear", "assembly", "cam_rim_modifier", "gear_tooth_modifier", "gear_plug_modifier"]
 
 module assembled() {
     cam();
@@ -31,8 +31,8 @@ if (part == "cam") {
     cam_gear_printable();
 } else if (part == "washer") {
     spacer_washer();
-} else if (part == "follower") {
-    follower_gear();
+} else if (part == "reduction_gear") {
+    reduction_gear();
 } else if (part == "assembly") {
     assembled();
 } else if (part == "cam_rim_modifier") {
@@ -45,7 +45,7 @@ if (part == "cam") {
     cam();
     translate([trough_d + 20, 0, 0]) cam_gear_printable();
     translate([trough_d + 20, -(gear_od / 2 + washer_od), 0]) spacer_washer();
-    translate([trough_d + 20, gear_od / 2 + fg_ring_od / 2 + 8, 0]) follower_gear();
+    translate([trough_d + 20, gear_od + 8, 0]) reduction_gear();
 }
 
 echo(str("gear module = ", gear_module, " mm, pitch dia = ", gear_module * gear_teeth,

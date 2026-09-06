@@ -35,15 +35,15 @@ The photo turned out to be of the non-gear side: held gear side up, the owner se
 | | `gear_teeth` | 36 counted | done |
 | | `washer_t` | Gearbox wall to the underside of the OEM rim | |
 
-## 3_follower_gear.png (only if you also print the cam gear kit gears)
+## 3_reduction_gear.png (only if you also print the reduction gears)
 
 | Letter | Parameter | What to measure | Value |
 |---|---|---|---|
-| N | `fg_ring_od` | Big gear diameter tip to tip | |
-| O | `fg_pinion_od` | Small pinion diameter tip to tip | |
-| P | `fg_plate_d` | Raised plate diameter | |
-| Q | `fg_ring_thickness`, `fg_plate_h`, `fg_pinion_h` | Thickness of ring, plate and pinion, measured on the edge | |
-| | `fg_ring_teeth`, `fg_pinion_teeth` | Count both (photo: 36 and 11 or 12) | |
+| N | ring | Same as the gear, taken from `gear_od` | done |
+| O | `rg_pinion_od` | Small pinion diameter tip to tip | |
+| P | `rg_plate_d` | Raised plate diameter | |
+| Q | `rg_plate_h`, `rg_pinion_h` | Thickness of plate and pinion, measured on the edge; ring thickness is `gear_thickness` | |
+| | `rg_pinion_teeth` | Count the pinion teeth (photo: 11 or 12); ring is 36 like the gear | |
 
 ## 4_cam_underside.png
 

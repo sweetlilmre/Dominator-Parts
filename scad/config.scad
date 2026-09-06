@@ -110,16 +110,16 @@ gear_tip_round = 0.3;
 washer_t = 2;
 washer_od = 16;
 
-/* [Follower / compound gear (optional, kit 360295 style)] */
-fg_ring_teeth = 36;
-fg_ring_od = 47;
-fg_ring_thickness = 4.6;
-fg_pinion_teeth = 12;      // photo 11-12
-fg_pinion_od = 14.4;       // TV
-fg_pinion_h = 5;
-// Raised plate between ring and pinion. 0 height = none.
-fg_plate_d = 24;
-fg_plate_h = 1.5;
+/* [Reduction gear (optional)] */
+// One of the gearbox reduction gears: a ring identical to the cam gear with a
+// pinion on top. Ring teeth, diameter and thickness are taken from the gear
+// so the two cannot drift apart. Pinion values are unmeasured. (est)
+rg_pinion_teeth = 12;      // photo 11-12
+rg_pinion_od = 14.4;       // TV
+rg_pinion_h = 5;
+// Raised plate between ring and pinion. 0 height = none. Real outline unknown.
+rg_plate_d = 24;
+rg_plate_h = 1.5;
 
 /* [Slicer modifiers] */
 // Modifier volumes for PrusaSlicer. Load each as a modifier on its part and

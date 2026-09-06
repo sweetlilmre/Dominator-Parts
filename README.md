@@ -18,7 +18,7 @@ The steel pin runs through the bore of all of them.
 | `scad/config.scad` | All parameters, each tagged with where its value came from. |
 | `scad/cam.scad` | Cam plate, lobe outline with leaning edges, shaft with socket, washer. |
 | `scad/cam_gear.scad` | Ring gear with the plug. |
-| `scad/follower_gear.scad` | Optional: the compound gear from the cam gear kit (36 T ring + 12 T pinion). |
+| `scad/reduction_gear.scad` | Optional: a gearbox reduction gear, ring identical to the gear plus a 12 T pinion. Pinion unmeasured. |
 | `scad/lib/involute_gear.scad` | Self contained involute spur gear library, no external dependencies. |
 | `render.ps1` | Exports every part to `stl/` using the OpenSCAD command line. |
 | `PRINT_LOG.md` | One entry per physical print: config used, what was observed, what changed. |
