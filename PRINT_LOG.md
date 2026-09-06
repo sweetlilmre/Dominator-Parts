@@ -79,6 +79,12 @@ Parameters were renamed to match the glossary in `CONTEXT.md`. Shape verified id
 
 Not yet printed. Config as committed after print 1 feedback.
 
-## Slicing note: reinforcing the rim
+## Slicing note: reinforcing the contact regions
 
-`stl/dominator_rim_modifier.stl` is a ring covering the outer 8 mm of the plate plus the lobes. In PrusaSlicer load the cam, right click it, Add modifier > Load, pick this file (it lands centred on the same origin), then right click the modifier and add the settings Perimeters = 6 or more and Fill density = 100 percent. The rest of the plate keeps the global settings. See README, Printing.
+Perimeter count goes on the object, infill goes on modifiers. A perimeter override on a modifier makes the slicer draw perimeters around the modifier boundary as well, which is not wanted. In PrusaSlicer: right click the part, Add settings, Layers and perimeters, Perimeters = 6 (cam) or 4 (gear). Then right click the part, Add modifier, Load, pick the modifier STL below (they land on the same origin), right click the modifier, Add settings, Infill, Fill density = 100 percent, and nothing else.
+
+| Part | Modifier STL | Covers |
+|---|---|---|
+| cam | `stl/dominator_cam_rim_modifier.stl` | outer 8 mm of the plate plus all lobes |
+| gear | `stl/dominator_gear_tooth_modifier.stl` | the teeth plus 4 mm inside the root circle |
+| gear | `stl/dominator_gear_plug_modifier.stl` | the plug and the gear body beneath it |

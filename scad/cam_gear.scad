@@ -19,7 +19,23 @@ module cam_gear() {
     }
 }
 
-// Printable orientation: gear face on the bed, plug pointing up.
+// Printable orientation: flat side on the bed, plug pointing up.
 module cam_gear_printable() {
     translate([0, 0, gear_thickness]) mirror([0, 0, 1]) cam_gear();
+}
+
+// Slicer modifier volumes for the gear, in the printable orientation.
+// Tooth band: ring from gear_band inside the root circle to outside the tips.
+module gear_tooth_modifier() {
+    rr = gear_root_radius(gear_teeth, gear_module, gear_dedendum);
+    rt = gear_tip_radius(gear_teeth, gear_module, gear_addendum);
+    translate([0, 0, -0.5])
+        difference() {
+            cylinder(h = gear_thickness + 1, r = rt + 2);
+            translate([0, 0, -1]) cylinder(h = gear_thickness + 3, r = rr - gear_band);
+        }
+}
+// Plug: cylinder covering the spline plug and the gear body under it.
+module gear_plug_modifier() {
+    translate([0, 0, -0.5]) cylinder(h = gear_thickness + plug_h + 1, r = spline_od / 2 + 1.5);
 }

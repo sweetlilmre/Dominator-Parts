@@ -94,10 +94,10 @@ module cam() {
     }
 }
 
-// Slicer modifier volume: a ring covering the rim band of the plate, from
-// rim_band inside the trough circle to just outside the crests, slightly
-// taller than the plate so it covers the top and bottom layers too.
-module rim_modifier() {
+// Slicer modifier volume for the cam: a ring covering the rim band of the
+// plate, from rim_band inside the trough circle to just outside the crests,
+// slightly taller than the plate so it covers the top and bottom layers too.
+module cam_rim_modifier() {
     translate([0, 0, -0.5])
         difference() {
             cylinder(h = plate_t + 1, r = trough_d / 2 + lobe_height + 2);

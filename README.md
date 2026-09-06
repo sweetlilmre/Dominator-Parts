@@ -66,8 +66,8 @@ The steel pin runs through the bore of all of them.
 
 ## Printing
 
-- Cam: plate down, hub up, no supports. Slow the outer wall for the lobe faces. To make only the contact region solid, load `stl/dominator_rim_modifier.stl` as a PrusaSlicer modifier on the cam (right click the cam, Add modifier, Load) and give the modifier Perimeters 6 or more and Fill density 100 percent. Otherwise use 4 or more perimeters globally.
-- Gear: gear face down, plug up, as exported. No supports. 100 percent infill, 0.12 to 0.2 mm layers, 0.4 mm nozzle.
+- Cam: plate down, hub up, no supports. Slow the outer wall for the lobe faces. Set Perimeters = 6 on the cam object, and load `stl/dominator_cam_rim_modifier.stl` as a modifier with only Fill density = 100 percent, so the lobes and troughs are solid. See PRINT_LOG.md for why perimeters go on the object rather than the modifier.
+- Gear: flat side down, plug up, as exported. No supports. Set Perimeters = 4 on the object and load `stl/dominator_gear_tooth_modifier.stl` and `stl/dominator_gear_plug_modifier.stl` as modifiers with Fill density = 100 percent, or print at 100 percent infill throughout. 0.12 to 0.2 mm layers, 0.4 mm nozzle.
 - Washer: flat.
 - Material: PETG, ASA or nylon. PLA goes soft in a hot pool box.
 

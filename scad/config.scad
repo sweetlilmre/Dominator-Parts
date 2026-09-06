@@ -121,12 +121,15 @@ fg_pinion_h = 5;
 fg_plate_d = 24;
 fg_plate_h = 1.5;
 
-/* [Slicer modifier] */
-// Radial depth of the rim band, measured inward from the trough circle, that
-// the rim_modifier part covers. Load stl/dominator_rim_modifier.stl in
-// PrusaSlicer as a modifier and give it more perimeters / 100% infill so the
-// crests, faces and troughs are solid where the follower touches them.
+/* [Slicer modifiers] */
+// Modifier volumes for PrusaSlicer. Load each as a modifier on its part and
+// give it ONLY Fill density = 100 percent. Set the perimeter count on the
+// object itself, not on the modifier: a perimeter override on a modifier
+// makes the slicer draw perimeters around the modifier's inner boundary too.
+// Radial depth of the cam rim band, inward from the trough circle.
 rim_band = 8;
+// Radial depth of the gear tooth band, inward from the gear root circle.
+gear_band = 4;
 
 /* [Rendering] */
 $fn = 96;

@@ -7,7 +7,9 @@
 //   part = "washer"    spacer washer
 //   part = "follower"  optional compound gear from the cam gear kit
 //   part = "assembly"  cam with the gear seated, for checking fit and height
-//   part = "rim_modifier"  ring for PrusaSlicer modifier: solid rim band on the cam
+//   part = "cam_rim_modifier"    PrusaSlicer modifier: solid rim band on the cam
+//   part = "gear_tooth_modifier" PrusaSlicer modifier: solid tooth band on the gear
+//   part = "gear_plug_modifier"  PrusaSlicer modifier: solid plug on the gear
 //   part = "all"       everything laid out
 INVOLUTE_GEAR_NO_DEMO = true;
 include <config.scad>
@@ -16,7 +18,7 @@ include <cam_gear.scad>
 include <follower_gear.scad>
 
 /* [Part selection] */
-part = "all"; // ["all", "cam", "gear", "washer", "follower", "assembly", "rim_modifier"]
+part = "all"; // ["all", "cam", "gear", "washer", "follower", "assembly", "cam_rim_modifier", "gear_tooth_modifier", "gear_plug_modifier"]
 
 module assembled() {
     cam();
@@ -33,8 +35,12 @@ if (part == "cam") {
     follower_gear();
 } else if (part == "assembly") {
     assembled();
-} else if (part == "rim_modifier") {
-    rim_modifier();
+} else if (part == "cam_rim_modifier") {
+    cam_rim_modifier();
+} else if (part == "gear_tooth_modifier") {
+    gear_tooth_modifier();
+} else if (part == "gear_plug_modifier") {
+    gear_plug_modifier();
 } else {
     cam();
     translate([trough_d + 20, 0, 0]) cam_gear_printable();
