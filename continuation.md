@@ -54,5 +54,6 @@ Next steps for the shafts: user prints a test half, reports fit of the half teet
 - `washer_t`: gearbox wall to the underside of the OEM rim, not yet measured.
 - Stack check: washer + plate + hub + gear = 2 + 6.6 + 14 + 4.6 = 27.2 should equal OEM wall to gear top.
 - Print 2 of the cam and gear: outcome not yet reported.
+- Long drive shaft printed 2026-09-10: dowels align well, PVC cement joint solid, strong and somewhat flexible. Not yet tested in the device. Short shaft not yet printed.
 - Reduction gear pinion size unmeasured; only matters if those gears are printed.
 - Whether the dip on the long shaft needs its original depth (something may clip into it); currently 0.8 mm deep on the relieved body.

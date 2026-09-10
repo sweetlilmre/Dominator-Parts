@@ -82,3 +82,19 @@ Not yet printed. Config as committed after print 1 feedback.
 ## Slicing note
 
 How to make the contact regions solid without a fully solid part is written up in `SLICING.md`: Fill density 100 percent on the modifier meshes, a modest perimeter count on the object itself.
+
+## Long drive shaft, print 1, 2026-09-10
+
+Config as committed in 2283e47: two halves split through tooth centres, gear OD 12.45, root fillets 2, body relieved to 10 mm, single row of axis dowel holes at 4, 10, 20, 35, 60, 90, 120, 131, 145, 160, 173.
+
+Assembly: dowels of 1.75 mm filament, halves glued with PVC pipe cement.
+
+Observed:
+
+- Dowels align the halves very well.
+- Joint is solid; the finished shaft is strong and somewhat flexible.
+- Not yet tested in the cleaner.
+
+Slicer settings: not recorded, add if known.
+
+No config changes.
