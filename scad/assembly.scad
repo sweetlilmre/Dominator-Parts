@@ -7,6 +7,8 @@
 //   part = "washer"    spacer washer
 //   part = "reduction_gear"  optional gearbox reduction gear (ring as the gear, plus pinion)
 //   part = "assembly"  cam with the gear seated, for checking fit and height
+//   part = "shaft_long"   gearbox drive shaft, long
+//   part = "shaft_short"  gearbox drive shaft, short
 //   part = "cam_rim_modifier"    PrusaSlicer modifier: solid rim band on the cam
 //   part = "gear_tooth_modifier" PrusaSlicer modifier: solid tooth band on the gear
 //   part = "gear_plug_modifier"  PrusaSlicer modifier: solid plug on the gear
@@ -16,9 +18,10 @@ include <config.scad>
 include <cam.scad>
 include <cam_gear.scad>
 include <reduction_gear.scad>
+include <drive_shaft.scad>
 
 /* [Part selection] */
-part = "all"; // ["all", "cam", "gear", "washer", "reduction_gear", "assembly", "cam_rim_modifier", "gear_tooth_modifier", "gear_plug_modifier"]
+part = "all"; // ["all", "cam", "gear", "washer", "reduction_gear", "assembly", "shaft_long", "shaft_short", "cam_rim_modifier", "gear_tooth_modifier", "gear_plug_modifier"]
 
 module assembled() {
     cam();
@@ -33,6 +36,10 @@ if (part == "cam") {
     spacer_washer();
 } else if (part == "reduction_gear") {
     reduction_gear();
+} else if (part == "shaft_long") {
+    drive_shaft(ds_long);
+} else if (part == "shaft_short") {
+    drive_shaft(ds_short);
 } else if (part == "assembly") {
     assembled();
 } else if (part == "cam_rim_modifier") {

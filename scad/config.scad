@@ -121,6 +121,65 @@ rg_pinion_h = 5;
 rg_plate_d = 24;
 rg_plate_h = 1.5;
 
+/* [Drive shafts] */
+// Two gearbox drive shafts. Each is an 8 tooth pinion profile running the
+// full length, with round body sections, shallow-tooth (lobed) sections and
+// an optional arc groove. Designed to print as two lengthwise halves lying
+// flat and glued together, aligned by dowels, so the layers run along the shaft.
+// Gear tip diameter, both shafts. (owner: 12.4-12.5 by caliper)
+ds_gear_od = 12.45;
+// Plain body diameter.
+ds_body_d = 12.5;
+// Tooth thickness adjustment for the shaft pinions (mm, negative = fatter).
+ds_tooth_backlash = 0;
+// Length of the cone that eases each body end into the tooth roots. The
+// vertical print snapped exactly at this step; 0 = sharp step as the OEM.
+ds_step_fillet = 2;
+// Split into two halves for flat printing. false = one piece.
+ds_split = true;
+// Where the split plane passes through the pinion: "gaps" puts a tooth gap
+// on the glue line so each half has whole teeth and misalignment only
+// changes a gap width; "teeth" puts half teeth on the bed for a wider
+// footprint but the glue line runs through two teeth.
+ds_split_at = "teeth"; // ["gaps", "teeth"]
+// Optional steel rod channel down the centre. 0 = none (default: the halves
+// are aligned by dowels on the axis instead). A 3 mm rod matches the OEM's
+// 2.83 mm axial hole if you want the extra bending strength.
+ds_rod_d = 0;
+ds_rod_clearance = 0.2;
+// Dowel holes on the split face, for short pieces of 1.75 mm filament.
+ds_dowel_d = 1.75;
+ds_dowel_clearance = 0.25;
+ds_dowel_depth = 2.5;        // depth into each half
+// 0 = a single row of dowels on the axis, usable along the whole shaft
+// including the gear sections. > 0 = pairs at +x and -x (needs ds_rod_d = 0
+// or enough room beside the rod channel).
+ds_dowel_offset = 0;
+// Diameter the smooth body is turned down to in the "relief" regions, to
+// save print time and material. 0 = no relief.
+ds_relief_d = 10;
+// Fields per shaft: length, teeth, body [[z0,z1],...], lobed [[z0,z1],...],
+// lobe_core_d, groove [z_centre, width, depth, arc_r], dowels [z, ...],
+// relief [[z0,z1],...] (regions of body turned down to ds_relief_d).
+// Dowel positions: anywhere on the axis except inside the groove; put some
+// in each gear section so the teeth of the two halves line up.
+// Long shaft: 12 mm gear, body with an arc groove, 50 mm gear. Full diameter
+// is kept only for 4 mm beside each gear; the dip stays, cut into the relief.
+ds_long = [
+    ["length", 177], ["teeth", 8],
+    ["body", [[12, 127]]],
+    ["groove", [45, 10, 2.075, 10.3]],
+    ["relief", [[16, 123]]],
+    ["dowels", [4, 10, 20, 35, 60, 90, 120, 131, 145, 160, 173]]
+];
+// Short shaft: 18 mm gear, lobed 10 mm, body 18 mm, lobed 12 mm, 25 mm gear.
+ds_short = [
+    ["length", 83], ["teeth", 8],
+    ["body", [[28, 46]]],
+    ["lobed", [[18, 28], [46, 58]]], ["lobe_core_d", 9.7],
+    ["dowels", [4, 19, 34, 49, 64, 79]]
+];
+
 /* [Slicer modifiers] */
 // Modifier volumes for PrusaSlicer. Load each as a modifier on its part and
 // give it ONLY Fill density = 100 percent. Set the perimeter count on the

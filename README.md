@@ -19,6 +19,7 @@ The steel pin runs through the bore of all of them.
 | `scad/cam.scad` | Cam plate, lobe outline with leaning edges, shaft with socket, washer. |
 | `scad/cam_gear.scad` | Ring gear with the plug. |
 | `scad/reduction_gear.scad` | Optional: a gearbox reduction gear, ring identical to the gear plus a 12 T pinion. Pinion unmeasured. |
+| `scad/drive_shaft.scad` | The two gearbox drive shafts, long and short, as one parametric module. Presets `ds_long` and `ds_short` in the config. |
 | `scad/lib/involute_gear.scad` | Self contained involute spur gear library, no external dependencies. |
 | `render.ps1` | Exports every part to `stl/` using the OpenSCAD command line. |
 | `PRINT_LOG.md` | One entry per physical print: config used, what was observed, what changed. |
@@ -50,6 +51,27 @@ The steel pin runs through the bore of all of them.
 
 - Spline joint had play: `spline_clearance` reduced from 0.15 to 0.05. Next step if still loose is 0 or slightly negative.
 - Gear teeth thinner than the original: from the gear-side photo the OEM teeth are wider and shorter than a textbook involute. `gear_backlash` is now -0.2, `gear_dedendum` 1.0, and tip rounding is increased. Tooth count confirmed at 36 by the owner; a photo-based pitch estimate of 35 was wrong.
+
+## Drive shafts
+
+`stl/dominator_shaft_long.stl` and `stl/dominator_shaft_short.stl` are the two gearbox drive shafts, each exported as two identical lengthwise halves lying flat, ready to print. Each shaft is an 8 tooth involute pinion running its full length, with round body sections unioned over it, and on the short shaft two sections where the tooth roots are filled to 9.7 mm. The long shaft has a shallow arc dip centred 45 mm from its short-gear end.
+
+| | Long | Short |
+|---|---|---|
+| Length | 177 | 83 |
+| Gear tip diameter, module | 12.45, 1.245 | 12.45, 1.245 |
+| Gear lengths, A end / B end | 12 / 50 | 18 / 25 |
+| Body diameter | 12.5, relieved to 10 between the gear seats | 12.5 |
+
+Design choices, all parameters in the `[Drive shafts]` section of the config:
+
+- **Printed in halves, flat.** A one-piece vertical print snapped where the gear meets the body, because the layer lines lay across the shaft there. The halves print with the flat face down so the layers run along the shaft. `ds_split = false` gives the one-piece version.
+- **Split through tooth centres** (`ds_split_at = "teeth"`): each half has three whole teeth standing up and a half tooth lying flat on the bed at each side, so nothing overhangs. Splitting through the gaps left overhanging teeth that did not print.
+- **Root fillets** (`ds_step_fillet = 2`): a 2 mm cone eases each body end into the tooth roots instead of a square step.
+- **Dowel alignment**: a single row of holes on the axis, 2.5 mm deep, for pieces of 1.75 mm filament, at the positions in each shaft's `dowels` list, including inside the gear sections so the teeth of the two halves register. An optional steel rod channel (`ds_rod_d`) exists but is off.
+- **Body relief** (`ds_relief_d = 10`, `relief` list): the long shaft's smooth body is turned down between 4 mm seats at each gear to save print time. The dip is cut into the relieved body and is 0.8 mm deep there.
+
+Assembly: dry fit the halves with the dowels, then glue with CA or a thin layer of epoxy and clamp along the length. Print each half with 3 perimeters and 100 percent infill; they are small enough that a modifier is not worth the effort.
 
 ## Still to confirm
 

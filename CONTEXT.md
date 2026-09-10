@@ -46,6 +46,10 @@ _Avoid_: follower gear, compound gear, cam gear kit gear
 The small toothed wheel on top of a reduction gear that drives the next gear in the train.
 _Avoid_: small gear, spur
 
+**Drive shaft**:
+One of the two long gearbox shafts, long and short, that carry an 8 tooth pinion profile along their length and transfer drive to the wheels. Not part of the cam assembly.
+_Avoid_: drive gear, axle
+
 ### Spline joint
 
 **Spline**:
