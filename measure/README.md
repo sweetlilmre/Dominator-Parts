@@ -1,55 +1,44 @@
 # Measurement guide
 
-Open the four annotated photos in this folder. Each lettered callout is one value in `scad/config.scad`. Measure with calipers on your worn part and write the numbers next to the letter below, then copy them into the config.
+The cam is moulded with a version number on both faces. The owner has one of
+each, and the two differ, so the measurement sheets are kept apart:
 
-## 1_cam_top_view.png
+| Folder | Part |
+|---|---|
+| [`v1/`](v1/) | the cam stamped 1 |
+| [`v2/`](v2/) | the cam stamped 2 |
 
-| Letter | Parameter | What to measure | Value |
-|---|---|---|---|
-| A | `trough_d` | Diameter of the trough circle (orange), rim outside face to outside face where there is no lobe | |
-| C | `lobe_height` | How far a lobe sticks out past the trough circle | |
-| D | `hub_d` | Diameter of the centre plug the gear sits on | |
-| E | `shaft_d` | Bore diameter (or the steel shaft, whichever you can measure cleanly) | |
-| F | `cam_tray_inner_d` | Diameter of the raised centre plateau (the inner groove ring) | |
-| 1 to 5 | `lobes` | Start and end angle of each lobe (green). Traced from your straight-down photo: 15-65, 90-133, 168.5-209.5, 230-279.5, 305-354.5 degrees. Already in config. | done |
+Each folder holds annotated photos with lettered callouts and a README listing
+what each letter means and what is still to be measured. Every callout names a
+parameter in `scad/config.scad` using the vocabulary in `CONTEXT.md`.
 
-The sheet is now built from your own photo (`reference/own_cam_top.jpg`), scaled by your 71 mm rim reading. The trace gives a lobe height of 3.9 mm against your 4, and a bore of 6.2 mm. Items B, D and F from the earlier sheet are gone with the flat style.
+## What differs between the versions
 
-## 5_bump_edge_lean.png
+Only two parameters, both on the cam plate:
 
-Zoom on lobe 2 with radial reference lines. The edge faces are straight but not radial: seen from above with 0 degrees to the right, the clockwise edge of each lobe (its start angle) leans about 21 degrees toward the middle of the lobe as it goes outward, and the counter-clockwise edge (end angle) leans about 9 degrees the same way. All five lobes agree within a degree. These are `ramp_lean` and `drop_lean` in the config; the `lobes` angles are taken at mid-height so the lean pivots about that point.
+| | v1 | v2 |
+|---|---|---|
+| `lobe_height` | 4 mm | 5 mm |
+| `lobes` | 20.2-70.1, 90.4-131.5, 164-210, 235-284.9, 305.5-355 | 15-65, 90-133, 168.5-209.5, 230-279.5, 305-354.5 |
 
-The photo turned out to be of the non-gear side: held gear side up, the owner sees the ramp face on the counter-clockwise side. The model therefore mirrors the whole traced outline (`cam_mirror = true`), which flips both the lobe sequence and the leans together. The traced angles and leans in the config are still the photo's values.
+Everything else measured so far reads the same on both: trough circle 71 mm,
+plate 6.6 mm, hub 22 x 14 mm, gear 36 T at 47 mm, bore for a 6.0 mm pin.
 
-## 2_cam_side_view.png
+## How the traces were made
 
-| Letter | Parameter | What to measure | Value |
-|---|---|---|---|
-| G | `gear_od` | Gear diameter tip to tip, take the biggest of a few readings | |
-| H | `gear_thickness` | Gear face width (have 4.6) | done |
-| I | `hub_h` | Hub height, top of the OEM rim to the underside of the gear (have 10) | done |
-| J | not used | Flat plate design: the rim height is covered by `plate_t` | |
-| K | `plate_t` | Plate thickness: OEM rim bottom edge to rim top edge (have 6.6) | done |
-| L | not used | No rim wall in the flat design | |
-| M | (check) | Total height, rim bottom to gear top. Should equal K + I + H = 21.2 | |
-| | `gear_teeth` | 36 counted | done |
-| | `washer_t` | Gearbox wall to the underside of the OEM rim | |
+The outline is segmented from the owner's straight-down photograph, sampled as
+a radius-versus-angle profile about the part's centroid, and scaled by the
+cutting-mat grid anchored to the trough circle read off the ruler photograph.
 
-## 3_reduction_gear.png (only if you also print the reduction gears)
+Two cautions learned the hard way:
 
-| Letter | Parameter | What to measure | Value |
-|---|---|---|---|
-| N | ring | Same as the gear, taken from `gear_od` | done |
-| O | `rg_pinion_od` | Small pinion diameter tip to tip | |
-| P | `rg_plate_d` | Raised plate diameter | |
-| Q | `rg_plate_h`, `rg_pinion_h` | Thickness of plate and pinion, measured on the edge; ring thickness is `gear_thickness` | |
-| | `rg_pinion_teeth` | Count the pinion teeth (photo: 11 or 12); ring is 36 like the gear | |
+- **Parallax.** A ruler resting on the part sits about 12 mm closer to the lens
+  than the mat it lies on, which magnifies it by roughly 4 percent at phone
+  range. Scale from a feature in the same plane as the thing being measured.
+- **EXIF rotation.** Some of the photographs carry an orientation flag. Image
+  libraries that ignore it read the array unrotated, which silently rotates
+  every angle measured from it.
 
-## 4_cam_underside.png
-
-Not needed any more: the flat design has a flat underside and a washer sets the spacing. Kept for reference only.
-
-## Not in the photos but worth checking
-
-- The direction the cam turns in the gearbox, and which face of each lobe the pawl or follower rides against. That decides whether the lobes need a sharp edge on one side.
-- Whether the gear is moulded as one piece with the cam (the model can do either).
+Running this pipeline over the v2 photograph reproduces the v2 lobe widths
+already in the config to within 1.5 degrees. That is the accuracy these traced
+angles should be trusted to; anything finer needs calipers.

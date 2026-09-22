@@ -79,6 +79,28 @@ Parameters were renamed to match the glossary in `CONTEXT.md`. Shape verified id
 
 Not yet printed. Config as committed after print 1 feedback.
 
+## Spline fit test coupon, 2026-09-22
+
+`part = "fit_test"`, printed at the spline as it now stands: 11 teeth, 16 mm
+tip to tip, `spline_addendum` / `spline_dedendum` 0.9. Four sockets at
+`spline_clearance` 0, 0.05, 0.10 and 0.15 with loose plugs at nominal.
+
+Observed:
+
+- **0.15 is the best fit.**
+
+Changes made:
+
+- `spline_clearance` 0.05 to 0.15.
+
+Open question: print 1 used 0.15 and was reported as having play. The two
+disagree. The differences between them are the spline size (12 T / 14 mm then,
+11 T / 16 mm now), the printer settings (print 1 was PETG, 0.2 mm layers, 2
+perimeters, 15 percent infill; the coupon's settings are not recorded), and the
+part geometry the joint was printed as part of (a 47 mm gear and a 71 mm cam
+then, small pucks now). Which of those accounts for it is not known. The real
+parts should be printed and checked before the 0.15 is trusted for good.
+
 ## Slicing note
 
 How to make the contact regions solid without a fully solid part is written up in `SLICING.md`: Fill density 100 percent on the modifier meshes, a modest perimeter count on the object itself.

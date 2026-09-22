@@ -14,6 +14,10 @@ _Avoid_: cam kit, steering cam
 The flat lobed part that the follower runs on, with its hub. The part that wears.
 _Avoid_: cam plate, cam disc, tray
 
+**Cam version**:
+Which moulding of the cam a part or measurement refers to, taken from the number stamped on both faces. v1 and v2 differ in the lobe pattern and the lobe height only. Selected by `cam_version`.
+_Avoid_: revision, mark, type, generation
+
 **Plate**:
 The flat body of the cam from which the lobes and hub rise.
 _Avoid_: floor, disc

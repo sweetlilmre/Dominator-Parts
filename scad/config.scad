@@ -8,30 +8,59 @@
 // The steel pin runs through the bore of both.
 //
 // Sources: (owner) caliper readings on the worn part, (trace) measured from
-// the owner's straight-down photo reference/own_cam_top.jpg scaled to the
-// 71 mm rim, (TV) Thingiverse remake thing:6097557, (est) still an estimate.
+// the owner's straight-down photo reference/cam_v2/own_cam_top_v2.jpg scaled to the
+// 71 mm rim, (est) still an estimate.
 
 include <lib/involute_gear.scad>
 
 /* [Steel pin and bore] */
-// Diameter of the steel pin the cam spins on. Owner measured the OEM bore at
-// 6.3, so the pin is likely a touch under that; 6.3 plus clearance is safe. (owner)
-pin_d = 6.30;
+// Diameter of the steel pin the cam spins on. (owner) An earlier reading of
+// the worn OEM bore gave 6.3; the v1 photo traces read it at 6.1 to 6.4. The
+// pin itself is 6.00. The printed bore is pin + clearance.
+pin_d = 6.00;
 // Extra diameter so the cam spins freely on the pin. 0.3-0.4 typical for FDM.
 bore_clearance = 0.4;
 bore_d = pin_d + bore_clearance;
+
+/* [Cam version] */
+// The cam is moulded with a version number on both faces. The two versions
+// share every dimension measured so far except the lobe pattern and the lobe
+// height, so only those two are switched below. (owner)
+cam_version = "v1"; // ["v1", "v2"]
+// The OEM cam carries its number moulded into both faces. The printed cam
+// engraves the same digit, taken from cam_version, so a printed part can be
+// told apart from the other version once it is off the bed. 0 = no mark.
+cam_version_number_size = 8;
+// How deep the digit is cut into each face.
+cam_version_number_depth = 0.5;
+// Where the digit sits: radius from the centre, and angle around the plate.
+// Must clear the hub and stay inside the trough circle.
+cam_version_number_r = 22;
+cam_version_number_angle = 270;
 
 /* [Cam plate] */
 // Diameter of the trough circle of the rim, not across the lobes. (owner)
 trough_d = 71;
 // Plate thickness. This is the height of the lobe face the follower runs on. (owner)
 plate_t = 6.6;
-// How far each lobe protrudes beyond the trough circle. (owner 4, trace 3.9)
-lobe_height = 5;
+// How far each lobe protrudes beyond the trough circle, per version.
+// (owner; v1 trace 4.15, v2 trace 4.5)
+v1_lobe_height = 4;
+v2_lobe_height = 5;
 // Lobes as [start_deg, end_deg] at mid-height of the lobe, counter-clockwise
-// seen from the gear side, 0 deg = +X. (trace) An optional third value
-// overrides lobe_height for that lobe.
-lobes = [ [15, 65], [90, 133], [168.5, 209.5], [230, 279.5], [305, 354.5] ];
+// seen from the gear side, 0 deg = +X. An optional third value overrides
+// lobe_height for that lobe.
+// v1 (trace) measured from reference/cam_v1/own_cam_top_v1.jpg, scaled by the
+// cutting-mat grid and anchored to the 71.5 mm trough circle read off
+// reference/cam_v1/own_cam_top_ruler_v1.jpg.
+v1_lobes = [ [20.2, 70.1], [90.4, 131.5], [164, 210], [235, 284.9], [305.5, 355] ];
+// v2 (trace) from reference/cam_v2/own_cam_top_v2.jpg. Re-measuring that photo
+// with the v1 pipeline reproduces these widths to within 1.5 deg.
+v2_lobes = [ [15, 65], [90, 133], [168.5, 209.5], [230, 279.5], [305, 354.5] ];
+// The two differ in the narrow pair of lobes (v1 41.1 and 46.0 deg wide
+// against v2 43 and 41) and in the largest trough (v1 32.5, v2 35.5 deg).
+lobes       = cam_version == "v1" ? v1_lobes : v2_lobes;
+lobe_height = cam_version == "v1" ? v1_lobe_height : v2_lobe_height;
 // Rotate the whole lobe pattern (deg). Cosmetic, the gear is round.
 lobe_rot = 0;
 // Mirror the whole outline (lobe order and edge leans together). The photo
@@ -60,10 +89,17 @@ hub_h = 14;
 // of the hub has a matching socket. The plug is an involute
 // pinion profile. The gear seats on the flat shoulder of the hub around the
 // socket, so the teeth only carry torque and do not locate the gear.
-spline_teeth = 12;
-// Tip to tip diameter of the spline. (TV pinion 14.4) Must be < hub_d, and
+// Not an OEM dimension: the OEM gear and cam mate differently, so the spline
+// is free design. (design) Sized to match the reduction gear pinion at
+// 11 T / 16 mm so the project has one small tooth size rather than two nearly
+// identical ones. Deliberately a SEPARATE parameter from rg_pinion_teeth /
+// rg_pinion_od even though the values agree: the pinion is constrained by its
+// mesh with the cam gear, this is constrained by the hub wall and by the press
+// fit, and a change made for one must not silently alter the other.
+spline_teeth = 11;
+// Tip to tip diameter of the spline. Must be < hub_d, and
 // leave at least 1.3 mm of wall between the bore and the tooth roots.
-spline_od = 14;
+spline_od = 16;
 // Tooth depth factors for the spline. Shallower than a real gear so the core
 // stays thick around the bore.
 spline_addendum = 0.9;
@@ -73,10 +109,14 @@ plug_h = 5;
 // The socket is this much deeper than the plug so the gear seats on the
 // shoulder, not on the plug end.
 socket_extra = 0.3;
-// Radial clearance added to the socket. First print at 0.15 had play between
-// the plug teeth and the socket; 0.05 next. Go to 0 or slightly negative if
-// still loose, since FDM tends to shrink holes and grow posts anyway.
-spline_clearance = 0.05;
+// The whole of the joint's tolerance, applied as offset(delta = clearance) on
+// the socket profile, so it is the gap normal to every flank, root and tip.
+// It does not scale with tooth count or diameter.
+// Set from the fit test coupon (part = "fit_test"): 0.15 gripped best on the
+// owner's printer. Note this is the value print 1 used and reported as having
+// play, at the older 12 T / 14 mm spline and on unrecorded slicer settings;
+// the coupon is the better evidence but the disagreement is not explained.
+spline_clearance = 0.15;
 // Chamfer on the plug end to help it start into the socket (mm).
 spline_lead_in = 0.6;
 
@@ -90,7 +130,7 @@ gear_module = gear_module_from_od(gear_od, gear_teeth);
 gear_thickness = 4.6;
 gear_pressure_angle = 20;
 // Backlash removed per tooth (mm). Negative makes the teeth fatter. Measured
-// on the owner's gear-side photo (reference/own_gear_side.jpg) the OEM teeth
+// on the owner's gear-side photo (reference/cam_v2/own_gear_side_v2.jpg) the OEM teeth
 // are about 0.1 of the pitch wider than a textbook involute at every depth,
 // i.e. roughly 0.3 mm, though photo bloom inflates that a little. -0.2 is
 // the estimate after allowing for bloom. If the mesh binds, move toward 0.
@@ -111,11 +151,22 @@ washer_t = 2;
 washer_od = 16;
 
 /* [Reduction gear (optional)] */
-// One of the gearbox reduction gears: a ring identical to the cam gear with a
-// pinion on top. Ring teeth, diameter and thickness are taken from the gear
-// so the two cannot drift apart. Pinion values are unmeasured. (est)
-rg_pinion_teeth = 12;      // photo 11-12
-rg_pinion_od = 14.4;       // TV
+// One of the gearbox reduction gears: a ring plus a pinion on top. It is a
+// different part from the cam gear and owns its ring dimensions outright.
+// They happen to read the same today, but nothing forces them to move
+// together: changing the cam gear must not silently reshape this part.
+rg_ring_teeth = 36;        // (owner) same count as the cam gear, measured separately
+rg_ring_od = 47;           // (owner)
+rg_ring_thickness = 4.6;   // (owner)
+rg_ring_module = gear_module_from_od(rg_ring_od, rg_ring_teeth);
+// The pinion drives the cam gear, so its module must match the cam gear's.
+// That is a mesh constraint, not a shared parameter: the value is set here and
+// assembly.scad echoes a warning if the two modules drift apart.
+// At 11 T / 16 mm the module is 1.2308 against the cam gear's 1.2368, a 0.5
+// percent match. The earlier 12 T / 14.4 estimate was 17 percent out and
+// could not have meshed at all.
+rg_pinion_teeth = 11;      // (owner) counted; the photo suggested 11-12
+rg_pinion_od = 16;         // (owner) across the tips
 rg_pinion_h = 5;
 // Raised plate between ring and pinion. 0 height = none. Real outline unknown.
 rg_plate_d = 24;

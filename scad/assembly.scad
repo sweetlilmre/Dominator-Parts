@@ -12,6 +12,7 @@
 //   part = "cam_rim_modifier"    PrusaSlicer modifier: solid rim band on the cam
 //   part = "gear_tooth_modifier" PrusaSlicer modifier: solid tooth band on the gear
 //   part = "gear_plug_modifier"  PrusaSlicer modifier: solid plug on the gear
+//   part = "fit_test"  coupon: sockets at several clearances plus loose plugs
 //   part = "all"       everything laid out
 INVOLUTE_GEAR_NO_DEMO = true;
 include <config.scad>
@@ -19,9 +20,10 @@ include <cam.scad>
 include <cam_gear.scad>
 include <reduction_gear.scad>
 include <drive_shaft.scad>
+include <fit_test.scad>
 
 /* [Part selection] */
-part = "all"; // ["all", "cam", "gear", "washer", "reduction_gear", "assembly", "shaft_long", "shaft_short", "cam_rim_modifier", "gear_tooth_modifier", "gear_plug_modifier"]
+part = "all"; // ["all", "cam", "gear", "washer", "reduction_gear", "assembly", "shaft_long", "shaft_short", "fit_test", "cam_rim_modifier", "gear_tooth_modifier", "gear_plug_modifier"]
 
 module assembled() {
     cam();
@@ -40,6 +42,8 @@ if (part == "cam") {
     drive_shaft(ds_long);
 } else if (part == "shaft_short") {
     drive_shaft(ds_short);
+} else if (part == "fit_test") {
+    fit_test();
 } else if (part == "assembly") {
     assembled();
 } else if (part == "cam_rim_modifier") {
@@ -64,3 +68,12 @@ echo(str("stack: washer ", washer_t, " + plate ", plate_t, " + shaft ", hub_h, "
 echo(str("cam outer span = ", trough_d + 2 * lobe_height, " mm; spline root dia = ",
          2 * gear_root_radius(spline_teeth, gear_module_from_od(spline_od, spline_teeth, spline_addendum), spline_dedendum),
          " mm vs bore ", bore_d, " mm"));
+echo(str("cam version = ", cam_version, ": lobe height ", lobe_height,
+         " mm, ", len(lobes), " lobes"));
+
+// The reduction gear's pinion drives the cam gear, so the two must share a
+// module. They are separate parameters on purpose; this is the guard rail.
+_mesh_err = abs(rg_pinion_module / gear_module - 1) * 100;
+echo(str("mesh check: pinion module ", rg_pinion_module, " vs cam gear ", gear_module,
+         " = ", _mesh_err, " percent",
+         _mesh_err > 2 ? "  *** WARNING: these will not mesh, check rg_pinion_od / rg_pinion_teeth ***" : " (ok)"));

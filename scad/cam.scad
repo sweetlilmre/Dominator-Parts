@@ -74,14 +74,44 @@ module plug(h) {
     }
 }
 
+// The socket as a cutting solid, standing on z = 0 and open upward. Split out
+// so the fit test coupon cuts the same geometry the cam does, at a clearance
+// of its choosing, rather than a copy that could drift.
+module socket_cut(clearance = spline_clearance) {
+    linear_extrude(plug_h + socket_extra + 1) spline_2d(clearance);
+}
+
 // Toothed socket cut into the top of the hub, grown by the clearance.
 module socket() {
     depth = plug_h + socket_extra;
-    translate([0, 0, plate_t + hub_h - depth]) linear_extrude(depth + 1) spline_2d(spline_clearance);
+    translate([0, 0, plate_t + hub_h - depth]) socket_cut();
 }
 
 // Z of the gear underside above the cam bottom (the hub shoulder).
 function shoulder_z() = plate_t + hub_h;
+
+// The moulding number, cut into both faces of the plate as the OEM cam
+// carries it. The digit comes from cam_version, so "v1" marks a 1. Engraved
+// rather than raised: the cam side prints against the bed, where a raised
+// character cannot go, and a recess on the gear side cannot foul the gear.
+module version_mark() {
+    if (cam_version_number_size > 0) {
+        digit = cam_version[1];
+        p = _pol(cam_version_number_angle, cam_version_number_r);
+        // gear side, into the top of the plate
+        translate([0, 0, plate_t - cam_version_number_depth])
+            linear_extrude(cam_version_number_depth + eps)
+                translate(p)
+                    text(digit, size = cam_version_number_size, halign = "center", valign = "center");
+        // cam side, into the underside, mirrored so it reads the right way
+        // round when the part is turned over
+        translate([0, 0, -eps])
+            linear_extrude(cam_version_number_depth + eps)
+                translate(p)
+                    mirror([1, 0, 0])
+                        text(digit, size = cam_version_number_size, halign = "center", valign = "center");
+    }
+}
 
 module cam() {
     difference() {
@@ -90,6 +120,7 @@ module cam() {
             cylinder(h = plate_t + hub_h, d = hub_d);
         }
         socket();
+        version_mark();
         translate([0, 0, -1]) cylinder(h = plate_t + hub_h + 2, d = bore_d, $fn = 64);
     }
 }
@@ -97,10 +128,14 @@ module cam() {
 // Slicer modifier volume for the cam: a ring covering the rim band of the
 // plate, from rim_band inside the trough circle to just outside the crests,
 // slightly taller than the plate so it covers the top and bottom layers too.
+// Sized from the taller of the two versions' lobes so ONE modifier serves both
+// cams. On the shorter one the ring simply reaches past the crests, which does
+// not matter: a modifier only has to cover the region, not match its outline.
 module cam_rim_modifier() {
+    rim_lobe_h = max(v1_lobe_height, v2_lobe_height);
     translate([0, 0, -0.5])
         difference() {
-            cylinder(h = plate_t + 1, r = trough_d / 2 + lobe_height + 2);
+            cylinder(h = plate_t + 1, r = trough_d / 2 + rim_lobe_h + 2);
             translate([0, 0, -1]) cylinder(h = plate_t + 3, r = trough_d / 2 - rim_band);
         }
 }
