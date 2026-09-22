@@ -16,11 +16,6 @@ rim reading.
 | E | `pin_d` | Bore, or the steel pin if you can measure it cleanly | photo reads 6.2, pin set 6.0 |
 | 1 to 5 | `v2_lobes` | Start and end angle of each lobe, at mid-height | done, see below |
 
-The callout letters on the image predate the `CONTEXT.md` glossary and still
-read `cam_od`, `cam_ear_out`, `shaft_d` and `cam_bumps`. Those are now
-`trough_d`, `lobe_height`, `pin_d` and `lobes`. The image has not been
-regenerated.
-
 Lobe angles, counter-clockwise, 0 degrees to the right:
 
 | Lobe | Start | End | Width | Trough after it |

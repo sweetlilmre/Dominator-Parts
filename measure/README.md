@@ -5,8 +5,8 @@ each, and the two differ, so the measurement sheets are kept apart:
 
 | Folder | Part |
 |---|---|
-| [`v1/`](v1/) | the cam stamped 1 |
-| [`v2/`](v2/) | the cam stamped 2 |
+| [`cam_v1/`](cam_v1/) | the cam stamped 1 |
+| [`cam_v2/`](cam_v2/) | the cam stamped 2 |
 
 Each folder holds annotated photos with lettered callouts and a README listing
 what each letter means and what is still to be measured. Every callout names a

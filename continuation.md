@@ -6,7 +6,7 @@ State of the Dominator parts project as of 2026-09-22, written so a fresh sessio
 
 Parametric OpenSCAD replacements for wearing parts of a Kreepy Krauly Dominator pool cleaner gearbox. Owner: Peter. Remote: GitHub `sweetlilmre/Dominator-Parts`. Work is on branch `cam_alt_version`. Commit messages end with a `Co-authored-by` trailer.
 
-Files: `scad/assembly.scad` is the entry point (Customizer `part` and `cam_version` selectors), `scad/config.scad` holds every parameter with a source tag, `scad/lib/involute_gear.scad` is a dependency-free involute gear library. `render.ps1` exports STLs, `render_previews.ps1` regenerates the PNGs in `renders/`. `PRINT_LOG.md` records each physical print. `SLICING.md` explains perimeters versus infill and the modifier meshes. `measure/v1/` and `measure/v2/` hold the annotated measurement sheets. `reference/cam_v1/` and `reference/cam_v2/` hold the owner's photographs, and are tracked.
+Files: `scad/assembly.scad` is the entry point (Customizer `part` and `cam_version` selectors), `scad/config.scad` holds every parameter with a source tag, `scad/lib/involute_gear.scad` is a dependency-free involute gear library. `render.ps1` exports STLs, `render_previews.ps1` regenerates the PNGs in `renders/`. `PRINT_LOG.md` records each physical print. `SLICING.md` explains perimeters versus infill and the modifier meshes. `measure/cam_v1/` and `measure/cam_v2/` hold the annotated measurement sheets. `reference/cam_v1/` and `reference/cam_v2/` hold the owner's photographs, and are tracked.
 
 OpenSCAD 2021.01 is at `C:\Program Files\OpenSCAD\openscad.com`. Use the `.com`, not the `.exe`: the `.exe` is the GUI build and detaches without rendering.
 
@@ -33,7 +33,7 @@ The printed cam engraves its version digit 0.5 mm into both faces, as the OEM mo
 - **Washer** 2 x 16. Pin 6.0, bore clearance 0.4, bore 6.4.
 - **Reduction gear**: owns its ring dimensions (`rg_ring_*`, 36 T at 47, 4.6 thick) rather than borrowing the cam gear's. Pinion measured at 11 T / 16 mm.
 - **Drive shafts**: unchanged since 2026-09-10.
-- **Fit test coupon** (`part = "fit_test"`): sockets at several clearances with loose plugs, for finding the press fit without reprinting the real parts.
+- **Fit test coupon** (`part = "fit_test"`): a plate of sockets at several clearances, pressed onto a printed gear's plug to find the fit without reprinting the cam.
 
 ## Decisions worth not relitigating
 
