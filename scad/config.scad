@@ -112,11 +112,11 @@ socket_extra = 0.3;
 // The whole of the joint's tolerance, applied as offset(delta = clearance) on
 // the socket profile, so it is the gap normal to every flank, root and tip.
 // It does not scale with tooth count or diameter.
-// Set from the fit test coupon (part = "fit_test"): 0.15 gripped best on the
-// owner's printer. Note this is the value print 1 used and reported as having
-// play, at the older 12 T / 14 mm spline and on unrecorded slicer settings;
-// the coupon is the better evidence but the disagreement is not explained.
-spline_clearance = 0.15;
+// Printer dependent. On the owner's printer print 1 (12 T / 14 mm spline) had
+// play at 0.15, so 0.05 is used here, now under test at 11 T / 16 mm. The fit
+// test coupon (part = "fit_test") gripped best at 0.15 on a contributor's
+// printer; other printers should run the coupon and set their own value.
+spline_clearance = 0.05;
 // Chamfer on the plug end to help it start into the socket (mm).
 spline_lead_in = 0.6;
 
