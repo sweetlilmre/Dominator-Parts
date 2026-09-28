@@ -140,6 +140,17 @@ module cam_rim_modifier() {
         }
 }
 
+// Slicer modifier volume for the cam socket: a cylinder over the whole hub
+// width, from socket_band below the socket floor to just above the hub top,
+// so the hub wall around the socket teeth and the floor under the plug are
+// solid. Version independent: the hub is the same on both cams.
+module cam_socket_modifier() {
+    depth = plug_h + socket_extra;
+    z0 = shoulder_z() - depth - socket_band;
+    translate([0, 0, z0])
+        cylinder(h = depth + socket_band + 0.5, r = hub_d / 2 + 1);
+}
+
 // Spacer washer.
 module spacer_washer() {
     if (washer_t > 0)

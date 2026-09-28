@@ -24,7 +24,7 @@ Put them in different places:
 
 | Part | Object setting | Modifier | Modifier setting |
 |---|---|---|---|
-| cam | Perimeters 3 | `stl/dominator_cam_rim_modifier.stl` | Fill density 100 percent |
+| cam | Perimeters 3 | `stl/dominator_cam_rim_modifier.stl` and `stl/dominator_cam_socket_modifier.stl` | Fill density 100 percent |
 | gear | Perimeters 3 | `stl/dominator_gear_tooth_modifier.stl` and `stl/dominator_gear_plug_modifier.stl` | Fill density 100 percent |
 | washer | Perimeters 3, 100 percent infill globally | none | |
 
@@ -43,14 +43,15 @@ Other settings worth using:
 2. Right click the part in the object list, Add settings, Layers and perimeters, set Perimeters.
 3. Right click the part, Add modifier, Load, pick the modifier STL. It is exported on the same origin and in the same orientation as the part, so it lands in place. Do not move or scale it.
 4. Right click the modifier, Add settings, Infill, set Fill density to 100 percent. Add nothing else to the modifier.
-5. Repeat 3 and 4 for the second gear modifier.
-6. Slice and check the preview: the rim band, teeth and plug should show solid infill, the rest of the plate your global infill, and there should be no ring of perimeters at the modifier's inner edge.
+5. Repeat 3 and 4 for the second modifier on each part.
+6. Slice and check the preview: the rim band, hub around the socket, teeth and plug should show solid infill, the rest of the plate your global infill, and there should be no ring of perimeters at the modifier's inner edge.
 
 ## What the modifiers cover
 
 | Modifier | Covers | Config value |
 |---|---|---|
 | `dominator_cam_rim_modifier` | outer band of the plate from 8 mm inside the trough circle to beyond the crests, plus half a millimetre above and below the plate | `rim_band` |
+| `dominator_cam_socket_modifier` | the whole hub width from 1.5 mm below the socket floor to above the hub top, so the socket walls and floor are solid; one file fits either version | `socket_band` |
 | `dominator_gear_tooth_modifier` | the teeth and 4 mm inside the root circle, full gear thickness | `gear_band` |
 | `dominator_gear_plug_modifier` | the plug and the gear body directly under it | |
 

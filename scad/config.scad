@@ -240,6 +240,8 @@ ds_short = [
 rim_band = 8;
 // Radial depth of the gear tooth band, inward from the gear root circle.
 gear_band = 4;
+// How far the cam socket modifier reaches below the socket floor.
+socket_band = 1.5;
 
 /* [Rendering] */
 $fn = 96;

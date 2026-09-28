@@ -166,7 +166,7 @@ the printing errors of its own geometry and orientation with it. Edit
 
 ## Printing
 
-- Cam: plate down, hub up, no supports. Set Perimeters = 3 on the object and load `stl/dominator_cam_rim_modifier.stl` (one file, it fits either version) as a modifier with only Fill density = 100 percent, so the lobes and troughs are solid. Full reasoning and steps in `SLICING.md`.
+- Cam: plate down, hub up, no supports. Set Perimeters = 3 on the object and load `stl/dominator_cam_rim_modifier.stl` and `stl/dominator_cam_socket_modifier.stl` (each one file, fits either version) as modifiers with only Fill density = 100 percent, so the lobes, troughs and socket walls are solid. Full reasoning and steps in `SLICING.md`.
 - Gear: flat side down, plug up, as exported. No supports. Perimeters = 3 on the object; load `stl/dominator_gear_tooth_modifier.stl` and `stl/dominator_gear_plug_modifier.stl` as modifiers with Fill density = 100 percent. 0.12 to 0.2 mm layers, 0.4 mm nozzle. See `SLICING.md`.
 - Washer: flat.
 - Material: PETG, ASA or nylon. PLA goes soft in a hot pool box.
