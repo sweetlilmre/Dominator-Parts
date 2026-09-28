@@ -77,14 +77,14 @@ Parameters were renamed to match the glossary in `CONTEXT.md`. Shape verified id
 
 ## Print 2, 2026-09-28
 
-Cam v1 and gear as committed in 5ddb780, to test `spline_clearance = 0.05` on the owner's printer at the current spline (11 teeth, 16 mm tip to tip) and to check tooth solidity.
+Cam v2 and gear. Meant to test `spline_clearance = 0.05` on the owner's printer, but the cam was sliced from `stl/dominator_cam_v2.stl` before it was re-exported in 9c4f0b4, so it is the export from 120f812 with the socket cut at 0.15. The gear is from 5ddb780; its plug is nominal and does not depend on the clearance. So this print tests 0.15 on the owner's printer at the current spline (11 teeth, 16 mm tip to tip), and checks tooth solidity.
 
 | Parameter | Value |
 |---|---|
-| `cam_version` | v1 (lobe height 4) |
+| `cam_version` | v2 (lobe height 5) |
 | `pin_d` / `bore_clearance` | 6.00 / 0.4 (bore 6.4) |
 | `spline_teeth` / `spline_od` | 11 / 16 |
-| `spline_clearance` | 0.05 |
+| `spline_clearance` | 0.15 in the printed socket (config at the time said 0.05) |
 
 Slicer settings: Prusa MK4, PETG, 6 perimeters.
 
