@@ -36,6 +36,18 @@ if (-not $openscad) {
     exit 1
 }
 
+# Builds a -D assignment of an OpenSCAD string, e.g. part="cam". Windows
+# PowerShell 5.1 and pwsh before 7.3 pass arguments to native programs raw,
+# so the quotes must be backslash-escaped to reach OpenSCAD. pwsh 7.3+
+# (PSNativeCommandArgumentPassing = Windows or Standard) escapes them itself,
+# and a pre-escaped \" arrives literally and breaks the parse.
+function Format-ScadString([string]$name, [string]$value) {
+    $legacy = -not (Test-Path variable:PSNativeCommandArgumentPassing) -or
+        $PSNativeCommandArgumentPassing -eq "Legacy"
+    if ($legacy) { return "$name=\`"$value\`"" }
+    return "$name=`"$value`""
+}
+
 $root = Split-Path -Parent $MyInvocation.MyCommand.Path
 New-Item -ItemType Directory -Force (Join-Path $root "stl") | Out-Null
 $failed = @()
@@ -46,7 +58,7 @@ foreach ($p in $Parts) {
     # The inner quotes must survive PowerShell's native-argument handling, or
     # OpenSCAD sees an undefined variable, warns, and falls through to the
     # "all parts" branch - producing a wrong STL with no visible error.
-    & $openscad -o $out -D "part=\`"$p\`"" -D "cam_version=\`"$CamVersion\`"" (Join-Path $root "scad\assembly.scad")
+    & $openscad -o $out -D (Format-ScadString "part" $p) -D (Format-ScadString "cam_version" $CamVersion) (Join-Path $root "scad\assembly.scad")
     if ($LASTEXITCODE -ne 0) { $failed += $p }
 }
 if ($failed.Count -gt 0) {

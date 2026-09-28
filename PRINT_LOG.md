@@ -75,9 +75,20 @@ Parameters were renamed to match the glossary in `CONTEXT.md`. Shape verified id
 | `spline_boss_h` | `plug_h` |
 | `spline_pocket_extra` | `socket_extra` |
 
-## Print 2
+## Print 2, 2026-09-28
 
-Not yet printed. Config as committed after print 1 feedback.
+Cam v1 and gear as committed in 5ddb780, to test `spline_clearance = 0.05` on the owner's printer at the current spline (11 teeth, 16 mm tip to tip) and to check tooth solidity.
+
+| Parameter | Value |
+|---|---|
+| `cam_version` | v1 (lobe height 4) |
+| `pin_d` / `bore_clearance` | 6.00 / 0.4 (bore 6.4) |
+| `spline_teeth` / `spline_od` | 11 / 16 |
+| `spline_clearance` | 0.05 |
+
+Slicer settings: Prusa MK4, PETG, 6 perimeters.
+
+Observed: in progress.
 
 ## Spline fit test coupon, 2026-09-22
 
@@ -85,13 +96,15 @@ Not yet printed. Config as committed after print 1 feedback.
 tip to tip, `spline_addendum` / `spline_dedendum` 0.9. Four sockets at
 `spline_clearance` 0, 0.05, 0.10 and 0.15 with loose plugs at nominal.
 
+Printed on a contributor's printer, not the owner's; settings not recorded.
+
 Observed:
 
-- **0.15 is the best fit.**
+- **0.15 is the best fit** on that printer.
 
 Changes made:
 
-- `spline_clearance` 0.05 to 0.15.
+- `spline_clearance` 0.05 to 0.15, later reverted to 0.05 for the owner's printer (see print 2).
 
 Open question: print 1 used 0.15 and was reported as having play. The two
 disagree. The differences between them are the spline size (12 T / 14 mm then,
