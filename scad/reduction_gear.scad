@@ -1,5 +1,5 @@
-// reduction_gear.scad - one of the gearbox reduction gears (kit 360295
-// style): a ring, a raised plate, a small pinion on top, through bore. The
+// reduction_gear.scad - one of the gearbox reduction gears: a ring, a
+// raised plate, a small pinion on top, through bore. The
 // ring reads the same as the cam gear today but is a separate part and takes
 // its dimensions from the rg_ring_* parameters, so editing the cam gear does
 // not reshape this one. The pinion must still mesh with the cam gear, which

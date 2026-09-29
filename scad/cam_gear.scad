@@ -26,13 +26,18 @@ module cam_gear_printable() {
 
 // Slicer modifier volumes for the gear, in the printable orientation.
 // Tooth band: ring from gear_band inside the root circle to outside the tips.
+// It also serves the reduction gear ring, which is dimensioned separately, so
+// it spans the smaller root, the larger tip and the thicker of the two.
 module gear_tooth_modifier() {
-    rr = gear_root_radius(gear_teeth, gear_module, gear_dedendum);
-    rt = gear_tip_radius(gear_teeth, gear_module, gear_addendum);
+    rr = min(gear_root_radius(gear_teeth, gear_module, gear_dedendum),
+             gear_root_radius(rg_ring_teeth, rg_ring_module, gear_dedendum));
+    rt = max(gear_tip_radius(gear_teeth, gear_module, gear_addendum),
+             gear_tip_radius(rg_ring_teeth, rg_ring_module, gear_addendum));
+    t = max(gear_thickness, rg_ring_thickness);
     translate([0, 0, -0.5])
         difference() {
-            cylinder(h = gear_thickness + 1, r = rt + 2);
-            translate([0, 0, -1]) cylinder(h = gear_thickness + 3, r = rr - gear_band);
+            cylinder(h = t + 1, r = rt + 2);
+            translate([0, 0, -1]) cylinder(h = t + 3, r = rr - gear_band);
         }
 }
 // Core: cylinder over the centre of a gear. On the gear it covers the plug

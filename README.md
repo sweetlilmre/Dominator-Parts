@@ -114,6 +114,7 @@ A modifier is a second mesh that you load onto a part in the slicer. The slicer 
 | Cam | `stl/dominator_cam_socket_modifier.stl` | The full width of the hub, from 1.5 mm below the floor of the socket to the shoulder. This includes the walls and floor of the socket. |
 | Gear | `stl/dominator_gear_tooth_modifier.stl` | The teeth, and 4 mm inside the root circle. |
 | Gear | `stl/dominator_gear_core_modifier.stl` | The plug, and the gear body directly below it. |
+| Reduction gear | `stl/dominator_gear_tooth_modifier.stl` | The teeth of the ring, and 4 mm inside the root circle. |
 | Reduction gear | `stl/dominator_gear_core_modifier.stl` | The pinion, the plate, and the ring directly below them. |
 
 Both cam modifiers fit v1 and v2. The rim modifier has the size of the taller v2 lobes. On the v1 cam it goes past the crests, which has no effect.
@@ -146,7 +147,7 @@ Find the fit for your printer first. See [Before you print](#before-you-print-fi
 |---|---|---|---|---|
 | Cam | Cam side on the bed, hub up | 3 | rim and socket | none |
 | Gear | Flat side on the bed, plug up | 3 | tooth and core | none |
-| Reduction gear | Ring on the bed, pinion up | 3 | core | none |
+| Reduction gear | Ring on the bed, pinion up | 3 | tooth and core | none |
 | Washer | Flat | 3 | none, use 100 percent infill | none |
 
 All STL files are in the correct orientation for printing. Do not turn them.
