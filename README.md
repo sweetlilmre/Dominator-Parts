@@ -1,185 +1,302 @@
-# Kreepy Krauly Dominator cam and gear, parametric OpenSCAD replacement
+# Kreepy Krauly Dominator cam assembly
 
-A 3D printable replacement for the Dominator steering cam (Pool Mecca SKU 8880219510109; the Pentair Rebel/Warrior equivalent is cam kit 360294). Every dimension lives in `scad/config.scad` and can be tuned from the OpenSCAD Customizer.
+This project is a 3D printed replacement for the steering cam of the Kreepy Krauly Dominator pool cleaner. The design is parametric OpenSCAD. All dimensions are in `scad/config.scad`. You can change them in the OpenSCAD Customizer.
 
-This design is two printed pieces plus a washer, joined by a splined plug and socket of this project's own devising. How the OEM parts are divided is not established here; see the note below:
+Words in this README have the meanings in `CONTEXT.md`.
 
-- **cam**: a flat plate with the five-lobe outline and an integral shaft rising from its centre, with a socket in the top of the hub.
-- **gear**: the 36 tooth ring gear with a matching plug on its underside. The plug plugs into the socket and the gear seats on the hub shoulder, so the teeth only carry torque. Being separate, the wear item can be reprinted alone or in a tougher material.
-- **washer**: a spacer between the gearbox wall and the cam underside to set the axial position.
+| Cam assembly | Cam | Gear |
+|---|---|---|
+| ![Cam assembly](renders/assembly_v1.png) | ![Cam](renders/cam_iso_v1.png) | ![Gear](renders/gear_iso.png) |
 
-The steel pin runs through the bore of all of them.
+## Contents
 
-## Files
+1. [How the cam assembly works](#how-the-cam-assembly-works)
+2. [The parts](#the-parts)
+3. [Before you print: find the fit for your printer](#before-you-print-find-the-fit-for-your-printer)
+4. [Modifiers: solid material where the parts wear](#modifiers-solid-material-where-the-parts-wear)
+5. [Print the cam assembly](#print-the-cam-assembly)
+6. [The two cam versions](#the-two-cam-versions)
+7. [Optional gearbox parts](#optional-gearbox-parts)
+8. [Change the design](#change-the-design)
+9. [Where the numbers come from](#where-the-numbers-come-from)
+10. [Open items](#open-items)
 
-| Path | What it is |
+## How the cam assembly works
+
+The cam assembly turns on a steel pin in the gearbox. The gearbox drives the gear. The gear turns the cam.
+
+The cam has five lobes on the rim of its plate. A follower in the gearbox rides on the rim. When a lobe comes to the follower, the follower goes up the ramp face and onto the crest. At the end of the lobe, the follower falls off the drop face into the next trough. Each lift of the follower changes the direction of the cleaner.
+
+The cam and the gear are two separate printed parts:
+
+- The **plug** on the hub side of the gear has spline teeth.
+- The **socket** in the top of the hub has the same spline teeth.
+- You push the plug into the socket. The gear then seats on the **shoulder** of the hub.
+- The spline teeth transmit the torque. The shoulder holds the gear at the correct height.
+
+Because the gear is a separate part, you can print a new gear without a new cam. You can also print it in a different material.
+
+The **washer** goes on the pin between the gearbox wall and the cam side of the plate. It sets the position of the cam on the pin.
+
+## The parts
+
+| Part | What it does | STL file |
+|---|---|---|
+| Cam | The plate with the lobes, the hub and the socket. The follower runs on it. | `stl/dominator_cam_v1.stl` or `stl/dominator_cam_v2.stl` |
+| Gear | The 36 tooth gear with the plug. It drives the cam. | `stl/dominator_gear.stl` |
+| Washer | Sets the position of the cam on the pin. | `stl/dominator_washer.stl` |
+| Fit test | A test part to find the spline fit for your printer. | `stl/dominator_fit_test.stl` |
+
+Each part also has one or more modifier files. The section [Modifiers](#modifiers-solid-material-where-the-parts-wear) tells you which modifier goes with which part.
+
+## Before you print: find the fit for your printer
+
+The plug must be tight in the socket. If it is loose, the joint has play and the teeth wear. If it is too tight, the hub can split. Each printer makes holes and teeth a little differently, so the correct fit is different on each printer.
+
+One value controls the fit: `spline_clearance` in `scad/config.scad`. It is the gap between the plug and the socket, in mm, on all sides of each tooth.
+
+**Only the socket changes with `spline_clearance`.** The plug is always the nominal spline size. Thus you print the gear one time, and then you use it to test sockets.
+
+| Printer | Material | Best `spline_clearance` |
+|---|---|---|
+| Owner's Prusa MK4 | PETG | 0.05 (the default) |
+| A contributor's printer | not recorded | 0.15 |
+
+These results show that the value is different on different printers. Do the test on your printer before you print a cam.
+
+![Fit test](renders/fit_test.png)
+
+### Procedure
+
+1. Print the gear (`stl/dominator_gear.stl`). Use its modifiers and the settings that you will use for the final parts.
+2. Print the fit test (`stl/dominator_fit_test.stl`). Use the same material and settings. The fit test has four sockets, at clearances of 0, 0.05, 0.10 and 0.15. The clearance of each socket is engraved next to it.
+3. Push the plug of the gear into each socket, one at a time.
+4. Find the socket that holds the plug tightly without play. The socket must not crack.
+5. Write the clearance of that socket in `spline_clearance` in `scad/config.scad`.
+6. Export the cam again (see [Change the design](#change-the-design)).
+7. Record the result in `PRINT_LOG.md`.
+
+If no socket gives a good fit, change the list `ft_clearances` in `scad/fit_test.scad`. Then print the fit test again.
+
+### Why the test uses a real gear
+
+The fit test cuts its sockets with the same OpenSCAD module as the cam. The sockets are in the same orientation as the socket in the cam. Thus a socket in the fit test is equal to the socket in the cam.
+
+The gear gives you a real plug. It has the print errors of the real part. A test plug with a different shape or orientation would have different errors.
+
+### The clearance is on the cam
+
+The cam has its `spline_clearance` engraved on both faces of the plate, opposite the version number. You can read the value in the slicer before you print. You can also read it on the printed part. This prevents a print from an old STL file.
+
+## Modifiers: solid material where the parts wear
+
+### Why the parts need modifiers
+
+Some surfaces of the cam assembly rub against other parts:
+
+- On the **cam**, the follower rubs on the crests, ramp faces, drop faces and troughs. The plug pushes against the walls of the socket.
+- On the **gear**, the teeth mesh with the gearbox. The plug transmits the torque into the socket.
+
+A normal print has a thin skin of perimeters on sparse infill. At a surface that rubs, the skin wears through quickly. A fully solid part does not have this problem, but it uses much time and material.
+
+A modifier is a second mesh that you load onto a part in the slicer. The slicer applies the settings of the modifier only inside the modifier mesh. Each modifier in this project covers one area that rubs. Inside the modifier, the infill is 100 percent. The rest of the part uses your normal infill.
+
+### Which modifier goes with which part
+
+| Part | Modifier file | Area it makes solid |
+|---|---|---|
+| Cam | `stl/dominator_cam_rim_modifier.stl` | The outer band of the plate: from 8 mm inside the trough circle to outside the crests. This includes all the lobes and troughs. |
+| Cam | `stl/dominator_cam_socket_modifier.stl` | The full width of the hub, from 1.5 mm below the floor of the socket to the shoulder. This includes the walls and floor of the socket. |
+| Gear | `stl/dominator_gear_tooth_modifier.stl` | The teeth, and 4 mm inside the root circle. |
+| Gear | `stl/dominator_gear_plug_modifier.stl` | The plug, and the gear body directly below it. |
+
+Both cam modifiers fit v1 and v2. The rim modifier has the size of the taller v2 lobes. On the v1 cam it goes past the crests, which has no effect.
+
+Do not put a gear modifier on the cam. The plug on the gear and the socket on the cam are at different heights. Thus a gear modifier does not cover the socket.
+
+### Put each setting in the correct place
+
+- Set **Fill density = 100 percent on the modifier**. Do not add other settings to the modifier.
+- Set **Perimeters on the part**, not on the modifier.
+
+If you set perimeters on a modifier, the slicer makes perimeters around all edges of the modifier. This includes the inner edge of the ring in the middle of the plate. These perimeters have no function. When the modifier changes only the infill, the slicer does not make these perimeters.
+
+### Procedure in PrusaSlicer
+
+1. Import the STL of the part.
+2. Right-click the part in the object list. Select Add settings, Layers and perimeters. Set Perimeters.
+3. Right-click the part. Select Add modifier, Load. Select the modifier STL. The modifier has the same origin as the part, so it goes into the correct position. Do not move or scale it.
+4. Right-click the modifier. Select Add settings, Infill. Set Fill density to 100 percent.
+5. Do steps 3 and 4 again for the second modifier of the part.
+6. Slice the part. In the preview, make sure that the areas in the table above show solid infill. Make sure that there is no ring of perimeters at the inner edge of a modifier.
+
+`SLICING.md` gives more information about these settings.
+
+## Print the cam assembly
+
+Find the fit for your printer first. See [Before you print](#before-you-print-find-the-fit-for-your-printer).
+
+| Part | Orientation | Perimeters | Modifiers | Supports |
+|---|---|---|---|---|
+| Cam | Cam side on the bed, hub up | 3 | rim and socket | none |
+| Gear | Flat side on the bed, plug up | 3 | tooth and plug | none |
+| Washer | Flat | 3 | none, use 100 percent infill | none |
+
+All STL files are in the correct orientation for printing. Do not turn them.
+
+Settings for all parts:
+
+- Layer height: 0.12 to 0.2 mm. Thinner layers give smoother tooth flanks.
+- Nozzle: 0.4 mm.
+- Material: PETG, ASA or nylon. Do not use PLA. PLA becomes soft in a hot pool.
+- Speed: use a low speed for the external perimeters of the cam. The lobe faces are the surfaces that the follower runs on.
+
+### Assemble
+
+1. Push the plug of the gear into the socket of the cam. Push until the gear seats on the shoulder.
+2. Put the washer on the pin.
+3. Put the cam assembly on the pin, cam side to the washer.
+
+## The two cam versions
+
+The OEM cam has a number on both faces. Two numbers are known, v1 and v2. The owner has one of each. The two versions are the same in all measured dimensions, but for these:
+
+| | v1 | v2 |
+|---|---|---|
+| Lobe height | 4 mm | 5 mm |
+| Span across the crests | 79 mm | 81 mm |
+| Lobe widths, in sequence | 49.9, 41.1, 46.0, 49.9, 49.5 deg | 50, 43, 41, 49.5, 49.5 deg |
+| Largest trough | 32.5 deg | 35.5 deg |
+
+Find the number on your old cam. Print the cam with the same number.
+
+- In the Customizer, set `cam_version`.
+- With `render.ps1`, use `-CamVersion v1` or `-CamVersion v2`.
+
+The printed cam has its version number engraved on both faces, as the OEM cam does. Only the cam changes with the version. All other parts and all modifiers fit both versions.
+
+| v1 | v2 |
 |---|---|
-| `scad/assembly.scad` | Open this. Pick `part` in the Customizer, tune values, export STL. |
-| `scad/config.scad` | All parameters, each tagged with where its value came from. |
-| `scad/cam.scad` | Cam plate, lobe outline with leaning edges, shaft with socket, washer. |
-| `scad/cam_gear.scad` | Ring gear with the plug. |
-| `scad/reduction_gear.scad` | Optional: a gearbox reduction gear, its own 36 T ring plus an 11 T pinion. Independent of the cam gear. |
-| `scad/drive_shaft.scad` | The two gearbox drive shafts, long and short, as one parametric module. Presets `ds_long` and `ds_short` in the config. |
-| `scad/fit_test.scad` | Coupon for finding the spline press fit: a plate of sockets at several clearances, tested with a printed gear. |
-| `scad/lib/involute_gear.scad` | Self contained involute spur gear library, no external dependencies. |
-| `render.ps1` | Exports every part to `stl/` using the OpenSCAD command line. `-CamVersion v1|v2` picks the cam moulding. |
-| `render_previews.ps1` | Regenerates the PNG previews in `renders/`. |
-| `PRINT_LOG.md` | One entry per physical print: config used, what was observed, what changed. |
-| `SLICING.md` | How to slice in PrusaSlicer: where perimeters and infill go, and the modifier meshes. |
-| `renders/` | PNG previews, regenerated by `render_previews.ps1`. Cam views carry a `_v1` / `_v2` suffix. |
-| `measure/` | Per version (`cam_v1/`, `cam_v2/`), matching `reference/`: annotated photos with lettered callouts plus a table of what to measure. |
-| `stl/` | Exported STLs. Only the cam carries a `_v1` / `_v2` suffix. |
-| `reference/` | `cam_v1/` and `cam_v2/` hold the owner's photographs of each moulding. |
+| ![Cam v1](renders/cam_top_v1.png) | ![Cam v2](renders/cam_top_v2.png) |
+
+## Optional gearbox parts
+
+These parts are not part of the cam assembly. They are replacements for other worn parts in the gearbox.
+
+### Reduction gear
+
+`stl/dominator_reduction_gear.stl` is one of the gears between the turbine and the cam. It has a 36 tooth ring and an 11 tooth pinion on top. The pinion drives the gear of the cam assembly. Its dimensions are in the `[Reduction gear]` section of the config. They do not change when you change the gear of the cam assembly.
+
+![Reduction gear](renders/reduction_gear_iso.png)
+
+### Drive shafts
+
+`stl/dominator_shaft_long.stl` and `stl/dominator_shaft_short.stl` are the two drive shafts. Each drive shaft is an 8 tooth pinion along its full length, with round body sections.
+
+| | Long | Short |
+|---|---|---|
+| Length | 177 mm | 83 mm |
+| Gear tip diameter | 12.45 mm | 12.45 mm |
+| Gear lengths, A end / B end | 12 / 50 mm | 18 / 25 mm |
+| Body diameter | 12.5 mm, 10 mm between the gear seats | 12.5 mm |
+
+![Long drive shaft](renders/shaft_long.png)
+
+Each STL has two equal halves. The halves lie flat on the bed. You glue them together after printing.
+
+- **Why halves:** A drive shaft printed vertically broke at the step between the gear and the body. The layer lines went across the drive shaft at that point. Flat halves put the layer lines along the drive shaft.
+- **Split through the tooth centres:** Each half has whole teeth up. It has a half tooth flat on the bed at each side. Thus no tooth has an overhang.
+- **Dowel holes:** A line of holes on the axis holds short pieces of 1.75 mm filament. The dowels align the two halves, also in the gear sections.
+- **Root fillets:** A 2 mm cone at each body end goes into the tooth roots. This removes the sharp step where the vertical print broke.
+
+To print and assemble a drive shaft:
+
+1. Print the halves with 3 perimeters and 100 percent infill. The parts are small, so they do not need modifiers.
+2. Put the dowels into the holes of one half.
+3. Put the two halves together without glue. Make sure that they align.
+4. Glue the halves. Clamp them along the full length. PVC pipe cement gave a strong joint (see `PRINT_LOG.md`).
+
+All settings are in the `[Drive shafts]` section of the config.
+
+## Change the design
+
+### Files
+
+| Path | Contents |
+|---|---|
+| `scad/assembly.scad` | Open this file in OpenSCAD. Select `part` in the Customizer. |
+| `scad/config.scad` | All parameters. Each value shows where it comes from. |
+| `scad/cam.scad` | The cam, the washer and the cam modifiers. |
+| `scad/cam_gear.scad` | The gear and the gear modifiers. |
+| `scad/fit_test.scad` | The fit test. |
+| `scad/reduction_gear.scad` | The reduction gear. |
+| `scad/drive_shaft.scad` | The two drive shafts. |
+| `scad/lib/involute_gear.scad` | An involute spur gear library. It has no external dependencies. |
+| `render.ps1` | Exports the parts to `stl/`. |
+| `render_previews.ps1` | Makes the PNG images in `renders/`. |
+| `PRINT_LOG.md` | One entry for each print: the config, the result, and the changes. |
+| `SLICING.md` | More information about the slicer settings. |
+| `CONTEXT.md` | The words for the parts and their features. |
+| `measure/` | Photos with labels, and tables of the measurements to take, for each cam version. |
+| `reference/` | The owner's photos of each cam version. |
+
+### Export the STL files
+
+You need the OpenSCAD command line. Install OpenSCAD from the official OpenSCAD website.
+
+```powershell
+.\render.ps1                          # all parts, cam version v1
+.\render.ps1 cam gear                 # only the parts that you name
+.\render.ps1 -CamVersion v2           # all parts, cam version v2
+.\render_previews.ps1                 # the PNG images in renders\
+```
+
+The script works in Windows PowerShell 5.1 and in PowerShell 7. It uses `openscad.com`, the console version of OpenSCAD. Do not use `openscad.exe` for scripts: it is the GUI version, and it does not write files from the command line.
+
+### Parameters that you can change
+
+| Parameter | Default | What it does |
+|---|---|---|
+| `spline_clearance` | 0.05 | The gap between the plug and the socket. Find it with the fit test. |
+| `bore_clearance` | 0.4 | The added diameter of the bore, so the cam turns freely on the pin. Use 0.3 to 0.5. |
+| `gear_backlash` | -0.2 | A negative value makes the gear teeth thicker. The OEM teeth are thicker than a standard involute. If the gears bind, increase the value toward 0. |
+| `plug_h` | 5 | How far the plug goes into the socket. The socket is `socket_extra` deeper, so the gear seats on the shoulder. |
+| `ramp_lean`, `drop_lean` | 21, 9 | The lean of the ramp face and the drop face. 0 gives radial faces. |
+| `cam_clearance_mark_size` | 5 | The text size of the engraved clearance. 0 removes it. |
+| `socket_band` | 1.5 | How far the socket modifier goes below the floor of the socket. |
 
 ## Where the numbers come from
 
 | Item | Value | Source |
 |---|---|---|
-| Rim base diameter | 71 mm | owner's calipers |
+| Trough circle | 71 mm | owner's calipers |
 | Plate thickness | 6.6 mm | owner's calipers |
-| Lobe height | v1 4 mm (trace 4.15), v2 5 mm (trace 4.5) | owner's calipers, photo trace |
-| Lobe angles, v2 | 15-65, 90-133, 168.5-209.5, 230-279.5, 305-354.5 deg | traced from `reference/cam_v2/own_cam_top_v2.jpg` |
+| Lobe height | v1 4 mm, v2 5 mm | owner's calipers; photo trace gives 4.15 and 4.5 |
 | Lobe angles, v1 | 20.2-70.1, 90.4-131.5, 164-210, 235-284.9, 305.5-355 deg | traced from `reference/cam_v1/own_cam_top_v1.jpg` |
-| Lobe edge lean | 21 deg on one edge, 9 deg on the other, both toward the lobe middle | line fit per edge on the same photo |
-| Outline mirrored | `cam_mirror = true` | the trace photo was of the non-gear side; confirmed by tracing the gear-side photo `reference/cam_v2/own_gear_side_v2.jpg`, which shows the ramp face on the counter-clockwise edge and the mirrored gap sequence |
-| Gear | 36 T, 47 mm OD, 4.6 mm thick | owner's count and calipers |
-| Gear tooth thickness | about 0.1 of pitch wider than a textbook involute at every depth, so `gear_backlash = -0.2` | `reference/cam_v2/own_gear_side_v2.jpg`, tooth fraction vs radius |
-| Gear tooth depth | about 2.4 mm working depth, stubbier than standard, so `gear_dedendum = 1.0` | same photo |
-| Hub height, plate top to gear underside | 14 mm | owner |
-| Hub OD | 22 mm | owner |
-| Pin | 6.1 mm; the worn OEM bore measured 6.3 | owner; v1 photo trace reads the bore at 6.1-6.4 |
-| Spline size | 11 teeth, 16 mm across the tips | not an OEM dimension; sized to match the reduction gear pinion |
-| Washer | 2 mm | estimate, not critical to fit |
-| Reduction gear pinion | 11 teeth, 16 mm across the tips | owner |
+| Lobe angles, v2 | 15-65, 90-133, 168.5-209.5, 230-279.5, 305-354.5 deg | traced from `reference/cam_v2/own_cam_top_v2.jpg` |
+| Lean | ramp face 21 deg, drop face 9 deg | line fit on each face in the same photo |
+| Outline mirrored | `cam_mirror = true` | The trace photo shows the cam side. The gear side photo `reference/cam_v2/own_gear_side_v2.jpg` confirms the mirror. |
+| Gear | 36 teeth, 47 mm tip diameter, 4.6 mm thick | owner's count and calipers |
+| Gear tooth thickness | `gear_backlash = -0.2` | The OEM teeth are about 0.1 of the pitch thicker than a standard involute. Measured on `reference/cam_v2/own_gear_side_v2.jpg`. |
+| Gear tooth depth | `gear_dedendum = 1.0` | The OEM teeth are about 2.4 mm deep, less than a standard tooth. Same photo. |
+| Hub | 22 mm diameter, 14 mm from the plate to the shoulder | owner |
+| Pin | 6.00 mm | owner. The worn OEM bore measured 6.3. |
+| Washer | 2 mm | estimate |
+| Reduction gear pinion | 11 teeth, 16 mm tip diameter | owner |
 
-## The two cam versions
+The outlines come from the owner's photos. The photos were taken straight down. They were scaled with the grid of the cutting mat and the trough circle measured on the ruler photos. The v1 method, applied to the v2 photo, gives the v2 lobe widths within 1.5 degrees. This is the accuracy of the lobe angles.
 
-The cam carries a moulding number on both faces. Two are known, and the owner
-has one of each. They share every dimension measured so far except two:
+### The spline is not an OEM dimension
 
-| | v1 | v2 |
-|---|---|---|
-| Lobe height | 4 mm | 5 mm |
-| Outer span across the crests | 79 mm | 81 mm |
-| Lobe widths, in order | 49.9, 41.1, 46.0, 49.9, 49.5 deg | 50, 43, 41, 49.5, 49.5 deg |
-| Largest trough | 32.5 deg | 35.5 deg |
+The plug, the socket and all `spline_*` parameters are a design of this project. They let you print the gear as a separate part. The photos do not show how the OEM parts join. Thus the division into a cam and a gear is a decision for printing. It is not a copy of the OEM part.
 
-Trough circle, plate thickness, hub, bore and gear all read the same on both.
-Pick one with `cam_version` in the Customizer, or `-CamVersion` on `render.ps1`.
-The cam is exported as `dominator_cam_v1.stl` and `dominator_cam_v2.stl`.
-Every other part, the rim modifier included, is version independent: the
-modifier is sized from the taller lobes so one file covers both.
+The spline has 11 teeth and a 16 mm tip diameter. This is the same size as the pinion of the reduction gear, so the project has one small tooth size. The spline and the pinion have separate parameters. The mesh with the gear controls the pinion. The hub wall and the fit control the spline. A change to one must not change the other.
 
-Measurement method: the outlines were traced from the owner's straight-down
-photographs, scaled by the cutting-mat grid and anchored to the trough circle
-read off the ruler photographs. Running the v1 pipeline over the v2 photograph
-reproduces the v2 lobe widths to within 1.5 degrees, which is the accuracy
-these numbers should be trusted to.
+The spline teeth are shorter than the pinion teeth (`spline_addendum` 0.9). This keeps more material around the bore.
 
-## The spline is not an OEM dimension
+## Open items
 
-Earlier revisions of this README said the two printed pieces were "joined the
-same way as the OEM kit, where the gear carries a small plug that plugs into the
-cam's hub". Nothing in the reference photographs supports that. No plug, socket
-or spline is visible in any of them, and in
-`reference/cam_v2/own_gear_side_v2.jpg` the ring gear appears moulded in one
-piece with the lobed dish, around a plain flat centre and a plain bore.
-
-What is certain is that the plug, the socket and every `spline_*` parameter are
-this project's own design, chosen so the gear can be reprinted alone. No
-measurement constrains them and they are free to change. How the OEM assembly is
-actually divided, and whether it has any comparable joint, is **unresolved**: the
-photographs never show the mating faces. Treat the two-piece split as a printing
-decision, not as reverse engineering.
-
-It is sized at 11 teeth and 16 mm to match the reduction gear pinion, so the
-project has one small tooth size rather than two nearly identical ones. The two
-remain separate parameters: the pinion is constrained by its mesh with the cam
-gear, the spline by the hub wall and the press fit, and a change made for one
-must not silently alter the other. Their tooth forms still differ, and should:
-the spline uses shallower teeth (`spline_addendum` 0.9) to keep the core thick
-around the bore and give more flank contact, while the pinion needs full depth
-for rolling contact.
-
-## First print feedback (2026-09-05)
-
-- Spline joint had play: `spline_clearance` reduced from 0.15 to 0.05. Next step if still loose is 0 or slightly negative.
-- Gear teeth thinner than the original: from the gear-side photo the OEM teeth are wider and shorter than a textbook involute. `gear_backlash` is now -0.2, `gear_dedendum` 1.0, and tip rounding is increased. Tooth count confirmed at 36 by the owner; a photo-based pitch estimate of 35 was wrong.
-
-## Drive shafts
-
-`stl/dominator_shaft_long.stl` and `stl/dominator_shaft_short.stl` are the two gearbox drive shafts, each exported as two identical lengthwise halves lying flat, ready to print. Each shaft is an 8 tooth involute pinion running its full length, with round body sections unioned over it, and on the short shaft two sections where the tooth roots are filled to 9.7 mm. The long shaft has a shallow arc dip centred 45 mm from its short-gear end.
-
-| | Long | Short |
-|---|---|---|
-| Length | 177 | 83 |
-| Gear tip diameter, module | 12.45, 1.245 | 12.45, 1.245 |
-| Gear lengths, A end / B end | 12 / 50 | 18 / 25 |
-| Body diameter | 12.5, relieved to 10 between the gear seats | 12.5 |
-
-Design choices, all parameters in the `[Drive shafts]` section of the config:
-
-- **Printed in halves, flat.** A one-piece vertical print snapped where the gear meets the body, because the layer lines lay across the shaft there. The halves print with the flat face down so the layers run along the shaft. `ds_split = false` gives the one-piece version.
-- **Split through tooth centres** (`ds_split_at = "teeth"`): each half has three whole teeth standing up and a half tooth lying flat on the bed at each side, so nothing overhangs. Splitting through the gaps left overhanging teeth that did not print.
-- **Root fillets** (`ds_step_fillet = 2`): a 2 mm cone eases each body end into the tooth roots instead of a square step.
-- **Dowel alignment**: a single row of holes on the axis, 2.5 mm deep, for pieces of 1.75 mm filament, at the positions in each shaft's `dowels` list, including inside the gear sections so the teeth of the two halves register. An optional steel rod channel (`ds_rod_d`) exists but is off.
-- **Body relief** (`ds_relief_d = 10`, `relief` list): the long shaft's smooth body is turned down between 4 mm seats at each gear to save print time. The dip is cut into the relieved body and is 0.8 mm deep there.
-
-Assembly: dry fit the halves with the dowels, then glue with CA or a thin layer of epoxy and clamp along the length. Print each half with 3 perimeters and 100 percent infill; they are small enough that a modifier is not worth the effort.
-
-## Still to confirm
-
-1. `washer_t`: gearbox wall to the underside of the OEM rim.
-2. Stack check: washer plus plate plus shaft plus gear thickness should equal the OEM distance from wall to gear top. The console echo prints the total.
-3. After mirroring, the ramp face should be on the counter-clockwise side of each lobe when the part is held gear side up with 0 degrees to your right. If your part differs, set `cam_mirror = false` and swap the two lean values instead.
-
-## Tuning
-
-- `gear_backlash` 0.1 to 0.2 mm for FDM. Increase if the mesh binds, decrease if it rattles.
-- `spline_clearance` is the whole of the joint's tolerance. It is applied as
-  `offset(delta = clearance)` on the socket profile, so it is the gap normal to
-  every flank, root and tip, and it does not change with tooth count or
-  diameter. It is now 0.15, set from the fit test coupon. Print
-  `part = "fit_test"` to find the right value on your own machine rather than
-  guessing, and record the answer in `PRINT_LOG.md`.
-- `plug_h` sets how deep the plug engages in the hub; the socket is `socket_extra` deeper so the gear seats on the shoulder.
-- `bore_clearance` 0.3 to 0.5 mm depending on how well your printer holds small holes.
-- `ramp_lean` and `drop_lean` set to 0 give square radial lobe edges.
-
-## Finding the press fit
-
-The gear is held to the cam by a splined plug pressed into a socket in the top
-of the hub. The only tolerance is `spline_clearance`, currently 0.15, set from
-the coupon below. Be aware that print 1 used 0.15 and was reported as having
-play; the coupon disagrees and the reason is not established, so check the fit
-on your own parts.
-
-`part = "fit_test"` exports a coupon: one socket per candidate clearance, each
-with the number engraved beside it. It prints in the same orientation as the
-cam, sockets as holes in the top of an upright boss, and it cuts the same
-geometry the cam uses rather than a copy. Print it with the settings you will
-use for the parts, then press the plug of an actual printed gear into each
-socket in turn and keep the clearance that grips without splitting. Testing
-with the real gear is the point: it is the part that has to fit, and it brings
-the printing errors of its own geometry and orientation with it. Edit
-`ft_clearances` to change the range.
-
-## Printing
-
-- Cam: plate down, hub up, no supports. Set Perimeters = 3 on the object and load `stl/dominator_cam_rim_modifier.stl` and `stl/dominator_cam_socket_modifier.stl` (each one file, fits either version) as modifiers with only Fill density = 100 percent, so the lobes, troughs and socket walls are solid. Full reasoning and steps in `SLICING.md`.
-- Gear: flat side down, plug up, as exported. No supports. Perimeters = 3 on the object; load `stl/dominator_gear_tooth_modifier.stl` and `stl/dominator_gear_plug_modifier.stl` as modifiers with Fill density = 100 percent. 0.12 to 0.2 mm layers, 0.4 mm nozzle. See `SLICING.md`.
-- Washer: flat.
-- Material: PETG, ASA or nylon. PLA goes soft in a hot pool box.
-
-## Rendering from the command line
-
-```powershell
-.\render.ps1                          # every part, cam version v1
-.\render.ps1 cam gear                 # selected parts
-.\render.ps1 -CamVersion v2           # the other cam moulding
-.\render_previews.ps1                 # the PNGs in renders\ 
-```
-
-The script prefers `openscad.com`, the console build. `openscad.exe` is the
-GUI build: it detaches from the console and renders nothing, which is why an
-earlier version of this script could report success having written no files.
+1. Measure `washer_t`: the distance from the gearbox wall to the cam side of the OEM plate.
+2. Measure the stack height of the OEM cam assembly. Compare it with the stack height that OpenSCAD shows in the console.
+3. Hold the printed cam with the gear side up and 0 degrees to your right. The ramp face of each lobe must be on the counter-clockwise side. If it is not, set `cam_mirror = false` and change the two lean values with each other.
+4. Print the cam and the gear at `spline_clearance = 0.05`. The fit test found this value on the owner's printer, but the full parts are not yet printed at this value.
