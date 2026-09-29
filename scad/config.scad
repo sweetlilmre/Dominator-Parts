@@ -116,10 +116,10 @@ socket_extra = 0.3;
 // The whole of the joint's tolerance, applied as offset(delta = clearance) on
 // the socket profile, so it is the gap normal to every flank, root and tip.
 // It does not scale with tooth count or diameter.
-// Printer dependent. On the owner's printer print 1 (12 T / 14 mm spline) had
-// play at 0.15, so 0.05 is used here, now under test at 11 T / 16 mm. The fit
-// test coupon (part = "fit_test") gripped best at 0.15 on a contributor's
-// printer; other printers should run the coupon and set their own value.
+// Printer dependent: run the fit test coupon (part = "fit_test") and set your
+// own value. On the owner's Prusa MK4 in PETG the coupon found 0.05 best at
+// 11 T / 16 mm, and 0.15 failed on both cam prints. A contributor's printer
+// gripped best at 0.15. The value is engraved on the cam (clearance_mark).
 spline_clearance = 0.05;
 // Chamfer on the plug end to help it start into the socket (mm).
 spline_lead_in = 0.6;

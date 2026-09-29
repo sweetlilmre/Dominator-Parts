@@ -88,7 +88,23 @@ Cam v2 and gear. Meant to test `spline_clearance = 0.05` on the owner's printer,
 
 Slicer settings: Prusa MK4, PETG, 6 perimeters.
 
-Observed: in progress.
+Observed:
+
+- The spline joint failed at 0.15.
+
+Followed up with a fit test coupon on the owner's printer, below.
+
+## Spline fit test coupon, owner's printer, after print 2
+
+`part = "fit_test"` at the current spline (11 teeth, 16 mm tip to tip), sockets at `spline_clearance` 0, 0.05, 0.10 and 0.15 with loose plugs at nominal. Printed on the owner's Prusa MK4 after print 2 failed at 0.15.
+
+Observed:
+
+- **0.05 works** on the owner's printer.
+
+Changes made: none; `spline_clearance` was already 0.05. The coupon cuts its sockets with the same `socket_cut` module as the cam, so it is taken as enough evidence without a 0.05 cam print. The cam and gear at 0.05 have not been printed yet.
+
+This settles the open question in the contributor's coupon entry below: the owner's printer wants 0.05 and the contributor's printer 0.15, so the difference is the printer, not the spline size or the part geometry.
 
 ## Spline fit test coupon, 2026-09-22
 
@@ -113,6 +129,8 @@ perimeters, 15 percent infill; the coupon's settings are not recorded), and the
 part geometry the joint was printed as part of (a 47 mm gear and a 71 mm cam
 then, small pucks now). Which of those accounts for it is not known. The real
 parts should be printed and checked before the 0.15 is trusted for good.
+
+Resolved: the owner's coupon after print 2 found 0.05 best on the owner's printer, so the two results reflect different printers.
 
 ## Slicing note
 

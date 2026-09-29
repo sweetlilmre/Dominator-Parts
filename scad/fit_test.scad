@@ -5,8 +5,8 @@
 // The joint is a plug on the gear's underside pressed into a socket in the top
 // of the hub. The only tolerance is `spline_clearance`, applied as
 // offset(delta = clearance) on the socket profile, so the gap is that value
-// normal to every flank, root and tip. Print 1 used 0.15 and had play; the
-// config now says 0.05, which has never been printed.
+// normal to every flank, root and tip. On the owner's printer the coupon found
+// 0.05 best; on a contributor's printer 0.15.
 //
 // The coupon prints one socket per candidate clearance, each on its own boss
 // in the same orientation the cam uses: a hole going down into the top of an
