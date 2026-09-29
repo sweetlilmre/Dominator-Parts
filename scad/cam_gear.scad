@@ -35,10 +35,11 @@ module gear_tooth_modifier() {
             translate([0, 0, -1]) cylinder(h = gear_thickness + 3, r = rr - gear_band);
         }
 }
-// Plug: cylinder covering the spline plug and the gear body under it. It also
-// serves the reduction gear, where it covers the pinion, the plate and the
-// ring under them, so it is sized from the taller and wider of the two.
-module gear_plug_modifier() {
+// Core: cylinder over the centre of a gear. On the gear it covers the plug
+// and the gear body under it; on the reduction gear the pinion, the plate and
+// the ring under them. Sized from the taller and wider of the two, so one
+// modifier serves both.
+module gear_core_modifier() {
     h = max(gear_thickness + plug_h, rg_ring_thickness + rg_plate_h + rg_pinion_h);
     r = max(spline_od, rg_pinion_od) / 2 + 1.5;
     translate([0, 0, -0.5]) cylinder(h = h + 1, r = r);

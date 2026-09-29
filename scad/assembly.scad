@@ -12,7 +12,7 @@
 //   part = "cam_rim_modifier"    PrusaSlicer modifier: solid rim band on the cam
 //   part = "cam_socket_modifier" PrusaSlicer modifier: solid hub around the cam socket
 //   part = "gear_tooth_modifier" PrusaSlicer modifier: solid tooth band on the gear
-//   part = "gear_plug_modifier"  PrusaSlicer modifier: solid plug on the gear
+//   part = "gear_core_modifier"  PrusaSlicer modifier: solid plug on the gear, or pinion on the reduction gear
 //   part = "fit_test"  coupon: sockets at several clearances plus loose plugs
 //   part = "all"       everything laid out
 INVOLUTE_GEAR_NO_DEMO = true;
@@ -24,7 +24,7 @@ include <drive_shaft.scad>
 include <fit_test.scad>
 
 /* [Part selection] */
-part = "all"; // ["all", "cam", "gear", "washer", "reduction_gear", "assembly", "shaft_long", "shaft_short", "fit_test", "cam_rim_modifier", "cam_socket_modifier", "gear_tooth_modifier", "gear_plug_modifier"]
+part = "all"; // ["all", "cam", "gear", "washer", "reduction_gear", "assembly", "shaft_long", "shaft_short", "fit_test", "cam_rim_modifier", "cam_socket_modifier", "gear_tooth_modifier", "gear_core_modifier"]
 
 module assembled() {
     cam();
@@ -53,8 +53,8 @@ if (part == "cam") {
     cam_socket_modifier();
 } else if (part == "gear_tooth_modifier") {
     gear_tooth_modifier();
-} else if (part == "gear_plug_modifier") {
-    gear_plug_modifier();
+} else if (part == "gear_core_modifier") {
+    gear_core_modifier();
 } else {
     cam();
     translate([trough_d + 20, 0, 0]) cam_gear_printable();
