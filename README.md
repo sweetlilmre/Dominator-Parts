@@ -1,6 +1,11 @@
-# Kreepy Krauly Dominator cam assembly
+# Kreepy Krauly Dominator replacement parts
 
-This project is a 3D printed replacement for the steering cam of the Kreepy Krauly Dominator pool cleaner. The design is parametric OpenSCAD. All dimensions are in `scad/config.scad`. You can change them in the OpenSCAD Customizer.
+This project gives 3D printed replacement parts for the Kreepy Krauly Dominator pool cleaner:
+
+- **The cam assembly:** the cam, the gear and the washer. The cam controls the steering of the cleaner.
+- **Gearbox parts:** the reduction gear and the two drive shafts.
+
+The design is parametric OpenSCAD. All dimensions are in `scad/config.scad`. You can change them in the OpenSCAD Customizer.
 
 Words in this README have the meanings in `CONTEXT.md`.
 
@@ -16,7 +21,7 @@ Words in this README have the meanings in `CONTEXT.md`.
 4. [Modifiers: solid material where the parts wear](#modifiers-solid-material-where-the-parts-wear)
 5. [Print the cam assembly](#print-the-cam-assembly)
 6. [The two cam versions](#the-two-cam-versions)
-7. [Optional gearbox parts](#optional-gearbox-parts)
+7. [Gearbox parts](#gearbox-parts)
 8. [Change the design](#change-the-design)
 9. [Where the numbers come from](#where-the-numbers-come-from)
 10. [Open items](#open-items)
@@ -179,9 +184,9 @@ The printed cam has its version number engraved on both faces, as the OEM cam do
 |---|---|
 | ![Cam v1](renders/cam_top_v1.png) | ![Cam v2](renders/cam_top_v2.png) |
 
-## Optional gearbox parts
+## Gearbox parts
 
-These parts are not part of the cam assembly. They are replacements for other worn parts in the gearbox.
+These parts are not part of the cam assembly. They replace other worn parts in the gearbox. Use the same material as for the cam assembly.
 
 ### Reduction gear
 
