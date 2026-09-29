@@ -242,8 +242,8 @@ ds_short = [
 // makes the slicer draw perimeters around the modifier's inner boundary too.
 // Radial depth of the cam rim band, inward from the trough circle. The same
 // for both cam versions, so one modifier fits both. (owner: 8 and 5 were
-// too deep)
-rim_band = 3;
+// too deep, 3 too shallow)
+rim_band = 4;
 // Radial depth of the gear tooth band, inward from the gear root circle.
 gear_band = 4;
 // How far the cam socket modifier reaches below the socket floor.
