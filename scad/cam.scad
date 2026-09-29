@@ -95,21 +95,34 @@ function shoulder_z() = plate_t + hub_h;
 // rather than raised: the cam side prints against the bed, where a raised
 // character cannot go, and a recess on the gear side cannot foul the gear.
 module version_mark() {
-    if (cam_version_number_size > 0) {
-        digit = cam_version[1];
-        p = _pol(cam_version_number_angle, cam_version_number_r);
+    face_mark(cam_version[1], cam_version_number_size, cam_version_number_angle);
+}
+
+// The spline_clearance the socket was cut at, opposite the version digit, so
+// the value can be read off the part in the slicer before printing and off
+// the printed part afterwards. Only the cam carries it: the gear's plug is
+// nominal and does not depend on the clearance.
+module clearance_mark() {
+    face_mark(str(spline_clearance), cam_clearance_mark_size, cam_version_number_angle + 180);
+}
+
+// Engraves txt into both faces of the plate at cam_version_number_r and the
+// given angle. size 0 = no mark.
+module face_mark(txt, size, angle) {
+    if (size > 0) {
+        p = _pol(angle, cam_version_number_r);
         // gear side, into the top of the plate
         translate([0, 0, plate_t - cam_version_number_depth])
             linear_extrude(cam_version_number_depth + eps)
                 translate(p)
-                    text(digit, size = cam_version_number_size, halign = "center", valign = "center");
+                    text(txt, size = size, halign = "center", valign = "center");
         // cam side, into the underside, mirrored so it reads the right way
         // round when the part is turned over
         translate([0, 0, -eps])
             linear_extrude(cam_version_number_depth + eps)
                 translate(p)
                     mirror([1, 0, 0])
-                        text(digit, size = cam_version_number_size, halign = "center", valign = "center");
+                        text(txt, size = size, halign = "center", valign = "center");
     }
 }
 
@@ -121,6 +134,7 @@ module cam() {
         }
         socket();
         version_mark();
+        clearance_mark();
         translate([0, 0, -1]) cylinder(h = plate_t + hub_h + 2, d = bore_d, $fn = 64);
     }
 }

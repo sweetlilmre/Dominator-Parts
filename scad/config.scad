@@ -37,6 +37,10 @@ cam_version_number_depth = 0.5;
 // Must clear the hub and stay inside the trough circle.
 cam_version_number_r = 22;
 cam_version_number_angle = 270;
+// The spline_clearance value (e.g. "0.05") is engraved the same way on the
+// opposite side of the plate, so a cam sliced from a stale STL shows the
+// clearance it was cut at. Same depth and radius as the digit. 0 = no mark.
+cam_clearance_mark_size = 5;
 
 /* [Cam plate] */
 // Diameter of the trough circle of the rim, not across the lobes. (owner)

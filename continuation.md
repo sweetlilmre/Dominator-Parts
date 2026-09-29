@@ -23,7 +23,7 @@ The cam is moulded with a number on both faces. The owner has one of each. They 
 
 Everything else reads the same: trough circle 71, plate 6.6, hub 22 x 14, gear 36 T at 47, bore for a 6.0 mm pin. Select with `cam_version`, or `-CamVersion` on the scripts. Only the cam STL carries a `_v1` / `_v2` suffix; the rim modifier is sized from the taller lobes so one file serves both.
 
-The printed cam engraves its version digit 0.5 mm into both faces, as the OEM moulding carries it (`cam_version_number_*`).
+The printed cam engraves its version digit 0.5 mm into both faces, as the OEM moulding carries it (`cam_version_number_*`), and the `spline_clearance` its socket was cut at on the opposite side (`cam_clearance_mark_size`).
 
 ## Current design state
 
