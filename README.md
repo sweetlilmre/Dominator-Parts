@@ -110,7 +110,7 @@ A modifier is a second mesh that you load onto a part in the slicer. The slicer 
 
 | Part | Modifier file | Area it makes solid |
 |---|---|---|
-| Cam | `stl/dominator_cam_rim_modifier.stl` | The outer band of the plate: from 5 mm inside the trough circle to outside the crests. 5 mm is the lobe height of v2. This includes all the lobes and troughs. |
+| Cam | `stl/dominator_cam_rim_modifier.stl` | The outer band of the plate: from 3 mm inside the trough circle to outside the crests. This includes all the lobes and troughs. |
 | Cam | `stl/dominator_cam_socket_modifier.stl` | The full width of the hub, from 1.5 mm below the floor of the socket to the shoulder. This includes the walls and floor of the socket. |
 | Gear | `stl/dominator_gear_tooth_modifier.stl` | The teeth, and 4 mm inside the root circle. |
 | Gear | `stl/dominator_gear_plug_modifier.stl` | The plug, and the gear body directly below it. |

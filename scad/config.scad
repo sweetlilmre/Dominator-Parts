@@ -240,11 +240,10 @@ ds_short = [
 // give it ONLY Fill density = 100 percent. Set the perimeter count on the
 // object itself, not on the modifier: a perimeter override on a modifier
 // makes the slicer draw perimeters around the modifier's inner boundary too.
-// Radial depth of the cam rim band, inward from the trough circle. Equal to
-// the lobe height, so the band goes as deep below the trough circle as the
-// lobes stand above it. The taller lobes set it, so one modifier fits both
-// cam versions (v2 exact, v1 1 mm deeper).
-rim_band = max(v1_lobe_height, v2_lobe_height);
+// Radial depth of the cam rim band, inward from the trough circle. The same
+// for both cam versions, so one modifier fits both. (owner: 8 and 5 were
+// too deep)
+rim_band = 3;
 // Radial depth of the gear tooth band, inward from the gear root circle.
 gear_band = 4;
 // How far the cam socket modifier reaches below the socket floor.

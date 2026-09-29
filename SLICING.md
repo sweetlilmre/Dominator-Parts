@@ -50,7 +50,7 @@ Other settings worth using:
 
 | Modifier | Covers | Config value |
 |---|---|---|
-| `dominator_cam_rim_modifier` | outer band of the plate from one lobe height (5 mm, the taller v2 lobes) inside the trough circle to beyond the crests, plus half a millimetre above and below the plate | `rim_band` |
+| `dominator_cam_rim_modifier` | outer band of the plate from 3 mm inside the trough circle to beyond the crests, plus half a millimetre above and below the plate | `rim_band` |
 | `dominator_cam_socket_modifier` | the whole hub width from 1.5 mm below the socket floor to above the hub top, so the socket walls and floor are solid; one file fits either version | `socket_band` |
 | `dominator_gear_tooth_modifier` | the teeth and 4 mm inside the root circle, full gear thickness | `gear_band` |
 | `dominator_gear_plug_modifier` | the plug and the gear body directly under it | |
