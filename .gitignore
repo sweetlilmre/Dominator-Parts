@@ -9,6 +9,11 @@ reference/cam_v1/*
 reference/cam_v2/*
 !reference/cam_v1/own_*.jpg
 !reference/cam_v2/own_*.jpg
+!reference/drive_gears/
+reference/drive_gears/*
+# own_* rather than own_*.jpg here: the folder also holds the owner's
+# measurement notes, which are his own material by the same rule.
+!reference/drive_gears/own_*
 
 # Scratch
 *.bak
