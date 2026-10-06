@@ -10,6 +10,7 @@
 //   part = "shaft_long"   gearbox drive shaft, long
 //   part = "shaft_short"  gearbox drive shaft, short
 //   part = "drive_gear_1" gearbox drive gear 1, compound 26 T over 19 T
+//   part = "drive_gear_2" gearbox drive gear 2, 23 T with a spacer each face
 //   part = "cam_rim_modifier"    PrusaSlicer modifier: solid rim band on the cam
 //   part = "cam_socket_modifier" PrusaSlicer modifier: solid hub around the cam socket
 //   part = "gear_tooth_modifier" PrusaSlicer modifier: solid tooth band on the gear
@@ -26,7 +27,7 @@ include <drive_gear.scad>
 include <fit_test.scad>
 
 /* [Part selection] */
-part = "all"; // ["all", "cam", "gear", "washer", "reduction_gear", "assembly", "shaft_long", "shaft_short", "drive_gear_1", "fit_test", "cam_rim_modifier", "cam_socket_modifier", "gear_tooth_modifier", "gear_core_modifier"]
+part = "all"; // ["all", "cam", "gear", "washer", "reduction_gear", "assembly", "shaft_long", "shaft_short", "drive_gear_1", "drive_gear_2", "fit_test", "cam_rim_modifier", "cam_socket_modifier", "gear_tooth_modifier", "gear_core_modifier"]
 
 module assembled() {
     cam();
@@ -47,6 +48,8 @@ if (part == "cam") {
     drive_shaft(ds_short);
 } else if (part == "drive_gear_1") {
     drive_gear_1();
+} else if (part == "drive_gear_2") {
+    drive_gear_2();
 } else if (part == "fit_test") {
     fit_test();
 } else if (part == "assembly") {
@@ -77,6 +80,8 @@ echo(str("cam outer span = ", trough_d + 2 * lobe_height, " mm; spline root dia 
          " mm vs bore ", bore_d, " mm"));
 echo(str("drive gear 1: module ", dg1_module, ", outer ", dg1_outer_teeth, " T at ", dg1_outer_od,
          " mm, inner ", dg1_inner_teeth, " T at ", dg1_inner_od, " mm, height ", dg1_height(), " mm"));
+echo(str("drive gear 2: module ", dg2_module, ", ", dg2_teeth, " T at ", dg2_od,
+         " mm, body ", dg2_h, " mm, height ", dg2_height(), " mm"));
 echo(str("cam version = ", cam_version, ": lobe height ", lobe_height,
          " mm, ", len(lobes), " lobes"));
 
