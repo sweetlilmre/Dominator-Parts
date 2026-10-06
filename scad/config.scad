@@ -235,6 +235,45 @@ ds_short = [
     ["dowels", [4, 19, 34, 49, 64, 79]]
 ];
 
+/* [Drive gear 1] */
+// A compound gearbox drive gear: a 26 tooth gear with a 19 tooth gear above it
+// on one axis, turning on the same pin as the rest of the train. The OEM part
+// has a web with material saving slots; the printed one is solid throughout.
+// The bore is bore_d, the same hole as the cam and the gear, not a value of its
+// own. (owner) Confirmed on the part: the drive gears run on the same pin. A
+// trace of the owner's photograph reads the bore at 6.48 against the 6.40 that
+// pin_d plus bore_clearance gives. If a drive gear ever needs a different pin,
+// give the drive gears their own diameter rather than widening bore_clearance,
+// which would loosen the cam as a side effect.
+// Outer gear, measured tip to tip. (owner) That reading is trustworthy because
+// 26 is even, so the caliper straddles two opposite tooth tips, and 35 mm over
+// 26 teeth gives a module of exactly 1.25.
+dg1_outer_teeth = 26;
+dg1_outer_od = 35;
+// Face widths. (owner) The 19 tooth gear is the taller of the two at 11 mm and
+// the 26 tooth gear is 10 mm, as in own_drive_gears_measurements.txt. They were
+// briefly entered the other way round here, from a reading that put the 11 mm
+// section at the spoked face; the owner corrected it. The two widths add to the
+// 21 mm overall height, which was measured separately, so all three agree.
+dg1_outer_h = 10;
+dg1_inner_teeth = 19;
+dg1_inner_h = 11;
+// One module for both halves, taken from the outer gear. It also matches the
+// drive shaft pinion this gear meshes with to within 0.4 percent: that pinion
+// reads 1.245 only because ds_gear_od is 12.45 rather than 12.5.
+dg1_module = gear_module_from_od(dg1_outer_od, dg1_outer_teeth);
+// Derived rather than measured. 19 is odd, so no tooth lies opposite another
+// and a caliper cannot span tip to tip; it reads low. The owner read 25 to 26
+// against the 26.25 this gives. If a better measurement ever contradicts it,
+// replace this with the measured value.
+dg1_inner_od = dg1_module * (dg1_inner_teeth + 2);
+// Tooth depth factors. Standard, unlike the cam gear's deliberately stubby
+// teeth: the root to tip ratio measured on the outer gear implies a dedendum
+// near 1.29, and the drive shaft pinion it meshes with takes the library
+// defaults. Backlash is shared with that pinion for the same reason.
+dg1_addendum = 1.0;
+dg1_dedendum = 1.25;
+
 /* [Slicer modifiers] */
 // Modifier volumes for PrusaSlicer. Load each as a modifier on its part and
 // give it ONLY Fill density = 100 percent. Set the perimeter count on the

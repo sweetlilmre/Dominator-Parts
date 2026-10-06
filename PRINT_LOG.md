@@ -151,3 +151,28 @@ Observed:
 Slicer settings: not recorded, add if known.
 
 No config changes.
+
+## Drive gear 1, print 1, 2026-10-06
+
+`part = "drive_gear_1"` as committed: a 26 tooth gear 10 mm wide with a 19
+tooth gear 11 mm wide above it, tip diameters 35 and 26.25 mm, module 1.25,
+total 21 mm, bore 6.4 mm, solid body. Printed with the 26 tooth gear on the
+bed, no supports. Slicer settings not recorded; add them if known.
+
+Observed:
+
+- Correct. The gear meshes and the dimensions are right.
+
+This confirms three things that were derived rather than measured. The module
+of 1.25, taken from the 26 tooth gear because 26 is even and a caliper can span
+tip to tip. The 19 tooth tip diameter of 26.25, calculated from that module
+against a caliper reading of 25 to 26, which read low because 19 is odd. And
+the bore, which is `bore_d` and therefore the same hole as the cam: the drive
+gears run on the same pin.
+
+The two face widths are the owner's corrected values, 10 mm for the 26 tooth
+gear and 11 mm for the 19 tooth gear. They were briefly entered the other way
+round.
+
+No config changes.
+

@@ -3,7 +3,7 @@
 This project gives 3D printed replacement parts for the Kreepy Krauly Dominator pool cleaner:
 
 - **The cam assembly:** the cam, the gear and the washer. The cam controls the steering of the cleaner.
-- **Gearbox parts:** the reduction gear and the two drive shafts.
+- **Gearbox parts:** the reduction gear, the two drive shafts and drive gear 1.
 
 The design is parametric OpenSCAD. All dimensions are in `scad/config.scad`. You can change them in the OpenSCAD Customizer.
 
@@ -226,6 +226,40 @@ To print and assemble a drive shaft:
 
 All settings are in the `[Drive shafts]` section of the config.
 
+### Drive gear 1
+
+`stl/dominator_drive_gear_1.stl` is a compound gear from the gearbox. It has a
+26 tooth gear with a 19 tooth gear on the same axis. It turns on the pin. The 19
+tooth gear meshes with the pinion of a drive shaft.
+
+| | 26 tooth gear | 19 tooth gear |
+|---|---|---|
+| Tip diameter | 35 mm | 26.25 mm |
+| Face width | 10 mm | 11 mm |
+| Module | 1.25 | 1.25 |
+
+![Drive gear 1](renders/drive_gear_1.png)
+
+Both gears use one module. The module comes from the 26 tooth gear, because 26
+is an even number: a caliper touches two opposite tooth tips, so the reading is
+correct. 19 is an odd number, so a caliper cannot touch two opposite tips and
+the reading is too small. The owner read 25 to 26 mm for a true 26.25 mm. The
+model therefore calculates the 19 tooth diameter from the module. If you get a
+better measurement, put the value in `dg1_inner_od`.
+
+The teeth are a standard depth. They are not short like the teeth of the gear of
+the cam assembly. The drive shaft pinion that this gear meshes with also uses
+the standard depth.
+
+The OEM part has slots in one face to save material. The printed part is solid.
+The slots save moulding material and prevent shrinkage. A printed part does not
+need this, and a solid part is stronger.
+
+To print drive gear 1: put the 26 tooth gear on the bed. You do not need
+supports. The bore goes through both gears.
+
+All settings are in the `[Drive gear 1]` section of the config.
+
 ## Change the design
 
 ### Files
@@ -239,6 +273,7 @@ All settings are in the `[Drive shafts]` section of the config.
 | `scad/fit_test.scad` | The fit test. |
 | `scad/reduction_gear.scad` | The reduction gear. |
 | `scad/drive_shaft.scad` | The two drive shafts. |
+| `scad/drive_gear.scad` | The drive gears. |
 | `scad/lib/involute_gear.scad` | An involute spur gear library. It has no external dependencies. |
 | `render.ps1` | Exports the parts to `stl/`. |
 | `render_previews.ps1` | Makes the PNG images in `renders/`. |

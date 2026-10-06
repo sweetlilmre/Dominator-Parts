@@ -20,6 +20,7 @@ $all = @(
     @{ name="gear_iso";           part="gear";           cam=$iso; size="1400,1050"; ver=$false },
     @{ name="gear_top";           part="gear";           cam=$top; size="1400,1050"; ver=$false },
     @{ name="reduction_gear_iso"; part="reduction_gear"; cam=$iso; size="1400,1050"; ver=$false },
+    @{ name="drive_gear_1";      part="drive_gear_1";   cam=$iso; size="1400,1050"; ver=$false },
     @{ name="fit_test";           part="fit_test";       cam=$iso; size="1400,900";  ver=$false },
     # Close-up on the socket in the top of the hub. Fixed camera, not viewall:
     # the point is the joint, not the whole part.
