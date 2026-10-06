@@ -1,12 +1,19 @@
-# Reference material downloaded from the internet is not ours to redistribute.
-# Only the owner's own photographs (own_*.jpg) are tracked.
+# Only the owner's own photographs (own_*.jpg) are tracked under reference/.
+# Git will not look inside an ignored directory, so each per-version folder is
+# un-ignored first and then filtered by the same own_* rule.
 reference/*
 !reference/own_*.jpg
-
-# Measurement sheets derived from internet product photos.
-measure/2_cam_side_view.png
-measure/3_reduction_gear.png
-measure/4_cam_underside.png
+!reference/cam_v1/
+!reference/cam_v2/
+reference/cam_v1/*
+reference/cam_v2/*
+!reference/cam_v1/own_*.jpg
+!reference/cam_v2/own_*.jpg
+!reference/drive_gears/
+reference/drive_gears/*
+# own_* rather than own_*.jpg here: the folder also holds the owner's
+# measurement notes, which are his own material by the same rule.
+!reference/drive_gears/own_*
 
 # Scratch
 *.bak

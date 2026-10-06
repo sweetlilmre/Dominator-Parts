@@ -75,9 +75,62 @@ Parameters were renamed to match the glossary in `CONTEXT.md`. Shape verified id
 | `spline_boss_h` | `plug_h` |
 | `spline_pocket_extra` | `socket_extra` |
 
-## Print 2
+## Print 2, 2026-09-28
 
-Not yet printed. Config as committed after print 1 feedback.
+Cam v2 and gear. Meant to test `spline_clearance = 0.05` on the owner's printer, but the cam was sliced from `stl/dominator_cam_v2.stl` before it was re-exported in 9c4f0b4, so it is the export from 120f812 with the socket cut at 0.15. The gear is from 5ddb780; its plug is nominal and does not depend on the clearance. So this print tests 0.15 on the owner's printer at the current spline (11 teeth, 16 mm tip to tip), and checks tooth solidity.
+
+| Parameter | Value |
+|---|---|
+| `cam_version` | v2 (lobe height 5) |
+| `pin_d` / `bore_clearance` | 6.00 / 0.4 (bore 6.4) |
+| `spline_teeth` / `spline_od` | 11 / 16 |
+| `spline_clearance` | 0.15 in the printed socket (config at the time said 0.05) |
+
+Slicer settings: Prusa MK4, PETG, 6 perimeters.
+
+Observed:
+
+- The spline joint failed at 0.15.
+
+Followed up with a fit test coupon on the owner's printer, below.
+
+## Spline fit test coupon, owner's printer, after print 2
+
+`part = "fit_test"` at the current spline (11 teeth, 16 mm tip to tip), sockets at `spline_clearance` 0, 0.05, 0.10 and 0.15 with loose plugs at nominal. Printed on the owner's Prusa MK4 after print 2 failed at 0.15.
+
+Observed:
+
+- **0.05 works** on the owner's printer.
+
+Changes made: none; `spline_clearance` was already 0.05. The coupon cuts its sockets with the same `socket_cut` module as the cam, so it is taken as enough evidence without a 0.05 cam print. The cam and gear at 0.05 have not been printed yet.
+
+This settles the open question in the contributor's coupon entry below: the owner's printer wants 0.05 and the contributor's printer 0.15, so the difference is the printer, not the spline size or the part geometry.
+
+## Spline fit test coupon, 2026-09-22
+
+`part = "fit_test"`, printed at the spline as it now stands: 11 teeth, 16 mm
+tip to tip, `spline_addendum` / `spline_dedendum` 0.9. Four sockets at
+`spline_clearance` 0, 0.05, 0.10 and 0.15 with loose plugs at nominal.
+
+Printed on a contributor's printer, not the owner's; settings not recorded.
+
+Observed:
+
+- **0.15 is the best fit** on that printer.
+
+Changes made:
+
+- `spline_clearance` 0.05 to 0.15, later reverted to 0.05 for the owner's printer (see print 2).
+
+Open question: print 1 used 0.15 and was reported as having play. The two
+disagree. The differences between them are the spline size (12 T / 14 mm then,
+11 T / 16 mm now), the printer settings (print 1 was PETG, 0.2 mm layers, 2
+perimeters, 15 percent infill; the coupon's settings are not recorded), and the
+part geometry the joint was printed as part of (a 47 mm gear and a 71 mm cam
+then, small pucks now). Which of those accounts for it is not known. The real
+parts should be printed and checked before the 0.15 is trusted for good.
+
+Resolved: the owner's coupon after print 2 found 0.05 best on the owner's printer, so the two results reflect different printers.
 
 ## Slicing note
 

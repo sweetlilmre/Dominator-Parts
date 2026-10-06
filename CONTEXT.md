@@ -1,18 +1,22 @@
-# Dominator Cam
+# Dominator Replacement Parts
 
-Vocabulary for the 3D printed replacement steering cam of the Kreepy Krauly Dominator pool cleaner. The cam turns in the gearbox and its lobes lift a follower that changes the cleaner's direction.
+Vocabulary for the 3D printed replacement parts of the Kreepy Krauly Dominator pool cleaner: the cam assembly and the gearbox parts. The cam turns in the gearbox and its lobes lift a follower that changes the cleaner's direction.
 
 ## Language
 
 ### Parts
 
 **Cam assembly**:
-The complete replacement: cam, gear and washer on the pin.
+The cam, gear and washer on the pin.
 _Avoid_: cam kit, steering cam
 
 **Cam**:
 The flat lobed part that the follower runs on, with its hub. The part that wears.
 _Avoid_: cam plate, cam disc, tray
+
+**Cam version**:
+Which moulding of the cam a part or measurement refers to, taken from the number stamped on both faces. v1 and v2 differ in the lobe pattern and the lobe height only. Selected by `cam_version`.
+_Avoid_: revision, mark, type, generation
 
 **Plate**:
 The flat body of the cam from which the lobes and hub rise.
@@ -39,15 +43,19 @@ The part of the gearbox that rides on the cam's lobes and triggers the steering.
 _Avoid_: pawl, finger, follower gear
 
 **Reduction gear**:
-One of the gearbox gears between the turbine and the cam: a ring identical to the gear, with a pinion on top. Not part of the cam assembly; modelled as an optional extra.
+One of the gearbox gears between the turbine and the cam: a ring with a pinion on top. A gearbox part, not part of the cam assembly. Its ring reads the same as the gear today but is dimensioned separately.
 _Avoid_: follower gear, compound gear, cam gear kit gear
+
+**Gearbox parts**:
+The printed replacements for gearbox parts outside the cam assembly: the reduction gear and the drive shafts.
+_Avoid_: optional parts, extras
 
 **Pinion**:
 The small toothed wheel on top of a reduction gear that drives the next gear in the train.
 _Avoid_: small gear, spur
 
 **Drive shaft**:
-One of the two long gearbox shafts, long and short, that carry an 8 tooth pinion profile along their length and transfer drive to the wheels. Not part of the cam assembly.
+One of the two long gearbox shafts, long and short, that carry an 8 tooth pinion profile along their length and transfer drive to the wheels. A gearbox part, not part of the cam assembly.
 _Avoid_: drive gear, axle
 
 ### Spline joint

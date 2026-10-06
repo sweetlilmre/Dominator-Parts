@@ -26,16 +26,26 @@ module cam_gear_printable() {
 
 // Slicer modifier volumes for the gear, in the printable orientation.
 // Tooth band: ring from gear_band inside the root circle to outside the tips.
+// It also serves the reduction gear ring, which is dimensioned separately, so
+// it spans the smaller root, the larger tip and the thicker of the two.
 module gear_tooth_modifier() {
-    rr = gear_root_radius(gear_teeth, gear_module, gear_dedendum);
-    rt = gear_tip_radius(gear_teeth, gear_module, gear_addendum);
+    rr = min(gear_root_radius(gear_teeth, gear_module, gear_dedendum),
+             gear_root_radius(rg_ring_teeth, rg_ring_module, gear_dedendum));
+    rt = max(gear_tip_radius(gear_teeth, gear_module, gear_addendum),
+             gear_tip_radius(rg_ring_teeth, rg_ring_module, gear_addendum));
+    t = max(gear_thickness, rg_ring_thickness);
     translate([0, 0, -0.5])
         difference() {
-            cylinder(h = gear_thickness + 1, r = rt + 2);
-            translate([0, 0, -1]) cylinder(h = gear_thickness + 3, r = rr - gear_band);
+            cylinder(h = t + 1, r = rt + 2);
+            translate([0, 0, -1]) cylinder(h = t + 3, r = rr - gear_band);
         }
 }
-// Plug: cylinder covering the spline plug and the gear body under it.
-module gear_plug_modifier() {
-    translate([0, 0, -0.5]) cylinder(h = gear_thickness + plug_h + 1, r = spline_od / 2 + 1.5);
+// Core: cylinder over the centre of a gear. On the gear it covers the plug
+// and the gear body under it; on the reduction gear the pinion, the plate and
+// the ring under them. Sized from the taller and wider of the two, so one
+// modifier serves both.
+module gear_core_modifier() {
+    h = max(gear_thickness + plug_h, rg_ring_thickness + rg_plate_h + rg_pinion_h);
+    r = max(spline_od, rg_pinion_od) / 2 + 1.5;
+    translate([0, 0, -0.5]) cylinder(h = h + 1, r = r);
 }

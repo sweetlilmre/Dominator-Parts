@@ -1,0 +1,23 @@
+drive_gear_1
+drive_gear_1_outer_diameter = 35
+drive_gear_1_outer_teeth_count = 26
+drive_gear_1_outer_height = 10
+drive_gear_1_inner_diameter = 25
+drive_gear_1_inner_teeth_count = 19
+drive_gear_1_inner_height = 11
+drive_gear_1_total_height = 21
+
+drive_gear_2
+drive_gear_2_diameter = 30
+drive_gear_2_teeth_count = 23
+drive_gear_2_height = 15
+drive_gear_2_height_spacer = 1.5mm (one on either side)
+
+drive_gear_3
+drive_gear_3_teeth_count = 26
+drive_gear_3_diameter = 35
+drive_gear_3_shaft_diameter = 18
+drive_gear_3_total_height = 30
+drive_gear_3_gear_height = 11
+drive_gear_3_shaft_height = 14
+drive_gear_3_shaft_height_short = 5
