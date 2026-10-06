@@ -132,6 +132,25 @@ parts should be printed and checked before the 0.15 is trusted for good.
 
 Resolved: the owner's coupon after print 2 found 0.05 best on the owner's printer, so the two results reflect different printers.
 
+## Drive gear 2, print 1, 2026-10-06
+
+`part = "drive_gear_2"` as committed: 23 teeth, tip diameter 31.25 mm, module
+1.25, gear body 15 mm, a 1.5 mm spacer at 14 mm diameter on each face, total
+18 mm, bore 6.4 mm. Printed on one spacer, no supports.
+
+Observed:
+
+- Correct. The gear meshes and the dimensions are right.
+
+This settles two open questions. The tip diameter of 31.25 is right and the
+owner's caliper reading of 30 was the odd tooth count reading it was taken to
+be: 23 is odd, so no tooth lies opposite another and a caliper cannot span tip
+to tip. The gear body of 15 mm is also right, against a trace of the side
+photograph that suggested 17 to 19; a photograph read along the axis of a part
+lying on its side is not reliable for that dimension.
+
+No config changes.
+
 ## Slicing note
 
 How to make the contact regions solid without a fully solid part is written up in `SLICING.md`: Fill density 100 percent on the modifier meshes, a modest perimeter count on the object itself.

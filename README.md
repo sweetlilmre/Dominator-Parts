@@ -3,7 +3,7 @@
 This project gives 3D printed replacement parts for the Kreepy Krauly Dominator pool cleaner:
 
 - **The cam assembly:** the cam, the gear and the washer. The cam controls the steering of the cleaner.
-- **Gearbox parts:** the reduction gear, the two drive shafts and drive gear 1.
+- **Gearbox parts:** the reduction gear, the two drive shafts and drive gears 1 and 2.
 
 The design is parametric OpenSCAD. All dimensions are in `scad/config.scad`. You can change them in the OpenSCAD Customizer.
 
@@ -259,6 +259,40 @@ To print drive gear 1: put the 26 tooth gear on the bed. You do not need
 supports. The bore goes through both gears.
 
 All settings are in the `[Drive gear 1]` section of the config.
+
+### Drive gear 2
+
+`stl/dominator_drive_gear_2.stl` is a 23 tooth gear from the gearbox. It meshes
+with the 19 tooth gear of drive gear 1. It has a spacer on each face. The
+spacers hold the gear away from its neighbours on the pin, so they are a part of
+the gear and not separate washers.
+
+| Item | Value |
+|---|---|
+| Teeth | 23 |
+| Tip diameter | 31.25 mm |
+| Module | 1.25 |
+| Gear body width | 15 mm |
+| Spacer | 1.5 mm high, 14 mm diameter, one on each face |
+| Total height | 18 mm |
+
+![Drive gear 2](renders/drive_gear_2.png)
+
+The module is not a value of its own. It comes from drive gear 1, because the
+two gears mesh and meshing gears must have the same module.
+
+The tip diameter is calculated from the module, not measured. 23 is an odd
+number, so no tooth is opposite another tooth. A caliper cannot touch two
+opposite tips, and the reading is too small: the owner read 30 mm for a true
+31.25 mm.
+
+The gear body is 15 mm. A trace of the side photograph gave 17 to 19 mm, but a
+print showed that the caliper reading of 15 mm is correct (see `PRINT_LOG.md`).
+
+To print drive gear 2: put one spacer on the bed. You do not need supports. The
+spacer is small, so use a brim if the part comes loose.
+
+All settings are in the `[Drive gear 2]` section of the config.
 
 ## Change the design
 

@@ -267,12 +267,37 @@ dg1_module = gear_module_from_od(dg1_outer_od, dg1_outer_teeth);
 // against the 26.25 this gives. If a better measurement ever contradicts it,
 // replace this with the measured value.
 dg1_inner_od = dg1_module * (dg1_inner_teeth + 2);
-// Tooth depth factors. Standard, unlike the cam gear's deliberately stubby
-// teeth: the root to tip ratio measured on the outer gear implies a dedendum
-// near 1.29, and the drive shaft pinion it meshes with takes the library
-// defaults. Backlash is shared with that pinion for the same reason.
-dg1_addendum = 1.0;
-dg1_dedendum = 1.25;
+// Tooth depth factors, shared by every drive gear. Standard, unlike the cam
+// gear's deliberately stubby teeth: the root to tip ratio measured on drive
+// gear 1's outer gear implies a dedendum near 1.29, and the drive shaft pinion
+// the train meshes with takes the library defaults. Backlash is shared with
+// that pinion for the same reason.
+dg_addendum = 1.0;
+dg_dedendum = 1.25;
+
+/* [Drive gear 2] */
+// A single gear with a spacer boss on each face, so it stands off its
+// neighbours on the pin. The OEM part has material saving slots in its web;
+// the printed one is solid.
+// (owner) Counted twice.
+dg2_teeth = 23;
+// The module is drive gear 1's, not an independent value: this gear meshes
+// with drive gear 1's 19 tooth half, and meshing gears must share a module.
+dg2_module = dg1_module;
+// Derived rather than measured, for the same reason as drive gear 1's inner
+// gear: 23 is odd, so no tooth lies opposite another, a caliper cannot span
+// tip to tip and reads low. The owner read 30 against this 31.25.
+dg2_od = dg2_module * (dg2_teeth + 2);
+// Face width of the gear body, without the spacers. (owner) A trace of the side
+// photograph suggested 17 to 19 and was wrong; the printed gear at 15 is
+// correct, so the caliper reading stands and the trace is not to be trusted for
+// a dimension along the axis of a part photographed from the side.
+dg2_h = 15;
+// Spacer boss on each face. Height (owner); a trace of the side photograph
+// gives 1.56. The diameter is from the same trace and is not critical: it only
+// has to clear the root circle, which is 25.6 mm.
+dg2_spacer_h = 1.5;
+dg2_spacer_d = 14;
 
 /* [Slicer modifiers] */
 // Modifier volumes for PrusaSlicer. Load each as a modifier on its part and
