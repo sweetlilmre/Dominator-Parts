@@ -59,7 +59,7 @@ One of the two long gearbox shafts, long and short, that carry an 8 tooth pinion
 _Avoid_: axle
 
 **Drive gear**:
-One of the gears in the gearbox that drives the drive shafts. Numbered 1 to 3 after the owner's photographs. Drive gear 1 is a compound gear: a 26 tooth gear with a 19 tooth gear on the same axis. A gearbox part, not part of the cam assembly.
+One of the gears in the gearbox that drives the drive shafts. Numbered 1 to 3 after the owner's photographs. Drive gear 1 is a compound gear: a 26 tooth gear with a 19 tooth gear on the same axis. Drive gear 2 is a single 23 tooth gear and meshes with drive gear 1's 19 tooth gear. A gearbox part, not part of the cam assembly.
 _Avoid_: drive shaft, idler, transfer gear
 
 ### Spline joint
