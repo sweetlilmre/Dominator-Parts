@@ -16,6 +16,10 @@
 //   part = "cam_socket_modifier" PrusaSlicer modifier: solid hub around the cam socket
 //   part = "gear_tooth_modifier" PrusaSlicer modifier: solid tooth band on the gear
 //   part = "gear_core_modifier"  PrusaSlicer modifier: solid plug on the gear, or pinion on the reduction gear
+//   part = "turbine_drive_side"     turbine, drive gear side
+//   part = "turbine_reduction_side" turbine, reduction gear side
+//   part = "turbine_blade"          one turbine blade, print it 5 times
+//   part = "turbine_assembly"       the three turbine parts assembled
 //   part = "fit_test"  coupon: sockets at several clearances plus loose plugs
 //   part = "all"       everything laid out
 INVOLUTE_GEAR_NO_DEMO = true;
@@ -25,10 +29,11 @@ include <cam_gear.scad>
 include <reduction_gear.scad>
 include <drive_shaft.scad>
 include <drive_gear.scad>
+include <turbine.scad>
 include <fit_test.scad>
 
 /* [Part selection] */
-part = "all"; // ["all", "cam", "gear", "washer", "reduction_gear", "assembly", "shaft_long", "shaft_short", "drive_gear_1", "drive_gear_2", "drive_gear_3", "fit_test", "cam_rim_modifier", "cam_socket_modifier", "gear_tooth_modifier", "gear_core_modifier"]
+part = "all"; // ["all", "cam", "gear", "washer", "reduction_gear", "assembly", "shaft_long", "shaft_short", "drive_gear_1", "drive_gear_2", "drive_gear_3", "turbine_drive_side", "turbine_reduction_side", "turbine_blade", "turbine_assembly", "fit_test", "cam_rim_modifier", "cam_socket_modifier", "gear_tooth_modifier", "gear_core_modifier"]
 
 module assembled() {
     cam();
@@ -53,6 +58,14 @@ if (part == "cam") {
     drive_gear_2();
 } else if (part == "drive_gear_3") {
     drive_gear_3();
+} else if (part == "turbine_drive_side") {
+    turbine_drive_side();
+} else if (part == "turbine_reduction_side") {
+    turbine_reduction_side();
+} else if (part == "turbine_blade") {
+    turbine_blade_printable();
+} else if (part == "turbine_assembly") {
+    turbine_assembly();
 } else if (part == "fit_test") {
     fit_test();
 } else if (part == "assembly") {
@@ -89,6 +102,8 @@ echo(str("drive gear 3: module ", dg3_module, ", ", dg3_teeth, " T at ", dg3_mod
          " mm, height ", dg3_height(), " mm, sockets ", dg3_short_socket, " + ", dg3_long_socket,
          " mm, wall ", dg3_height() - dg3_short_socket - dg3_long_socket, " mm, ",
          dg3_split ? str("split at z ", dg3_cut_z()) : "one piece"));
+echo(str("turbine: disc ", turbine_disc_d, " x ", turbine_disc_t, " mm, ", turbine_blades,
+         " blades ", turbine_blade_l(), " mm long, overall width ", turbine_width(), " mm"));
 echo(str("cam version = ", cam_version, ": lobe height ", lobe_height,
          " mm, ", len(lobes), " lobes"));
 

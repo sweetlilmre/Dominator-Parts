@@ -58,6 +58,18 @@ _Avoid_: small gear, spur
 One of the two long gearbox shafts, long and short, that carry an 8 tooth pinion profile along their length and transfer drive to the wheels. A gearbox part, not part of the cam assembly.
 _Avoid_: axle
 
+**Turbine**:
+The part that drives the cleaner. Water sucked through it turns its blades, which turn the gear train. Printed as three parts: a drive gear side, a reduction gear side and a blade printed five times. A gearbox part, not part of the cam assembly.
+_Avoid_: impeller, rotor, fan, propeller
+
+**Blade**:
+One of the five curved vanes of the turbine. Each blade passes right through both discs and is glued.
+_Avoid_: vane, fin, paddle, wing
+
+**Disc**:
+One of the two end plates of the turbine that the blades pass through, each carrying its gear on a shaft.
+_Avoid_: plate, end cap, flange, hub
+
 **Drive gear**:
 One of the gears in the gearbox that drives the drive shafts. Numbered 1 to 3 after the owner's photographs. Drive gear 1 is a compound gear: a 26 tooth gear with a 19 tooth gear on the same axis. Drive gear 2 is a single 23 tooth gear and meshes with drive gear 1's 19 tooth gear. Drive gear 3 is a 26 tooth gear driven by drive gear 2; it does not turn on the pin but joins the long and short drive shafts, which fit into a socket in each of its two bosses. A gearbox part, not part of the cam assembly.
 _Avoid_: drive shaft, idler, transfer gear

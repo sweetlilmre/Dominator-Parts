@@ -9,7 +9,7 @@ param(
     # positionally. Without it PowerShell gives the second name to the next
     # positional parameter, and the extra parts are silently dropped.
     [Parameter(Position = 0, ValueFromRemainingArguments = $true)]
-    [string[]]$Parts = @("cam", "gear", "washer", "reduction_gear", "shaft_long", "shaft_short", "drive_gear_1", "drive_gear_2", "drive_gear_3", "cam_rim_modifier", "cam_socket_modifier", "gear_tooth_modifier", "gear_core_modifier", "fit_test"),
+    [string[]]$Parts = @("cam", "gear", "washer", "reduction_gear", "shaft_long", "shaft_short", "drive_gear_1", "drive_gear_2", "drive_gear_3", "turbine_drive_side", "turbine_reduction_side", "turbine_blade", "cam_rim_modifier", "cam_socket_modifier", "gear_tooth_modifier", "gear_core_modifier", "fit_test"),
     [ValidateSet("v1", "v2")][string]$CamVersion = "v1"
 )
 

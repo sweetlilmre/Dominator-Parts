@@ -24,6 +24,10 @@ $all = @(
     @{ name="drive_gear_2";      part="drive_gear_2";   cam=$iso; size="1400,1050"; ver=$false },
     # Full render: the fast preview draws the cut, mirrored halves with gaps.
     @{ name="drive_gear_3";      part="drive_gear_3";   cam=$iso; size="1400,1050"; ver=$false; render=$true },
+    @{ name="turbine_drive_side";     part="turbine_drive_side";     cam=$iso; size="1400,1050"; ver=$false },
+    @{ name="turbine_reduction_side"; part="turbine_reduction_side"; cam=$iso; size="1400,1050"; ver=$false },
+    @{ name="turbine_blade";          part="turbine_blade";          cam=$iso; size="1400,900";  ver=$false },
+    @{ name="turbine_assembly";       part="turbine_assembly";       cam=$iso; size="1400,1050"; ver=$false },
     @{ name="fit_test";           part="fit_test";       cam=$iso; size="1400,900";  ver=$false },
     # Close-up on the socket in the top of the hub. Fixed camera, not viewall:
     # the point is the joint, not the whole part.

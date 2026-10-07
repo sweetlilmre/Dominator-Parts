@@ -3,7 +3,7 @@
 This project gives 3D printed replacement parts for the Kreepy Krauly Dominator pool cleaner:
 
 - **The cam assembly:** the cam, the gear and the washer. The cam controls the steering of the cleaner.
-- **Gearbox parts:** the reduction gear, the two drive shafts and drive gears 1, 2 and 3.
+- **Gearbox parts:** the reduction gear, the two drive shafts, drive gears 1, 2 and 3, and the turbine.
 
 The design is parametric OpenSCAD. All dimensions are in `scad/config.scad`. You can change them in the OpenSCAD Customizer.
 
@@ -329,6 +329,48 @@ To print drive gear 3:
 
 All settings are in the `[Drive gear 3]` section of the config. Set `dg3_split = true` to print the gear in two halves instead. The halves are cut across the axis at the middle of the gear. They print on their cut faces, and you glue them together with four 1.75 mm filament dowels.
 
+
+### Turbine
+
+The turbine drives the cleaner. Water sucked through it turns the blades, which
+turn the gear train.
+
+`stl/dominator_turbine_drive_side.stl`, `stl/dominator_turbine_reduction_side.stl`
+and `stl/dominator_turbine_blade.stl` are the three printed parts. The blade file
+holds five blades.
+
+| Item | Value |
+|---|---|
+| Disc | 81 mm diameter, 6.5 mm thick |
+| Blades | 5, at 72 degrees |
+| Blade length | 53 mm |
+| Gap between the discs | 40 mm |
+| Drive side gear | 11 teeth, 16.25 mm, 18 mm of shaft |
+| Reduction side gear | 13 teeth, 18.75 mm, 29 mm of shaft |
+| Overall width | 100 mm |
+
+![Turbine assembled](renders/turbine_assembly.png)
+
+The OEM turbine is one moulding with the blades formed between the two discs.
+That shape needs a lot of support to print. This version is three parts that
+glue together.
+
+Each disc has five cutouts of the blade shape. The cutouts go right through, so
+each blade passes through both discs and is glued. The blade is therefore longer
+than the gap between the discs by one disc thickness at each end, and it finishes
+flush with both outer faces.
+
+Both discs print on their inner face, which is flat because the blades are
+separate. The shaft points up. There are no overhangs and you do not need
+supports. The blade has the same cross section along its whole length, so it
+stands on end and every layer is the same.
+
+The blade shape comes from the owner's trace of all five blades
+(`reference/turbine/own_turbine_blade_layout_trace.jpg`). The five outlines were
+put on top of each other and averaged, which cancels the wobble of a drawn line.
+The five traced areas agree to within 4 percent.
+
+All settings are in the `[Turbine]` and `[Turbine gears]` sections of the config.
 ## Change the design
 
 ### Files
@@ -343,6 +385,7 @@ All settings are in the `[Drive gear 3]` section of the config. Set `dg3_split =
 | `scad/reduction_gear.scad` | The reduction gear. |
 | `scad/drive_shaft.scad` | The two drive shafts. |
 | `scad/drive_gear.scad` | The drive gears. |
+| `scad/turbine.scad` | The turbine: two discs and the blade. |
 | `scad/lib/involute_gear.scad` | An involute spur gear library. It has no external dependencies. |
 | `render.ps1` | Exports the parts to `stl/`. |
 | `render_previews.ps1` | Makes the PNG images in `renders/`. |

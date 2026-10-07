@@ -1,0 +1,16 @@
+turbine_diameter = 81
+turbine_total_width = 100
+turbine_axle = same as others
+turbine_blade_length = 40
+turbine_number_of_blades = 5
+
+turbine_drive_gear_diameter = 16
+turbine_drive_gear_teeth = 11
+turbine_drive_gear_shaft_total_length = 18
+turbine_drive_gear_shaft_teeth_length = 10
+
+turbine_reduction_gear_diameter = 18
+turbine_reduction_gear_teeth = 13
+turbine_reduction_gear_shaft_total_length = 29
+turbine_reduction_gear_shaft_teeth_length = 14
+turbine_reduction_gear_shaft_neck_length = 11

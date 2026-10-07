@@ -342,6 +342,119 @@ dg3_split = false;
 dg3_dowel_count = 4;
 dg3_dowel_r = 10.5;
 
+/* [Turbine] */
+// The turbine is what drives the cleaner: water sucked through it turns the
+// blades, which turn the gear train. The OEM part is one moulding with the
+// blades formed between two end discs, which cannot be printed without heavy
+// support. It is modelled instead as three printed parts that glue together:
+// a drive gear side, a reduction gear side, and a blade printed five times.
+// Each disc carries a through cutout of the blade profile, so both discs print
+// flat on their inner face with no overhang, and each blade passes right
+// through both discs and is glued. The blade is therefore longer than the gap
+// between the discs by one disc thickness at each end.
+// Disc diameter. (owner)
+turbine_disc_d = 81;
+// Disc thickness. Derived, not measured: the owner's overall width of 100 less
+// the two shaft lengths and the blade gap leaves 6.5 at each end, and the owner
+// confirms that looks right.
+turbine_disc_t = 6.5;
+// Clear gap between the inner faces of the two discs. (owner)
+turbine_blade_gap = 40;
+// Recess around the shaft on the outer face. The OEM dish is 5 mm deep; the
+// printed part does not need that much, and 2 is enough. (owner)
+turbine_recess_h = 2;
+// Width of the full thickness ring left around the edge of the disc. The
+// recess is everything inside that ring, so the disc is a thin web with a rim,
+// as the OEM part is. (est) Not measured.
+turbine_rim_w = 2.5;
+// Blades, equally spaced. (trace) The owner's trace of all five gives gaps of
+// 71.2 to 73.3 degrees, so the spacing is taken as exactly 360/5.
+turbine_blades = 5;
+// Blade cross section, in mm, with the turbine axis at the origin. Traced from
+// reference/turbine/own_turbine_blade_layout_trace.jpg: all five outlines were
+// extracted, rotated onto one another and averaged, so the hand drawn wobble
+// is cancelled. The five traced areas agree within 4 percent and the mean is
+// 108.9 mm2, spanning radius 16.25 to 38.33. The root hole visible in
+// own_turbine_drive_gear_bottom.jpg sits at radius 23, inside that span and at
+// the thickest part of the blade, which is an independent check on the scale.
+// The blade does not twist: the section is the same along its whole length.
+// The averaged outline is then smoothed: it is resampled at even spacing and
+// rebuilt from its first 12 Fourier harmonics, which removes the wobble of a
+// drawn line while keeping the shape. The smoothed curve stays within 0.23 mm
+// of the traced one everywhere, 0.04 mm rms. One profile is used for all five
+// blades, each rotated into place, so every blade is identical.
+turbine_blade_profile = [
+    [12.742, 14.285], [13.306, 14.333], [13.855, 14.464],
+    [14.373, 14.691], [14.834, 15.017], [15.223, 15.427],
+    [15.538, 15.896], [15.788, 16.403], [15.979, 16.935],
+    [16.100, 17.488], [16.124, 18.052], [16.039, 18.611],
+    [15.881, 19.154], [15.691, 19.687], [15.511, 20.223],
+    [15.384, 20.774], [15.361, 21.338], [15.469, 21.892],
+    [15.672, 22.420], [15.914, 22.932], [16.152, 23.445],
+    [16.361, 23.970], [16.527, 24.511], [16.648, 25.064],
+    [16.739, 25.622], [16.823, 26.182], [16.917, 26.740],
+    [17.019, 27.296], [17.118, 27.853], [17.196, 28.414],
+    [17.242, 28.977], [17.246, 29.543], [17.210, 30.108],
+    [17.147, 30.670], [17.081, 31.232], [17.026, 31.795],
+    [16.977, 32.359], [16.913, 32.921], [16.801, 33.475],
+    [16.597, 34.002], [16.255, 34.449], [15.769, 34.731],
+    [15.211, 34.801], [14.662, 34.675], [14.183, 34.380],
+    [13.832, 33.940], [13.651, 33.406], [13.622, 32.842],
+    [13.689, 32.281], [13.793, 31.725], [13.883, 31.166],
+    [13.923, 30.602], [13.899, 30.037], [13.825, 29.476],
+    [13.727, 28.919], [13.624, 28.363], [13.525, 27.806],
+    [13.423, 27.249], [13.301, 26.697], [13.141, 26.154],
+    [12.933, 25.628], [12.692, 25.116], [12.435, 24.612],
+    [12.177, 24.109], [11.921, 23.604], [11.660, 23.102],
+    [11.376, 22.613], [11.055, 22.147], [10.697, 21.709],
+    [10.317, 21.290], [9.929, 20.878], [9.544, 20.463],
+    [9.162, 20.046], [8.776, 19.633], [8.368, 19.241],
+    [7.922, 18.893], [7.438, 18.601], [6.936, 18.340],
+    [6.439, 18.068], [5.976, 17.745], [5.587, 17.336],
+    [5.336, 16.832], [5.311, 16.272], [5.563, 15.773],
+    [6.022, 15.450], [6.565, 15.298], [7.129, 15.248],
+    [7.694, 15.234], [8.260, 15.210], [8.821, 15.146],
+    [9.375, 15.031], [9.919, 14.875], [10.457, 14.700],
+    [10.997, 14.532], [11.547, 14.397], [12.106, 14.312]
+];
+// Clearance added around the blade cutout in each disc, as a gap normal to
+// every edge. The blade is a press fit and is glued, so this is small. Printer
+// dependent, like spline_clearance: if the blade will not enter, raise it.
+turbine_blade_clearance = 0.10;
+
+/* [Turbine gears] */
+// Both turbine gears are odd tooth counts, so a caliper cannot span tip to tip
+// and reads low, exactly as on the drive gears. The owner read 16 and 18; at
+// the module 1.25 that every gear in this train shares, 11 and 13 teeth give
+// 16.25 and 18.75. The drive side gear is the same size as the reduction gear
+// pinion, though it is a separate part and a separate parameter.
+// The two shafts are not the same shape, which is why only one of them has a
+// neck in the owner's measurements. Seen in own_turbine_split.jpg, with the
+// drive side on the right and the reduction side on the left:
+//   drive      a boss off the disc, then the teeth, and the teeth are the end
+//   reduction  a boss, then the teeth, then a narrow tube beyond them
+// The boss is as wide as the gear on both. The narrow part is the reduction
+// side's end tube only.
+turbine_drive_teeth = 11;
+turbine_drive_od = 16.25;
+// (owner) Total 18 with 10 of teeth, so the boss is the remaining 8 and there
+// is nothing beyond the teeth.
+turbine_drive_shaft_l = 18;
+turbine_drive_teeth_l = 10;
+turbine_drive_neck_l = 0;
+turbine_reduction_teeth = 13;
+turbine_reduction_od = 18.75;
+// (owner) Total 29 with 14 of teeth and an 11 neck beyond them, so the boss is
+// the remaining 4.
+turbine_reduction_shaft_l = 29;
+turbine_reduction_teeth_l = 14;
+turbine_reduction_neck_l = 11;
+// The boss between the disc and the teeth is not a parameter: it takes each
+// gear's own tip diameter, so the teeth run straight out of it.
+// Diameter of the reduction side's tube beyond the teeth. (est) Not measured,
+// but clearly much narrower than the gear in own_turbine_split.jpg.
+turbine_neck_d = 9;
+
 /* [Slicer modifiers] */
 // Modifier volumes for PrusaSlicer. Load each as a modifier on its part and
 // give it ONLY Fill density = 100 percent. Set the perimeter count on the
