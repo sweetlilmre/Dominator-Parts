@@ -321,17 +321,13 @@ The module comes from drive gear 1, because drive gear 3 meshes with drive gear 
 
 The sockets have the tooth profile of the drive shaft pinion. `dg3_socket_clearance` adds a gap of 0.3 mm on all sides. This gives a slide fit, because the shafts are loose in the OEM part. If a shaft is too tight or too loose, change the value and print the gear again.
 
-The STL has two halves. The cut goes across the axis, at the middle of the gear. You glue the halves together after printing.
+To print drive gear 3:
 
-To print and assemble drive gear 3:
+1. Print it in one piece, as exported, with the short boss on the bed. You do not need supports. The wall between the sockets prints as a 13 mm bridge over the short socket.
+2. If the part is not stable on the bed, use a brim.
+3. Push each drive shaft into its socket. Make sure that it slides in and turns the gear without play.
 
-1. Print the two halves as exported, with the cut faces on the bed. You do not need supports. In the taller half, the wall between the sockets is a short bridge.
-2. Put a 1.75 mm filament dowel into each of the 4 holes in one half.
-3. Put the two halves together without glue. Make sure that the teeth align.
-4. Glue the halves and clamp them.
-5. Push each drive shaft into its socket. Make sure that it slides in and turns the gear without play.
-
-All settings are in the `[Drive gear 3]` section of the config. Set `dg3_split = false` to print the gear in one piece.
+All settings are in the `[Drive gear 3]` section of the config. Set `dg3_split = true` to print the gear in two halves instead. The halves are cut across the axis at the middle of the gear. They print on their cut faces, and you glue them together with four 1.75 mm filament dowels.
 
 ## Change the design
 

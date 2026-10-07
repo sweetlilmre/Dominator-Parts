@@ -109,9 +109,9 @@ module dg3_dowels() {
                 cylinder(h = 2 * ds_dowel_depth, d = ds_dowel_d + ds_dowel_clearance, $fn = 24);
 }
 
-// Printable layout. Split: both halves stand on their cut faces, side by side,
-// so the teeth start on the bed and the dowel holes open upward. Each socket
-// floor or the wall is the only bridge, over a 13 mm hole.
+// Printable layout. One piece (default): standing on the short boss; the wall
+// is the only bridge, over the 13 mm short socket. Split: both halves stand on
+// their cut faces, side by side, and the dowel holes open upward.
 module drive_gear_3() {
     zc = dg3_cut_z();
     H = dg3_height();

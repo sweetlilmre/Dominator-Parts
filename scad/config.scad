@@ -328,9 +328,12 @@ dg3_long_socket = 12;
 // offset(delta) on the shaft's own tooth profile. A slide fit: the shafts sit
 // loosely in the OEM bosses. (est) Tune after a print.
 dg3_socket_clearance = 0.3;
-// Split across the axis at mid-height of the gear, so the halves print on
-// their cut faces and are glued together. false = one piece.
-dg3_split = true;
+// false = one piece, standing on the short boss: no supports, no glue joint
+// for the long shaft's torque to cross, and the teeth stay whole. The wall is
+// the only unsupported layer, a 13 mm bridge over the short socket.
+// true = two halves cut across the axis at mid-height of the gear, printed
+// on their cut faces and glued, aligned by the dowels below.
+dg3_split = false;
 // Dowel holes on the cut face for 1.75 mm filament, sized like the drive shaft
 // dowels (ds_dowel_d, ds_dowel_clearance, ds_dowel_depth). They sit in the
 // solid gear ring between the socket and the tooth roots.

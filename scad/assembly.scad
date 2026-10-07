@@ -87,7 +87,8 @@ echo(str("drive gear 2: module ", dg2_module, ", ", dg2_teeth, " T at ", dg2_od,
          " mm, body ", dg2_h, " mm, height ", dg2_height(), " mm"));
 echo(str("drive gear 3: module ", dg3_module, ", ", dg3_teeth, " T at ", dg3_module * (dg3_teeth + 2),
          " mm, height ", dg3_height(), " mm, sockets ", dg3_short_socket, " + ", dg3_long_socket,
-         " mm, wall ", dg3_height() - dg3_short_socket - dg3_long_socket, " mm, cut at z ", dg3_cut_z()));
+         " mm, wall ", dg3_height() - dg3_short_socket - dg3_long_socket, " mm, ",
+         dg3_split ? str("split at z ", dg3_cut_z()) : "one piece"));
 echo(str("cam version = ", cam_version, ": lobe height ", lobe_height,
          " mm, ", len(lobes), " lobes"));
 
