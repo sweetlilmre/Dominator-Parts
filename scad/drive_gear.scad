@@ -67,3 +67,71 @@ module drive_gear_2() {
 
 // Total height of drive gear 2, spacers included.
 function dg2_height() = dg2_h + 2 * dg2_spacer_h;
+
+// Drive gear 3: a 26 tooth gear with a boss on each face and an 8 lobe socket
+// in each end for the drive shafts. No bore: a solid wall separates the
+// sockets, and the gear is carried by the shafts rather than the pin.
+// Origin: the end face of the short boss. Z up.
+function dg3_height() = dg3_short_h + dg3_gear_h + dg3_long_h;
+// Height of the cut plane, at mid-height of the gear.
+function dg3_cut_z() = dg3_short_h + dg3_gear_h / 2;
+
+// The drive shaft pinion profile grown by the socket clearance. Built from the
+// same values the shaft uses, so a change to the shaft moves the socket with it.
+module dg3_socket_2d() {
+    offset(delta = dg3_socket_clearance)
+        gear_2d(8, gear_module_from_od(ds_gear_od, 8), pa = 20, backlash = ds_tooth_backlash);
+}
+
+module drive_gear_3_whole() {
+    H = dg3_height();
+    difference() {
+        union() {
+            cylinder(h = H, d = dg3_boss_d);
+            translate([0, 0, dg3_short_h])
+                spur_gear(dg3_teeth, dg3_module, dg3_gear_h,
+                          pa = gear_pressure_angle, backlash = ds_tooth_backlash, bore = 0,
+                          addendum = dg_addendum, dedendum = dg_dedendum,
+                          tip_round = gear_tip_round, chamfer = gear_chamfer);
+        }
+        // short shaft socket, open at z = 0
+        translate([0, 0, -1]) linear_extrude(dg3_short_socket + 1) dg3_socket_2d();
+        // long shaft socket, open at the top
+        translate([0, 0, H - dg3_long_socket]) linear_extrude(dg3_long_socket + 1) dg3_socket_2d();
+    }
+}
+
+// Dowel holes centred on the cut plane, reaching ds_dowel_depth into each half.
+module dg3_dowels() {
+    for (i = [0 : dg3_dowel_count - 1])
+        rotate(i * 360 / dg3_dowel_count + 45)
+            translate([dg3_dowel_r, 0, dg3_cut_z() - ds_dowel_depth])
+                cylinder(h = 2 * ds_dowel_depth, d = ds_dowel_d + ds_dowel_clearance, $fn = 24);
+}
+
+// Printable layout. Split: both halves stand on their cut faces, side by side,
+// so the teeth start on the bed and the dowel holes open upward. Each socket
+// floor or the wall is the only bridge, over a 13 mm hole.
+module drive_gear_3() {
+    zc = dg3_cut_z();
+    H = dg3_height();
+    big = dg3_module * (dg3_teeth + 2) + 10;
+    if (!dg3_split) {
+        drive_gear_3_whole();
+    } else {
+        // half A: short boss and the lower half of the gear, short boss up
+        translate([0, 0, zc]) mirror([0, 0, 1])
+            difference() {
+                drive_gear_3_whole();
+                dg3_dowels();
+                translate([-big / 2, -big / 2, zc]) cube([big, big, H]);
+            }
+        // half B: upper half of the gear and the long boss, long boss up
+        translate([dg3_module * (dg3_teeth + 2) + 6, 0, -zc])
+            difference() {
+                drive_gear_3_whole();
+                dg3_dowels();
+                translate([-big / 2, -big / 2, -1]) cube([big, big, zc + 1]);
+            }
+    }
+}

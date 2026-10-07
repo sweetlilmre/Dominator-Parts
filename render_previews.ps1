@@ -22,7 +22,8 @@ $all = @(
     @{ name="reduction_gear_iso"; part="reduction_gear"; cam=$iso; size="1400,1050"; ver=$false },
     @{ name="drive_gear_1";      part="drive_gear_1";   cam=$iso; size="1400,1050"; ver=$false },
     @{ name="drive_gear_2";      part="drive_gear_2";   cam=$iso; size="1400,1050"; ver=$false },
-    @{ name="drive_gear_3";      part="drive_gear_3";   cam=$iso; size="1400,1050"; ver=$false },
+    # Full render: the fast preview draws the cut, mirrored halves with gaps.
+    @{ name="drive_gear_3";      part="drive_gear_3";   cam=$iso; size="1400,1050"; ver=$false; render=$true },
     @{ name="fit_test";           part="fit_test";       cam=$iso; size="1400,900";  ver=$false },
     # Close-up on the socket in the top of the hub. Fixed camera, not viewall:
     # the point is the joint, not the whole part.
@@ -66,6 +67,7 @@ foreach ($v in $todo) {
         # $args is an automatic variable in PowerShell; do not assign to it.
         $oargs = @("-o", $out, "--imgsize=$($v.size)", "--colorscheme=$scheme", "--camera=$($v.cam)")
         if (-not $v.noviewall) { $oargs += @("--viewall", "--autocenter") }
+        if ($v.render) { $oargs += "--render" }
         $oargs += @("-D", (Format-ScadString "part" $v.part), "-D", (Format-ScadString "cam_version" $cv), $scad)
         & $openscad @oargs 2>&1 | Where-Object { $_ -match "ERROR|WARNING" }
     }
