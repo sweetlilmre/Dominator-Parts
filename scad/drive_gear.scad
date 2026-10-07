@@ -109,8 +109,8 @@ module dg3_dowels() {
                 cylinder(h = 2 * ds_dowel_depth, d = ds_dowel_d + ds_dowel_clearance, $fn = 24);
 }
 
-// Printable layout. One piece (default): standing on the short boss; the wall
-// is the only bridge, over the 13 mm short socket. Split: both halves stand on
+// Printable layout. One piece (default): standing on the short boss; the gear
+// needs supports under its overhang, and the wall bridges the short socket. Split: both halves stand on
 // their cut faces, side by side, and the dowel holes open upward.
 module drive_gear_3() {
     zc = dg3_cut_z();

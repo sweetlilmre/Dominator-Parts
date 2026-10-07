@@ -323,7 +323,7 @@ The sockets have the tooth profile of the drive shaft pinion. `dg3_socket_cleara
 
 To print drive gear 3:
 
-1. Print it in one piece, as exported, with the short boss on the bed. You do not need supports. The wall between the sockets prints as a 13 mm bridge over the short socket.
+1. Print it in one piece, as exported, with the short boss on the bed. You must use supports under the gear, because the gear is wider than the boss below it. Put supports only there: use paint-on supports or "Support on build plate only". Make sure that no supports go into the short socket, and tick "Don't support bridges". The wall between the sockets prints as a 13 mm bridge over the short socket.
 2. If the part is not stable on the bed, use a brim.
 3. Push each drive shaft into its socket. Make sure that it slides in and turns the gear without play.
 

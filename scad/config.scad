@@ -328,9 +328,11 @@ dg3_long_socket = 12;
 // offset(delta) on the shaft's own tooth profile. A slide fit: the shafts sit
 // loosely in the OEM bosses. (est) Tune after a print.
 dg3_socket_clearance = 0.3;
-// false = one piece, standing on the short boss: no supports, no glue joint
-// for the long shaft's torque to cross, and the teeth stay whole. The wall is
-// the only unsupported layer, a 13 mm bridge over the short socket.
+// false = one piece, standing on the short boss: no glue joint for the long
+// shaft's torque to cross, and the teeth stay whole. The gear overhangs the
+// 18 mm boss from z = 5, so it needs supports under it (from the bed, 5 mm
+// tall). The wall is a 13 mm bridge over the short socket; keep supports out
+// of the socket.
 // true = two halves cut across the axis at mid-height of the gear, printed
 // on their cut faces and glued, aligned by the dowels below.
 dg3_split = false;
