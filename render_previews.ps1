@@ -22,6 +22,7 @@ $all = @(
     @{ name="reduction_gear_iso"; part="reduction_gear"; cam=$iso; size="1400,1050"; ver=$false },
     @{ name="drive_gear_1";      part="drive_gear_1";   cam=$iso; size="1400,1050"; ver=$false },
     @{ name="drive_gear_2";      part="drive_gear_2";   cam=$iso; size="1400,1050"; ver=$false },
+    @{ name="drive_gear_3";      part="drive_gear_3";   cam=$iso; size="1400,1050"; ver=$false },
     @{ name="fit_test";           part="fit_test";       cam=$iso; size="1400,900";  ver=$false },
     # Close-up on the socket in the top of the hub. Fixed camera, not viewall:
     # the point is the joint, not the whole part.
@@ -39,6 +40,18 @@ if (-not $openscad) {
     exit 1
 }
 
+# Builds a -D assignment of an OpenSCAD string, e.g. part="cam". Windows
+# PowerShell 5.1 and pwsh before 7.3 pass arguments to native programs raw,
+# so the quotes must be backslash-escaped to reach OpenSCAD. pwsh 7.3+
+# (PSNativeCommandArgumentPassing = Windows or Standard) escapes them itself,
+# and a pre-escaped \" arrives literally and breaks the parse.
+function Format-ScadString([string]$name, [string]$value) {
+    $legacy = -not (Test-Path variable:PSNativeCommandArgumentPassing) -or
+        $PSNativeCommandArgumentPassing -eq "Legacy"
+    if ($legacy) { return "$name=\`"$value\`"" }
+    return "$name=`"$value`""
+}
+
 $root = Split-Path -Parent $MyInvocation.MyCommand.Path
 $scad = Join-Path $root "scad\assembly.scad"
 New-Item -ItemType Directory -Force (Join-Path $root "renders") | Out-Null
@@ -53,7 +66,7 @@ foreach ($v in $todo) {
         # $args is an automatic variable in PowerShell; do not assign to it.
         $oargs = @("-o", $out, "--imgsize=$($v.size)", "--colorscheme=$scheme", "--camera=$($v.cam)")
         if (-not $v.noviewall) { $oargs += @("--viewall", "--autocenter") }
-        $oargs += @("-D", "part=\`"$($v.part)\`"", "-D", "cam_version=\`"$cv\`"", $scad)
+        $oargs += @("-D", (Format-ScadString "part" $v.part), "-D", (Format-ScadString "cam_version" $cv), $scad)
         & $openscad @oargs 2>&1 | Where-Object { $_ -match "ERROR|WARNING" }
     }
 }
