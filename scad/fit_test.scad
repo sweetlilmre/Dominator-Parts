@@ -16,12 +16,12 @@
 // printer, so there the number is added on top of it and the column is fine
 // tuning. The 0 column is therefore the production bore, not a zero bore.
 //
-// The range straddles zero because a press fit usually wants it to. A printer
-// never lands on the nominal size: it tends to shrink holes and grow posts, so
-// a cutout at a nominal 0 comes out slightly tight, which is what a press fit
-// is after. A positive only range can only find the loosest fit that still
-// works, never the best one, so the negative columns are the useful half for
-// the spline and the blade.
+// The range starts at zero. A printer never lands on the nominal size: it
+// tends to shrink holes and grow posts, so a cutout at a nominal 0 already
+// comes out slightly tight, which is what a press fit is after. No printer
+// tested so far has wanted less than 0 (owner's Prusa i3 MK4: spline 0.05;
+// a contributor's Ender 3 V3 KE: spline 0.15, blade 0), so the columns spend
+// their range above zero, in finer steps, where the answers have fallen.
 //
 // The coupon prints one column per candidate clearance, with all three
 // features in that column and the value engraved between them, so one number
@@ -38,13 +38,11 @@
 // with them. Every feature here is cut with the same module the real part
 // uses, so the coupon cannot drift away from what it stands in for.
 //
-// On the owner's printer the spline wanted 0.05; on a contributor's, 0.15.
-
-// Clearances to try, one column each, left to right. The steps are coarse on
-// purpose: find the two columns the right fit falls between and estimate the
-// value in the gap, rather than printing a long row of near identical ones. A
-// column may be too tight to assemble at all, which is a result, not a fault.
-ft_clearances = [-0.20, -0.10, 0, 0.10, 0.20];
+// Clearances to try, one column each, left to right. Steps of 0.05 cover the
+// range seen so far in four columns; if the best fit is at either end, extend
+// the list past it and print again. A column may be too tight to assemble at
+// all, which is a result, not a fault.
+ft_clearances = [0, 0.05, 0.10, 0.15];
 // Boss height. Must leave a floor under the socket, which is
 // plug_h + socket_extra deep.
 ft_boss_h = 9;
@@ -63,6 +61,12 @@ function ft_pitch() = hub_d + 4;
 function ft_boss_y()  =  hub_d / 2 + 2;
 function ft_label_y() = -4;
 function ft_blade_y() = -20;
+
+// A clearance as engraved, always with two decimals ("0.00", "0.10"), so the
+// labels read alike and match the values written in config.scad. Positive
+// values only, as the columns are.
+function ft_label_text(c) = let (h = round(c * 100))
+    str(floor(h / 100), ".", h % 100 < 10 ? "0" : "", h % 100);
 
 // The axle bore for a column: the production bore plus the column's value, so
 // the engraved number is how much has been added for fine tuning.
@@ -106,7 +110,7 @@ module fit_test() {
         translate([-p / 2, y0, 0]) cube([w, y1 - y0, ft_base_t]);
         for (i = [0 : len(ft_clearances) - 1]) {
             c = ft_clearances[i];
-            translate([i * p, ft_label_y(), 0]) ft_label(str(c));
+            translate([i * p, ft_label_y(), 0]) ft_label(ft_label_text(c));
             // blade cutout, right through the plate
             translate([i * p, ft_blade_y(), -1])
                 linear_extrude(ft_base_t + 2)
