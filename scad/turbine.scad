@@ -42,6 +42,20 @@ module turbine_blade_2d(i = 0, grow = 0) {
             polygon(turbine_blade_profile);
 }
 
+// Centre of the blade profile's bounding box, derived from the profile itself
+// so it follows any change to it.
+function turbine_blade_cx() =
+    (min([for (q = turbine_blade_profile) q[0]]) + max([for (q = turbine_blade_profile) q[0]])) / 2;
+function turbine_blade_cy() =
+    (min([for (q = turbine_blade_profile) q[1]]) + max([for (q = turbine_blade_profile) q[1]])) / 2;
+
+// The blade section moved to the origin, for anything that wants it on its own
+// rather than in its place on the turbine. Used by the fit test coupon.
+module turbine_blade_2d_centred(grow = 0) {
+    translate([-turbine_blade_cx(), -turbine_blade_cy()])
+        turbine_blade_2d(0, grow);
+}
+
 // The five cutouts through a disc, grown by the fit clearance.
 module turbine_blade_cutouts() {
     for (i = [0 : turbine_blades - 1])
