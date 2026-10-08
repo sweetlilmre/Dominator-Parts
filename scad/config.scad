@@ -418,9 +418,14 @@ turbine_blade_profile = [
     [10.997, 14.532], [11.547, 14.397], [12.106, 14.312]
 ];
 // Clearance added around the blade cutout in each disc, as a gap normal to
-// every edge. The blade is a press fit and is glued, so this is small. Printer
-// dependent, like spline_clearance: if the blade will not enter, raise it.
-turbine_blade_clearance = 0.10;
+// every edge. The blade is a press fit and is glued, so this is small.
+// (owner) Printed and settled: 0 gives a good tight fit on the owner's printer,
+// where the earlier guess of 0.10 was visibly loose. A nominal 0 is not a zero
+// gap, because a printer does not land on the nominal size; it is whatever that
+// printer's own oversizing of a hole leaves, which here is the press fit the
+// joint wants. Printer dependent, like spline_clearance: if the blade will not
+// enter, raise it, and the fit test coupon has columns either side of 0.
+turbine_blade_clearance = 0;
 
 /* [Turbine gears] */
 // Both turbine gears are odd tooth counts, so a caliper cannot span tip to tip

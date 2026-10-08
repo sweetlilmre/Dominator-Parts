@@ -57,21 +57,30 @@ module turbine_blade_2d_centred(grow = 0) {
 }
 
 // The five cutouts through a disc, grown by the fit clearance.
-module turbine_blade_cutouts() {
-    for (i = [0 : turbine_blades - 1])
-        translate([0, 0, -1])
-            linear_extrude(turbine_disc_t + 2)
-                turbine_blade_2d(i, turbine_blade_clearance);
+//
+// The two discs face each other, and the blades are straight, so in the built
+// turbine both discs must present the same pattern of holes in space. The
+// second disc gets there by being turned over, which is a half turn about a
+// horizontal axis, and a half turn mirrors the pattern. The blade section is
+// curved and has no mirror symmetry of its own, so the two discs cannot be the
+// same part: one of them must be made as the mirror image of the other, and
+// the turning over then brings the two patterns back into line.
+module turbine_blade_cutouts(mirrored = false) {
+    mirror([0, mirrored ? 1 : 0, 0])
+        for (i = [0 : turbine_blades - 1])
+            translate([0, 0, -1])
+                linear_extrude(turbine_disc_t + 2)
+                    turbine_blade_2d(i, turbine_blade_clearance);
 }
 
 // Z of the floor of the recess, which is where a blade finishes.
 function turbine_recess_z() = turbine_disc_t - turbine_recess_h;
 
 // A disc with its blade cutouts and the bore, without the shaft.
-module turbine_disc() {
+module turbine_disc(mirrored = false) {
     difference() {
         cylinder(h = turbine_disc_t, d = turbine_disc_d);
-        turbine_blade_cutouts();
+        turbine_blade_cutouts(mirrored);
         // the recess: everything inside the rim, on the outer face, so the
         // disc is a thin web with a full thickness ring around its edge
         translate([0, 0, turbine_disc_t - turbine_recess_h])
@@ -127,8 +136,10 @@ module turbine_drive_side() {
 }
 
 // The reduction gear side: the same, plus a narrow tube beyond the teeth.
+// Its blade cutouts are mirrored against the drive side's, so that the two
+// line up once this disc is turned over to face the other.
 module turbine_reduction_side() {
-    turbine_disc();
+    turbine_disc(true);
     translate([0, 0, turbine_recess_z() - eps])
         turbine_shaft(turbine_reduction_teeth, turbine_reduction_od,
                       turbine_reduction_boss_l() + turbine_recess_h,
@@ -147,10 +158,14 @@ module turbine_blade_printable() {
 }
 
 // The three parts assembled, for checking fit and overall width.
+// The three parts as they go together. The reduction side is turned over with
+// a half turn, which is what you do to the printed part; a mirror would not be
+// a fair picture, because no real part can be reflected. Its cutouts are made
+// mirrored for exactly this reason, so the half turn lines them up.
 module turbine_assembly() {
-    translate([0, 0, turbine_blade_gap + turbine_disc_t])
-        turbine_drive_side();
-    mirror([0, 0, 1]) turbine_reduction_side();
+    // drive side sits one blade gap above the reduction side's inner face
+    translate([0, 0, turbine_blade_gap]) turbine_drive_side();
+    rotate([180, 0, 0]) turbine_reduction_side();
     for (i = [0 : turbine_blades - 1])
         translate([0, 0, -turbine_web_t()])
             linear_extrude(turbine_blade_l()) turbine_blade_2d(i);
