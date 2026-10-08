@@ -3,7 +3,7 @@
 This project gives 3D printed replacement parts for the Kreepy Krauly Dominator pool cleaner:
 
 - **The cam assembly:** the cam, the gear and the washer. The cam controls the steering of the cleaner.
-- **Gearbox parts:** the reduction gear, the two drive shafts and drive gears 1 and 2.
+- **Gearbox parts:** the reduction gear, the two drive shafts and drive gears 1, 2 and 3.
 
 The design is parametric OpenSCAD. All dimensions are in `scad/config.scad`. You can change them in the OpenSCAD Customizer.
 
@@ -293,6 +293,41 @@ To print drive gear 2: put one spacer on the bed. You do not need supports. The
 spacer is small, so use a brim if the part comes loose.
 
 All settings are in the `[Drive gear 2]` section of the config.
+
+### Drive gear 3
+
+`stl/dominator_drive_gear_3.stl` is a 26 tooth gear that connects the two drive shafts. Drive gear 2 turns it. It has a boss on each face. Each boss has an 8 lobe socket for a drive shaft:
+
+- The long shaft goes into the long boss.
+- The short shaft goes into the short boss.
+
+The gear does not turn on the pin. It has no bore. A solid wall separates the two sockets.
+
+| Item | Value |
+|---|---|
+| Teeth | 26 |
+| Tip diameter | 35 mm |
+| Module | 1.25 |
+| Gear face width | 11 mm |
+| Boss diameter | 18 mm |
+| Short boss / long boss | 5 mm / 14 mm |
+| Total height | 30 mm |
+| Short socket / long socket depth | 17 mm / 12 mm |
+| Wall | 1 mm, at the face of the gear on the long boss side |
+
+![Drive gear 3](renders/drive_gear_3.png)
+
+The module comes from drive gear 1, because drive gear 3 meshes with drive gear 2. The 35 mm tip diameter agrees: 26 is an even number, so the caliper reading is correct.
+
+The sockets have the tooth profile of the drive shaft pinion. `dg3_socket_clearance` adds a gap of 0.3 mm on all sides. This gives a slide fit, because the shafts are loose in the OEM part. If a shaft is too tight or too loose, change the value and print the gear again.
+
+To print drive gear 3:
+
+1. Print it in one piece, as exported, with the short boss on the bed. You must use supports under the gear, because the gear is wider than the boss below it. Put supports only there: use paint-on supports or "Support on build plate only". Make sure that no supports go into the short socket, and tick "Don't support bridges". The wall between the sockets prints as a 13 mm bridge over the short socket.
+2. If the part is not stable on the bed, use a brim.
+3. Push each drive shaft into its socket. Make sure that it slides in and turns the gear without play.
+
+All settings are in the `[Drive gear 3]` section of the config. Set `dg3_split = true` to print the gear in two halves instead. The halves are cut across the axis at the middle of the gear. They print on their cut faces, and you glue them together with four 1.75 mm filament dowels.
 
 ## Change the design
 

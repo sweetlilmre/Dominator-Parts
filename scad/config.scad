@@ -299,6 +299,49 @@ dg2_h = 15;
 dg2_spacer_h = 1.5;
 dg2_spacer_d = 14;
 
+/* [Drive gear 3] */
+// A 26 tooth gear with a boss on each face, driven by drive gear 2. It has no
+// bore and does not turn on the pin: it joins the two drive shafts, which fit
+// into an 8 lobe socket in each end, the long shaft at the long boss and the
+// short shaft at the short boss. A solid wall separates the two sockets.
+// Along the axis from the short end: short boss, gear, long boss.
+// (owner) Counted.
+dg3_teeth = 26;
+// The module is drive gear 1's, not an independent value: this gear meshes
+// with drive gear 2, which takes its module from drive gear 1. The owner's
+// 35 mm tip reading agrees exactly, as 26 is even and the caliper spans two
+// opposite tips.
+dg3_module = dg1_module;
+// Gear face width. (owner)
+dg3_gear_h = 11;
+// Boss diameter, the same on both faces. (owner)
+dg3_boss_d = 18;
+// Boss heights. (owner) Short + gear + long = 30, the measured total.
+dg3_short_h = 5;
+dg3_long_h = 14;
+// Socket depths, measured from each end face. (owner) They leave a 1 mm wall
+// just past the gear face on the long boss side, where the owner marked it on
+// the side photograph.
+dg3_short_socket = 17;
+dg3_long_socket = 12;
+// Radial gap between the drive shaft pinion and the socket, applied as
+// offset(delta) on the shaft's own tooth profile. A slide fit: the shafts sit
+// loosely in the OEM bosses. (est) Tune after a print.
+dg3_socket_clearance = 0.3;
+// false = one piece, standing on the short boss: no glue joint for the long
+// shaft's torque to cross, and the teeth stay whole. The gear overhangs the
+// 18 mm boss from z = 5, so it needs supports under it (from the bed, 5 mm
+// tall). The wall is a 13 mm bridge over the short socket; keep supports out
+// of the socket.
+// true = two halves cut across the axis at mid-height of the gear, printed
+// on their cut faces and glued, aligned by the dowels below.
+dg3_split = false;
+// Dowel holes on the cut face for 1.75 mm filament, sized like the drive shaft
+// dowels (ds_dowel_d, ds_dowel_clearance, ds_dowel_depth). They sit in the
+// solid gear ring between the socket and the tooth roots.
+dg3_dowel_count = 4;
+dg3_dowel_r = 10.5;
+
 /* [Slicer modifiers] */
 // Modifier volumes for PrusaSlicer. Load each as a modifier on its part and
 // give it ONLY Fill density = 100 percent. Set the perimeter count on the

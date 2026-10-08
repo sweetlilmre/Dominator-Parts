@@ -11,6 +11,7 @@
 //   part = "shaft_short"  gearbox drive shaft, short
 //   part = "drive_gear_1" gearbox drive gear 1, compound 26 T over 19 T
 //   part = "drive_gear_2" gearbox drive gear 2, 23 T with a spacer each face
+//   part = "drive_gear_3" gearbox drive gear 3, 26 T joining the drive shafts, in two halves
 //   part = "cam_rim_modifier"    PrusaSlicer modifier: solid rim band on the cam
 //   part = "cam_socket_modifier" PrusaSlicer modifier: solid hub around the cam socket
 //   part = "gear_tooth_modifier" PrusaSlicer modifier: solid tooth band on the gear
@@ -27,7 +28,7 @@ include <drive_gear.scad>
 include <fit_test.scad>
 
 /* [Part selection] */
-part = "all"; // ["all", "cam", "gear", "washer", "reduction_gear", "assembly", "shaft_long", "shaft_short", "drive_gear_1", "drive_gear_2", "fit_test", "cam_rim_modifier", "cam_socket_modifier", "gear_tooth_modifier", "gear_core_modifier"]
+part = "all"; // ["all", "cam", "gear", "washer", "reduction_gear", "assembly", "shaft_long", "shaft_short", "drive_gear_1", "drive_gear_2", "drive_gear_3", "fit_test", "cam_rim_modifier", "cam_socket_modifier", "gear_tooth_modifier", "gear_core_modifier"]
 
 module assembled() {
     cam();
@@ -50,6 +51,8 @@ if (part == "cam") {
     drive_gear_1();
 } else if (part == "drive_gear_2") {
     drive_gear_2();
+} else if (part == "drive_gear_3") {
+    drive_gear_3();
 } else if (part == "fit_test") {
     fit_test();
 } else if (part == "assembly") {
@@ -82,6 +85,10 @@ echo(str("drive gear 1: module ", dg1_module, ", outer ", dg1_outer_teeth, " T a
          " mm, inner ", dg1_inner_teeth, " T at ", dg1_inner_od, " mm, height ", dg1_height(), " mm"));
 echo(str("drive gear 2: module ", dg2_module, ", ", dg2_teeth, " T at ", dg2_od,
          " mm, body ", dg2_h, " mm, height ", dg2_height(), " mm"));
+echo(str("drive gear 3: module ", dg3_module, ", ", dg3_teeth, " T at ", dg3_module * (dg3_teeth + 2),
+         " mm, height ", dg3_height(), " mm, sockets ", dg3_short_socket, " + ", dg3_long_socket,
+         " mm, wall ", dg3_height() - dg3_short_socket - dg3_long_socket, " mm, ",
+         dg3_split ? str("split at z ", dg3_cut_z()) : "one piece"));
 echo(str("cam version = ", cam_version, ": lobe height ", lobe_height,
          " mm, ", len(lobes), " lobes"));
 
